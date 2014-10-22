@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html ng-app="lolstreams">
+<html>
 <head>
-<title>LoLStream</title>
-<script src="js/angular.js"></script>
-<script src="js/angular-ui-router.js"></script>
-<script src="js/angular-resource.js"></script>
-<script src="js/main.js"></script>
+	<title>LoLStreams</title>
+	<script src="js/angular.js"></script>
+	<script src="js/angular-ui-router.js"></script>
+	<script src="js/angular-resource.js"></script>
+	<script src="js/main.js"></script>
 </head>
-<body>
-<div ui-view></div>
-<div ng-controller="index"></div>
-<div ng-repeat="stream in streams">{{stream}}</div>
+<body ng-app="LoLStreamsApp">
+	<div ui-view></div>
+	<div ng-controller="StreamsCtrl">
+		<div ng-repeat="stream in streams">{{stream.channel.name}}</div>
+	</div>
+
 </body>
 </html>

@@ -9,3 +9,5 @@ gem "better_errors"
 gem 'json'
 
 gem 'unirest'
+
+gem 'mongoid'

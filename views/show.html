@@ -2,7 +2,7 @@
         height="378" 
         width="620" 
         id="live_embed_player_flash" 
-        data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=<%= @stream['channel']['name'] %>" 
+        data="http://www.twitch.tv/widgets/live_embed_player.swf?channel={{}}}" 
         bgcolor="#000000">
   <param  name="allowFullScreen" 
           value="true" />
@@ -13,13 +13,13 @@
   <param  name="movie" 
           value="http://www.twitch.tv/widgets/live_embed_player.swf" />
   <param  name="flashvars" 
-          value="hostname=www.twitch.tv&channel=<%= @stream['channel']['name'] %>&auto_play=true&start_volume=25" />
+          value="hostname=www.twitch.tv&channel={{}}}&auto_play=true&start_volume=25" />
 </object>
 
 <iframe frameborder="0" 
         scrolling="no" 
         id="chat_embed" 
-        src="http://twitch.tv/chat/embed?channel=<%= @stream['channel']['name'] %>&amp;popout_chat=true" 
+        src="http://twitch.tv/chat/embed?channel={{}}}&amp;popout_chat=true" 
         height="500" 
         width="350">
 </iframe>
