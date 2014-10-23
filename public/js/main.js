@@ -21,16 +21,18 @@ app.factory('Stream', function($resource) {
 app.controller('StreamsCtrl', ['$scope', 'Stream', '$stateParams', '$http', function($scope, Stream, $stateParams, $http) {
 	var streams = Stream.query(function() {
 		$scope.streams = streams
-		console.log($scope.streams)
+		for(var i=0; i<streams.length; i++) {
+			$http({
+				method: 'GET',
+				url: "https://community-league-of-legends.p.mashape.com/api/v1.0/NA/summoner/retrieveInProgressSpectatorGameInfo/wingsofdeath",
+				headers: {"X-Mashape-Key": "LcnBPFSAykmshFMnK4hZ8MnYfdGrp1A2JIRjsn9J2VnbfKUfl9"}
+			}).success(function (result) {
+			  console.log(result);
+			});
+		}
 	})
 
-	$http({
-		method: 'GET',
-		url: "https://community-league-of-legends.p.mashape.com/api/v1.0/NA/summoner/retrieveInProgressSpectatorGameInfo/wingsofdeath",
-		headers: {"X-Mashape-Key": "LcnBPFSAykmshFMnK4hZ8MnYfdGrp1A2JIRjsn9J2VnbfKUfl9"}
-	}).success(function (result) {
-	  console.log(result);
-	});
+	
 
 	var stream = Stream.get({name: 'wingsofdeath'}, function() {
 		$scope.stream = stream

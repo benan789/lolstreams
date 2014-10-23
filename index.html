@@ -10,7 +10,9 @@
 <body ng-app="LoLStreamsApp">
 	<div ui-view></div>
 	<div ng-controller="StreamsCtrl">
-		<div ng-repeat="stream in streams">{{stream.channel.name}}</div>
+		<div ng-repeat="stream in streams">{{stream.channel.name}}
+		<div ng-repeat="(key, value) in stream.streamer.summoner_names">{{key}}</div></div>
+	
 	</div>
 
 </body>

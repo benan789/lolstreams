@@ -19,6 +19,9 @@ GEM
     builder (3.2.2)
     coderay (1.1.0)
     connection_pool (2.0.0)
+    dotenv (0.11.1)
+      dotenv-deployment (~> 0.0.2)
+    dotenv-deployment (0.0.2)
     erubis (2.7.0)
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
@@ -52,6 +55,7 @@ GEM
       rack
     rdoc (4.1.2)
       json (~> 1.4)
+    redis (3.1.0)
     rest-client (1.6.8)
       mime-types (~> 1.16)
       rdoc (>= 2.4.2)
@@ -73,8 +77,10 @@ PLATFORMS
 
 DEPENDENCIES
   better_errors
+  dotenv
   json
   mongoid
   oauth2
+  redis
   sinatra
   unirest

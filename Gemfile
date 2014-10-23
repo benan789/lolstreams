@@ -11,3 +11,7 @@ gem 'json'
 gem 'unirest'
 
 gem 'mongoid'
+
+gem 'redis'
+
+gem 'dotenv'
