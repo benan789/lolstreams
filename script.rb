@@ -3,7 +3,7 @@ require 'open-uri'
 
 redis = Redis.new
 redis.flushdb
-response = Unirest.get "https://api.twitch.tv/kraken/streams?game=league+of+legends&limit=10&?client_id=#{ENV['CLIENT_ID']}"	
+response = Unirest.get "https://api.twitch.tv/kraken/streams?game=league+of+legends&limit=100&?client_id=#{ENV['CLIENT_ID']}"	
 streams = response.body['streams']
 
 streams.each do |stream|
