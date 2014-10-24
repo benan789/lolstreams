@@ -1,6 +1,7 @@
 require 'bundler'
 Bundler.require
 require 'sinatra'
+require 'redis'
 require 'oauth2'
 require 'json'
 require 'unirest'

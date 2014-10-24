@@ -1,7 +1,8 @@
 require './config.rb'
+require 'redis'
 
 class Streams < Sinatra::Base
-
+	redis = Redis.new
 	get '/' do
 		send_file 'index.html'
 	end
@@ -26,11 +27,7 @@ class Streams < Sinatra::Base
 
 	get "/streams/?" do
 		content_type :json
-		response = Unirest.get "https://api.twitch.tv/kraken/streams?game=league+of+legends&limit=10&?client_id=#{ENV['CLIENT_ID']}"	
-		streams = response.body['streams']
-		streams.each do |stream|
-			stream['streamer'] = Streamer.find_or_create_by({name: stream['channel']['name']})
-		end
+		streams = JSON.parse(redis.get('streams'))
 		streams.to_json
 	end
 

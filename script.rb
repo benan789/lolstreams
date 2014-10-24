@@ -1,11 +1,13 @@
 require './config.rb'
-require 'redis'
 require 'open-uri'
 
 redis = Redis.new
-streams = Unirest.get 'http://localhost:9292/streams'
+redis.flushdb
+response = Unirest.get "https://api.twitch.tv/kraken/streams?game=league+of+legends&limit=10&?client_id=#{ENV['CLIENT_ID']}"	
+streams = response.body['streams']
 
-streams.body.each do |stream|
+streams.each do |stream|
+	stream['streamer'] = Streamer.find_or_create_by({name: stream['channel']['name']})
 	begin
 		regions = stream['streamer']['summoner_names'].keys
 		regions.each do |region|
@@ -18,13 +20,16 @@ streams.body.each do |stream|
 				summoner_info = response.body['game']['playerChampionSelections']['array'].find {|x| x['summonerInternalName'] == summoner}
 				if champion = Champion.find_by(champion_id: summoner_info['championId'])
 					puts champion.name
-					redis.set summoner, champion.champion_id
+					stream['champion'] = champion.name
 					break
 				end
 			rescue
-				puts "#{summoner} is not in game"
+				stream['champion'] = "Not in game."
 			end
 		end
 	rescue
+		stream['champion'] = "Not in game."
 	end
 end
+
+redis.set "streams", streams.to_json
