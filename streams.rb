@@ -36,5 +36,8 @@ class Streams < Sinatra::Base
 		response = Unirest.get "https://api.twitch.tv/kraken/streams/#{params[:name]}?client_id=#{ENV['CLIENT_ID']}"
 		stream = response.body['stream'].to_json
 	end
-
+	
+	get '/:name' do
+		erb :show
+	end
 end
