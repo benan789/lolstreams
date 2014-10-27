@@ -2,6 +2,7 @@ require './config.rb'
 require 'redis'
 
 class Streams < Sinatra::Base
+	enable :method_override
 	redis = Redis.new
 	get '/' do
 		send_file 'index.html'
@@ -39,5 +40,17 @@ class Streams < Sinatra::Base
 	
 	get '/:name' do
 		erb :show
+	end
+
+	get '/:name/edit' do
+		@streamer = Streamer.find_by(name: params[:name])
+		erb :edit
+	end
+
+	put '/:name/edit' do
+		@streamer = Streamer.find_by(name: params[:name])
+		if @streamer.update_attributes(params[:streamer])
+			redirect '/'
+		end
 	end
 end

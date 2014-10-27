@@ -1,0 +1,5 @@
+<form action="/<%= @streamer.name %>/edit" method="post">
+	<input type="hidden" name="_method" value="put">
+	<input name="streamer[team]" value="<%= @streamer.team %>">
+	<input type="submit">
+</form>

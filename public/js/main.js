@@ -35,6 +35,7 @@ app.controller('StreamsCtrl', ['$scope', '$filter', 'Stream', '$stateParams', '$
 
 	$scope.showteams = false
 	$scope.showrank = false
+
 	$scope.showlist = function() {
 
 		$scope.showteams ? $scope.showteams = false : $scope.showteams = true
@@ -43,17 +44,42 @@ app.controller('StreamsCtrl', ['$scope', '$filter', 'Stream', '$stateParams', '$
 	$scope.showlist2 = function() {
 		$scope.showrank ? $scope.showrank = false : $scope.showrank = true
 	}
+	$scope.filter = {}
+
+	var isempty = function(obj) {
+		for(var i in obj) {return false};
+		return true;
+	}
 
 	$scope.showclg = false
 	$scope.click_clg = function() {
 		$scope.showclg ? $scope.showclg = false : $scope.showclg = true
 		if($scope.showclg == true){
-			return stream.streamer.team == "tsm"
+			$scope.filter["clg"] = true
 		} else {
-			$scope.streams = streams
+			delete $scope.filter["clg"]
 		}
+		
+	}
+	$scope.showtsm = false
+	$scope.click_tsm = function() {
+		$scope.showtsm ? $scope.showtsm = false : $scope.showtsm = true
+		if($scope.showtsm == true){
+			$scope.filter["tsm"] = true
+			console.log($scope.filter)
+		} else {
+			delete $scope.filter["tsm"]
+		}
+		
 	}
 
-
+	$scope.filterall = function(stream) {
+		if(isempty($scope.filter)) {
+			return true;
+		} else {
+			console.log($scope.filter[stream.streamer.team])
+			return $scope.filter[stream.streamer.team]
+		}
+	}
 
 }])
