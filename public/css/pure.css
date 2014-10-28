@@ -1309,7 +1309,6 @@ since IE8 won't execute CSS that contains a CSS3 selector.
 .pure-menu.pure-menu-open {
     visibility: visible;
     z-index: 2;
-    width: 100%;
 }
 
 .pure-menu ul {
@@ -1479,7 +1478,7 @@ since IE8 won't execute CSS that contains a CSS3 selector.
 
 .pure-menu li a:hover,
 .pure-menu li a:focus {
-    background: #eee;
+    background: #c4151b;
 }
 
 /* DISABLED STATES */
@@ -1580,7 +1579,7 @@ since IE8 won't execute CSS that contains a CSS3 selector.
 
 @media (max-width: 480px) {
     .pure-menu-horizontal {
-        width: 100%;
+        
     }
 
     .pure-menu-children li {

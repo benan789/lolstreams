@@ -18,7 +18,7 @@ app.factory('Stream', function($resource) {
 	return $resource('/streams/:name')
 })
 
-app.controller('StreamsCtrl', ['$scope', '$filter', 'Stream', '$stateParams', '$http', function($scope, $filter, Stream, $stateParams, $http) {
+app.controller('StreamsCtrl', ['$scope', '$sce', 'Stream', '$stateParams', '$http', function($scope, $sce, Stream, $stateParams, $http) {
 	var streams = Stream.query(function() {
 		if($scope.showclg == true){
 			console.log("sdf")
@@ -66,7 +66,6 @@ app.controller('StreamsCtrl', ['$scope', '$filter', 'Stream', '$stateParams', '$
 		$scope.showtsm ? $scope.showtsm = false : $scope.showtsm = true
 		if($scope.showtsm == true){
 			$scope.filter["tsm"] = true
-			console.log($scope.filter)
 		} else {
 			delete $scope.filter["tsm"]
 		}
@@ -77,9 +76,21 @@ app.controller('StreamsCtrl', ['$scope', '$filter', 'Stream', '$stateParams', '$
 		if(isempty($scope.filter)) {
 			return true;
 		} else {
-			console.log($scope.filter[stream.streamer.team])
 			return $scope.filter[stream.streamer.team]
 		}
+	}
+	$scope.activestream = ""
+	$scope.activechat = ""
+	$scope.showstreamer = false;
+	$scope.showstream = function(stream) {
+		$scope.showstreamer = true;
+		$scope.activestream = stream.channel.name;
+		$scope.activechat = $sce.trustAsResourceUrl("http://twitch.tv/chat/embed?channel=" + stream.channel.name + "&amp;popout_chat=true")
+		console.log($scope.activechat)
+	}
+
+	$scope.closestream = function() {
+		$scope.showstreamer = false;
 	}
 
 }])

@@ -1,5 +1,5 @@
 body {
-    background: black;
+    background: #111111;
 }
 
 #layout {
@@ -13,6 +13,21 @@ body {
     position: fixed;
     letter-spacing: normal;
     overflow: auto;
+    border: none;
+    background: #111111;
+    border-right: none;
+    z-index: 1000;
+}
+
+.pure-menu-heading {
+    color: white !important;
+    margin-top: 3.6px !important;
+    padding-bottom: 8.6px !important;
+    border-bottom: none !important;
+}
+
+a {
+    color: white !important;
 }
 
 .viewers {
@@ -24,7 +39,13 @@ body {
 }
 
 #search {
+    margin: 5px;
+    height: 28px;
+    width: 59%;
+}
 
+.search {
+    width: 100% !important;
 }
 
 .content {
@@ -46,12 +67,27 @@ body {
 
 .container {
     width: 100%;
+    min-width: 150px;
 }
 
 .top-container {
-    margin-top: 10px;
-    width: 100%;
-    padding-left: 5px;
+    width: inherit;
+    height: 39px;
+    background: rgba(17,17,17, 1);
+    z-index: 999;
+    position: fixed;
+    left: 0;
+    padding-left: 150px;
+}
+
+.top-container2 {
+    width: inherit;
+    height: 39px;
+    background: rgba(17,17,17, 1);
+    z-index: 999;
+    position: fixed;
+    left: 0;
+    padding-left: 150px;
 }
 
 .status {
@@ -73,4 +109,25 @@ body {
 .sublist {
     margin-left: 10px;
     font-size: 12px;
+}
+
+.stream-container {
+    color: white;
+    overflow: auto;
+    height: 100vh;
+    position: fixed;
+    width: 65%;
+}
+
+.active-stream {
+    overflow: auto;
+    
+}
+
+.rightside {
+    position: fixed;
+}
+
+.fa-times {
+    float: right;
 }
