@@ -1,16 +1,32 @@
 var app = angular.module('LoLStreamsApp', ['ui.router', 'ngResource'])
 
+app.run(['$rootScope', '$stateParams', function($rootScope, $stateParams) {
+	$rootScope.$on('$stateChangeSuccess',function(event, toState, toParams, fromState, fromParams){
+        if($stateParams.name == undefined) {
+			$rootScope.showstreamer = false;
+		}
+    });
+	
+	$rootScope.activestream = undefined;
+	$rootScope.activechat = undefined;
+}])
+
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
 
 	$urlRouterProvider.otherwise('/');
 
 	$stateProvider
 		.state('home', {
-			url: '/'
+			url: '/',
+			controller: 'StreamsCtrl'
 		})
 		.state('stream', {
 			url: '/:name',
-			templateUrl: '/views/show.html'
+			controller: function($rootScope, $stateParams, $sce) {
+				$rootScope.showstreamer = true;
+				$rootScope.activestream = $stateParams.name;
+				$rootScope.activechat = $sce.trustAsResourceUrl("http://twitch.tv/chat/embed?channel=" + $stateParams.name + "&amp;popout_chat=true")
+			}
 		})
 }]);
 
@@ -18,7 +34,8 @@ app.factory('Stream', function($resource) {
 	return $resource('/streams/:name')
 })
 
-app.controller('StreamsCtrl', ['$scope', '$sce', 'Stream', '$stateParams', '$http', function($scope, $sce, Stream, $stateParams, $http) {
+app.controller('StreamsCtrl', ['$scope', '$sce', '$state', 'Stream', '$stateParams', '$http', function($scope, $sce, $state, Stream, $stateParams, $http) {
+	console.log($stateParams)
 	var streams = Stream.query(function() {
 		if($scope.showclg == true){
 			console.log("sdf")
@@ -26,11 +43,6 @@ app.controller('StreamsCtrl', ['$scope', '$sce', 'Stream', '$stateParams', '$htt
 		} else {
 			$scope.streams = streams
 		}
-	})
-
-	var stream = Stream.get({name: 'wingsofdeath'}, function() {
-		$scope.stream = stream
-		console.log($scope.stream)
 	})
 
 	$scope.showteams = false
@@ -44,53 +56,42 @@ app.controller('StreamsCtrl', ['$scope', '$sce', 'Stream', '$stateParams', '$htt
 	$scope.showlist2 = function() {
 		$scope.showrank ? $scope.showrank = false : $scope.showrank = true
 	}
-	$scope.filter = {}
 
-	var isempty = function(obj) {
-		for(var i in obj) {return false};
+	$scope.filter = {
+		'clg': false,
+		'tsm': false,
+		'dig': false,
+		'c9': false,
+		'lmq': false
+	}
+
+	$scope.click_team = function(team) {
+		$scope.filter[team] ? $scope.filter[team] = false : $scope.filter[team] = true
+	}
+		
+	$scope.filterall = function(stream) {
+		for (var key in $scope.filter) {
+			if ($scope.filter[key]){
+				return $scope.filter[stream.streamer.team];
+			}
+			if ($scope.filter[key]){
+				return $scope.filter[stream.streamer.rank];
+			}
+		}
 		return true;
 	}
 
-	$scope.showclg = false
-	$scope.click_clg = function() {
-		$scope.showclg ? $scope.showclg = false : $scope.showclg = true
-		if($scope.showclg == true){
-			$scope.filter["clg"] = true
-		} else {
-			delete $scope.filter["clg"]
-		}
-		
-	}
-	$scope.showtsm = false
-	$scope.click_tsm = function() {
-		$scope.showtsm ? $scope.showtsm = false : $scope.showtsm = true
-		if($scope.showtsm == true){
-			$scope.filter["tsm"] = true
-		} else {
-			delete $scope.filter["tsm"]
-		}
-		
+	if ($stateParams.name) {
+		$scope.showstream($stateParams.name);
 	}
 
-	$scope.filterall = function(stream) {
-		if(isempty($scope.filter)) {
-			return true;
-		} else {
-			return $scope.filter[stream.streamer.team]
-		}
-	}
-	$scope.activestream = ""
-	$scope.activechat = ""
-	$scope.showstreamer = false;
-	$scope.showstream = function(stream) {
-		$scope.showstreamer = true;
-		$scope.activestream = stream.channel.name;
-		$scope.activechat = $sce.trustAsResourceUrl("http://twitch.tv/chat/embed?channel=" + stream.channel.name + "&amp;popout_chat=true")
-		console.log($scope.activechat)
+	$scope.showstream = function(streamer) {
+		$state.go("stream", {"name": streamer})
 	}
 
 	$scope.closestream = function() {
 		$scope.showstreamer = false;
+		$state.go("home")
 	}
 
 }])

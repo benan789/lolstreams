@@ -21,27 +21,27 @@
        <a class="pure-menu-heading">LoL Streams</a>
        <ul>
           <li ng-click="showlist()"><a>Team</a></li>
-          <li class="sublist" ng-show="showteams" ng-click="click_clg()"><a><i ng-class="{'fa fa-square': showclg == false, 'fa fa-check-square': showclg }"></i> CLG</a></li>
-          <li class="sublist" ng-show="showteams"><a>C9</a></li>
-          <li class="sublist" ng-show="showteams"><a>DIG</a></li>
-          <li class="sublist" ng-show="showteams"><a>LMQ</a></li>
-          <li class="sublist" ng-show="showteams" ng-click="click_tsm()"><a><i ng-class="{'fa fa-square': showtsm == false, 'fa fa-check-square': showtsm }"></i> TSM</a></li>
+          <li class="sublist" ng-show="showteams" ng-click="click_team('clg')"><a><i ng-class="{'fa fa-square': filter['clg'] == false, 'fa fa-check-square': filter['clg'] }"></i> CLG</a></li>
+          <li class="sublist" ng-show="showteams" ng-click="click_team('c9')"><a><i ng-class="{'fa fa-square': filter['c9'] == false, 'fa fa-check-square': filter['c9'] }"></i> C9</a></li>
+          <li class="sublist" ng-show="showteams" ng-click="click_team('dig')"><a><i ng-class="{'fa fa-square': filter['dig'] == false, 'fa fa-check-square': filter['dig'] }"></i> DIG</a></li>
+          <li class="sublist" ng-show="showteams" ng-click="click_team('lmq')"><a><i ng-class="{'fa fa-square': filter['lmq'] == false, 'fa fa-check-square': filter['lmq'] }"></i> LMQ</a></li>
+          <li class="sublist" ng-show="showteams" ng-click="click_team('tsm')"><a><i ng-class="{'fa fa-square': filter['tsm'] == false, 'fa fa-check-square': filter['tsm'] }"></i> TSM</a></li>
           <li ng-click="showlist2()"><a>Rank</a></li>
-          <li class="sublist" ng-show="showrank"><a>Challenger</a></li>
-          <li class="sublist" ng-show="showrank"><a>Master</a></li>
-          <li class="sublist" ng-show="showrank"><a>Diamond</a></li>
-          <li class="sublist" ng-show="showrank"><a>Platinum</a></li>
-          <li class="sublist" ng-show="showrank"><a>Gold</a></li>
-          <li class="sublist" ng-show="showrank"><a>Silver</a></li>
-          <li class="sublist" ng-show="showrank"><a>Bronze</a></li>
+          <li class="sublist" ng-show="showrank" ng-click="click_team('cha')"><a><i ng-class="{'fa fa-square': filter['cha'] == false, 'fa fa-check-square': filter['cha'] }"></i> Challenger</a></li>
+          <li class="sublist" ng-show="showrank" ng-click="click_team('mas')"><a><i ng-class="{'fa fa-square': filter['mas'] == false, 'fa fa-check-square': filter['mas'] }"></i> Master</a></li>
+          <li class="sublist" ng-show="showrank" ng-click="click_team('dia')"><a><i ng-class="{'fa fa-square': filter['dia'] == false, 'fa fa-check-square': filter['dia'] }"></i> Diamond</a></li>
+          <li class="sublist" ng-show="showrank" ng-click="click_team('pla')"><a><i ng-class="{'fa fa-square': filter['pla'] == false, 'fa fa-check-square': filter['pla'] }"></i> Platinum</a></li>
+          <li class="sublist" ng-show="showrank" ng-click="click_team('gol')"><a><i ng-class="{'fa fa-square': filter['gol'] == false, 'fa fa-check-square': filter['gol'] }"></i> Gold</a></li>
+          <li class="sublist" ng-show="showrank" ng-click="click_team('sil')"><a><i ng-class="{'fa fa-square': filter['sil'] == false, 'fa fa-check-square': filter['sil'] }"></i> Silver</a></li>
+          <li class="sublist" ng-show="showrank" ng-click="click_team('bro')"><a><i ng-class="{'fa fa-square': filter['bro'] == false, 'fa fa-check-square': filter['bro'] }"></i> Bronze</a></li>
           <li><a>Region</a></li>
        </ul>
     </div>
     <div ui-view></div>
-    <div ng-class="{'pure-u-1': showstreamer == false, 'pure-u-1-4': showstreamer}">
+    <div ng-class="{'stream-list': true, 'pure-u-1': showstreamer == false, 'pure-u-1-4': showstreamer}">
        <div class="pure-u-1">
-          <div ng-class="{'pure-g':true, 'top-container': showstreamer == false, 'top-container2': showstreamer}">
-            <div ng-class="{'pure-u-1 pure-u-sm-2-3 pure-u-md-2-4 pure-u-lg-3-4': showstreamer == false, 'pure-u-1': showstreamer}">
+          <div class="pure-g top-container">
+            <div ng-class="{'pure-u-1 pure-u-sm-1-2 pure-u-md-1-3 pure-u-lg-1-4': showstreamer == false, 'pure-u-1-4': showstreamer}">
                  <div class="pure-form">
                     <form>
                        <input id="search" ng-class="{search: showstreamer}" ng-model="search" type="text" placeholder="Stream / Champ"></input>
@@ -53,11 +53,11 @@
           <div ng-class="{'pure-u-1 pure-u-sm-1-2 pure-u-md-1-3 pure-u-lg-1-4': showstreamer == false, 'pure-u-1': showstreamer}" ng-repeat="stream in streams | filter: search | filter: filterall">
              <div class="content">
                 <p><strong><i ng-if="stream.streamer.gender == 1" class="fa fa-male"></i> {{stream.channel.name}}</strong><strong class="viewers"><i class="fa fa-eye"></i> {{stream.viewers}}</strong></p>
-                <div class="img-box" ng-click="showstream(stream)">
+                <button class="img-box" ng-click="showstream(stream.channel.name)">
                    <img class="pure-img-responsive" src={{stream.preview.medium}}>
                    </img>
                    <div class="status">{{stream.channel.status}}</div>
-                </div>
+                </button>
                 </a>
                 <div class="pure-button">{{stream.champion}}</div>
              </div>
