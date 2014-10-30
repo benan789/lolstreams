@@ -15,3 +15,5 @@ gem 'mongoid'
 gem 'redis'
 
 gem 'dotenv'
+
+gem 'sinatra-contrib'

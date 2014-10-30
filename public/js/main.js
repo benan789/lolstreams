@@ -1,4 +1,4 @@
-var app = angular.module('LoLStreamsApp', ['ui.router', 'ngResource'])
+var app = angular.module('LoLStreamsApp', ['ui.router', 'ngResource', 'ngCookies'])
 
 app.run(['$rootScope', '$stateParams', function($rootScope, $stateParams) {
 	$rootScope.$on('$stateChangeSuccess',function(event, toState, toParams, fromState, fromParams){
@@ -17,8 +17,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 
 	$stateProvider
 		.state('home', {
-			url: '/',
-			controller: 'StreamsCtrl'
+			url: '/'
 		})
 		.state('stream', {
 			url: '/:name',
@@ -34,16 +33,21 @@ app.factory('Stream', function($resource) {
 	return $resource('/streams/:name')
 })
 
-app.controller('StreamsCtrl', ['$scope', '$sce', '$state', 'Stream', '$stateParams', '$http', function($scope, $sce, $state, Stream, $stateParams, $http) {
-	console.log($stateParams)
+app.factory('Favorite', function($resource) {
+	return $resource('/favorites')
+})
+
+app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$state', 'Stream', 'Favorite', '$stateParams', '$http', function($scope, $cookies, $cookieStore, $sce, $state, Stream, Favorite, $stateParams, $http) {
+	
 	var streams = Stream.query(function() {
-		if($scope.showclg == true){
-			console.log("sdf")
-			$scope.streams = $filter('filter')($scope.streams, {team: "clg"})
-		} else {
-			$scope.streams = streams
-		}
+		$scope.streams = streams
 	})
+
+	var favstreams = Favorite.query(function() {
+		$scope.favstreams = favstreams
+	})
+
+	console.log($cookieStore.get('twitch'))
 
 	$scope.showteams = false
 	$scope.showrank = false
@@ -75,6 +79,8 @@ app.controller('StreamsCtrl', ['$scope', '$sce', '$state', 'Stream', '$statePara
 		'BRONZE': false
 	}
 
+	$scope.fav_filter = {}
+		
 	$scope.click_team = function(team) {
 		$scope.team_filter[team] ? $scope.team_filter[team] = false : $scope.team_filter[team] = true
 	}
@@ -92,10 +98,28 @@ app.controller('StreamsCtrl', ['$scope', '$sce', '$state', 'Stream', '$statePara
 		$scope.rank_filter[rank] ? $scope.rank_filter[rank] = false : $scope.rank_filter[rank] = true
 	}
 
+	$scope.fav_box = false;
+	$scope.click_fav = function(fav) {
+		$scope.fav_box ? $scope.fav_box = false : $scope.fav_box = true
+		angular.forEach(fav, function(stream, key) {
+			$scope.fav_box ? $scope.fav_filter[stream.channel.name] = true : $scope.fav_filter[stream.channel.name] = false;
+		})
+		console.log($scope.fav_filter)
+	}
+
 	$scope.filterrank = function(stream) {
 		for (var key in $scope.rank_filter) {
 			if ($scope.rank_filter[key]){
 				return $scope.rank_filter[stream.rank];
+			}	
+		}
+		return true;
+	}
+
+	$scope.filterfav = function(stream) {
+		for (var key in $scope.fav_filter) {
+			if ($scope.fav_filter[key]){
+				return $scope.fav_filter[stream.channel.name];
 			}	
 		}
 		return true;

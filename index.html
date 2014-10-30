@@ -5,12 +5,19 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="css/pure.css">
-    <link rel="stylesheet" href="css/grids-responsive.css">
-    <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/grids-responsive.css">
+  <link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="font-awesome-4.2.0/css/font-awesome.min.css">
+  <link rel="shortcut icon" type="image/png" href="jasmine/lib/jasmine-2.0.0/jasmine_favicon.png">
+  <link rel="stylesheet" type="text/css" href="jasmine/lib/jasmine-2.0.0/jasmine.css"> 
+
+  <script type="text/javascript" src="jasmine/lib/jasmine-2.0.0/jasmine.js"></script>
+  <script type="text/javascript" src="jasmine/lib/jasmine-2.0.0/jasmine-html.js"></script>
+  <script type="text/javascript" src="jasmine/lib/jasmine-2.0.0/boot.js"></script>
 	<script src="js/angular.js"></script>
 	<script src="js/angular-ui-router.js"></script>
 	<script src="js/angular-resource.js"></script>
+  <script src="js/angular-cookies.js"></script>
 	<script src="js/main.js"></script>
     
 </head>
@@ -34,7 +41,9 @@
           <li class="sublist" ng-show="showrank" ng-click="click_rank('GOLD')"><a><i ng-class="{'fa fa-square': rank_filter['GOLD'] == false, 'fa fa-check-square': rank_filter['GOLD'] }"></i> Gold</a></li>
           <li class="sublist" ng-show="showrank" ng-click="click_rank('SILVER')"><a><i ng-class="{'fa fa-square': rank_filter['SILVER'] == false, 'fa fa-check-square': rank_filter['SILVER'] }"></i> Silver</a></li>
           <li class="sublist" ng-show="showrank" ng-click="click_rank('BRONZE')"><a><i ng-class="{'fa fa-square': rank_filter['BRONZE'] == false, 'fa fa-check-square': rank_filter['BRONZE'] }"></i> Bronze</a></li>
-          <li><a>Region</a></li>
+          <li><a ng-click="logout()">Region</a></li>
+          <li><a href="/auth" ng-if="favstreams == undefined">Twitch Login</a></li>
+          <li><a ng-if="favstreams !== undefined" ng-click="click_fav(favstreams)"><i ng-class="{'fa fa-square': fav_box == false, 'fa fa-check-square': fav_box }"></i> Follow Filter</a></li>
        </ul>
     </div>
     <div ui-view></div>
@@ -50,7 +59,7 @@
             </div>
           </div>
         <div class="pure-g container">
-          <div ng-class="{'pure-u-1 pure-u-sm-1-2 pure-u-md-1-3 pure-u-lg-1-4': showstreamer == false, 'pure-u-1': showstreamer}" ng-repeat="stream in streams | filter: search | filter: filterteams | filter: filterrank">
+          <div ng-class="{'pure-u-1 pure-u-sm-1-2 pure-u-md-1-3 pure-u-lg-1-4': showstreamer == false, 'pure-u-1': showstreamer}" ng-repeat="stream in streams | filter: search | filter: filterteams | filter: filterrank | filter: filterfav">
              <div class="content">
                 <p><strong><i ng-if="stream.streamer.gender == 1" class="fa fa-male"></i> {{stream.channel.name}}</strong><strong class="viewers"><i class="fa fa-eye"></i> {{stream.viewers}}</strong></p>
                 <button class="img-box" ng-click="showstream(stream.channel.name)">
