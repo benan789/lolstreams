@@ -43,6 +43,7 @@
           <li class="sublist" ng-show="showrank" ng-click="click_rank('BRONZE')"><a><i ng-class="{'fa fa-square': rank_filter['BRONZE'] == false, 'fa fa-check-square': rank_filter['BRONZE'] }"></i> Bronze</a></li>
           <li><a ng-click="logout()">Region</a></li>
           <li><a href="/auth" ng-if="favstreams == undefined">Twitch Login</a></li>
+          <li><a ng-if="user">{{user.name}}</a></li>
           <li><a ng-if="favstreams !== undefined" ng-click="click_fav(favstreams)"><i ng-class="{'fa fa-square': fav_box == false, 'fa fa-check-square': fav_box }"></i> Follow Filter</a></li>
        </ul>
     </div>
@@ -70,6 +71,7 @@
                 </a>
                 <div class="pure-button">{{stream.champion}}</div>
                 <div class="pure-button">{{stream.rank}}</div>
+                <div class="pure-button" ng-click="follow(stream, user)">Follow</div>
              </div>
           </div>
        </div>

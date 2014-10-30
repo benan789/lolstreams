@@ -37,7 +37,11 @@ app.factory('Favorite', function($resource) {
 	return $resource('/favorites')
 })
 
-app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$state', 'Stream', 'Favorite', '$stateParams', '$http', function($scope, $cookies, $cookieStore, $sce, $state, Stream, Favorite, $stateParams, $http) {
+app.factory('User', function($resource) {
+	return $resource('/user')
+})
+
+app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$state', 'Stream', 'Favorite', 'User', '$stateParams', '$http', function($scope, $cookies, $cookieStore, $sce, $state, Stream, Favorite, User, $stateParams, $http) {
 	
 	var streams = Stream.query(function() {
 		$scope.streams = streams
@@ -47,7 +51,11 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 		$scope.favstreams = favstreams
 	})
 
-	console.log($cookieStore.get('twitch'))
+	var user = User.get(function() {
+		$scope.user = user
+	})
+
+	console.log(user)
 
 	$scope.showteams = false
 	$scope.showrank = false
@@ -101,9 +109,13 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 	$scope.fav_box = false;
 	$scope.click_fav = function(fav) {
 		$scope.fav_box ? $scope.fav_box = false : $scope.fav_box = true
-		angular.forEach(fav, function(stream, key) {
-			$scope.fav_box ? $scope.fav_filter[stream.channel.name] = true : $scope.fav_filter[stream.channel.name] = false;
-		})
+		if(fav.length == 0) {
+			$scope.fav_box ? $scope.fav_filter['favoritesempty'] = true : $scope.fav_filter['favoritesempty'] = false;
+		} else {
+			angular.forEach(fav, function(stream, key) {
+				$scope.fav_box ? $scope.fav_filter[stream.channel.name] = true : $scope.fav_filter[stream.channel.name] = false;
+			})
+		}
 		console.log($scope.fav_filter)
 	}
 
@@ -123,6 +135,10 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 			}	
 		}
 		return true;
+	}
+
+	$scope.follow = function(stream, user) {
+		$http.put("https://api.twitch.tv/kraken/users/" + user.name + "/follows/channels/" + stream.channel.name + "?oauth_token=" + user.user_id)
 	}
 
 	if ($stateParams.name) {

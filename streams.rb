@@ -14,7 +14,7 @@ class Streams < Sinatra::Base
 		begin
 		client = OAuth2::Client.new(ENV['CLIENT_ID'], ENV['CLIENT_SECRET'], :authorize_url => 'https://api.twitch.tv/kraken/oauth2/authorize', :token_url => 'https://api.twitch.tv/kraken/oauth2/token')
 
-		redirect client.auth_code.authorize_url(:redirect_uri => 'http://localhost:9292/auth/callback',  :scope => 'user_read')
+		redirect client.auth_code.authorize_url(:redirect_uri => 'http://localhost:9292/auth/callback',  :scope => 'user_read user_follows_edit')
 		# => "https://example.org/oauth/authorization?response_type=code&client_id=client_id&redirect_uri=http://localhost:8080/oauth2/callback"
 		
 		rescue Exception => e
@@ -28,9 +28,9 @@ class Streams < Sinatra::Base
 		token = client.auth_code.get_token(params[:code], :redirect_uri => 'http://localhost:9292/auth/callback')
 		if token
 			token = JSON.parse(token.to_json)
+
 			cookies[:twitch] = token['access_token']
-			# response = Unirest.get "https://api.twitch.tv/kraken/streams/followed?oauth_token=#{}"
-			# response.to_json
+			
 			redirect back
 		end
 	end
@@ -52,7 +52,14 @@ class Streams < Sinatra::Base
 		response = Unirest.get "https://api.twitch.tv/kraken/streams/#{params[:name]}?client_id=#{ENV['CLIENT_ID']}"
 		stream = response.body['stream'].to_json
 	end
-	
+
+	get "/user/?" do 
+		response_user = Unirest.get "https://api.twitch.tv/kraken/user?oauth_token=#{cookies[:twitch]}"
+		user = response_user.body
+		user['user_id'] = cookies[:twitch]
+		user.to_json
+	end
+
 	get '/:name' do
 		@token = token
 		erb :show
