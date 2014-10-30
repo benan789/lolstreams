@@ -1,5 +1,16 @@
+<% @streamer.summoner_names ||= {"NA" => {
+	"Main" => "",
+	"Smurf" => ""
+	}} %>
 <form action="/<%= @streamer.name %>/edit" method="post">
 	<input type="hidden" name="_method" value="put">
-	<input name="streamer[team]" value="<%= @streamer.team %>">
+	<p>Team</p><input name="streamer[team]" value="<%= @streamer.team %>">
+	<select name="streamer[gender]">
+	  <option value=0>F</option>
+	  <option value=1>M</option>
+	  <option value=2>Third</option>
+	</select>
+	<p>NA Main</p><input name="streamer[summoner_names][NA][Main]" value="<%= @streamer.summoner_names['NA']['Main'] %>">
+	<p>NA Smurf</p><input name="streamer[summoner_names][NA][Smurf]" value="<%= @streamer.summoner_names['NA']['Smurf'] %>">
 	<input type="submit">
 </form>

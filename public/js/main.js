@@ -57,26 +57,46 @@ app.controller('StreamsCtrl', ['$scope', '$sce', '$state', 'Stream', '$statePara
 		$scope.showrank ? $scope.showrank = false : $scope.showrank = true
 	}
 
-	$scope.filter = {
+	$scope.team_filter = {
 		'clg': false,
 		'tsm': false,
 		'dig': false,
 		'c9': false,
-		'lmq': false
+		'lmq': false		
+	}
+
+	$scope.rank_filter = {
+		'CHALLENGER': false,
+		'MASTER': false,
+		'DIAMOND': false,
+		'PLATINUM': false,
+		'GOLD': false,
+		'SILVER': false,
+		'BRONZE': false
 	}
 
 	$scope.click_team = function(team) {
-		$scope.filter[team] ? $scope.filter[team] = false : $scope.filter[team] = true
+		$scope.team_filter[team] ? $scope.team_filter[team] = false : $scope.team_filter[team] = true
 	}
 		
-	$scope.filterall = function(stream) {
-		for (var key in $scope.filter) {
-			if ($scope.filter[key]){
-				return $scope.filter[stream.streamer.team];
-			}
-			if ($scope.filter[key]){
-				return $scope.filter[stream.streamer.rank];
-			}
+	$scope.filterteams = function(stream) {
+		for (var key in $scope.team_filter) {
+			if ($scope.team_filter[key]){
+				return $scope.team_filter[stream.streamer.team];
+			}	
+		}
+		return true;
+	}
+
+	$scope.click_rank = function(rank) {
+		$scope.rank_filter[rank] ? $scope.rank_filter[rank] = false : $scope.rank_filter[rank] = true
+	}
+
+	$scope.filterrank = function(stream) {
+		for (var key in $scope.rank_filter) {
+			if ($scope.rank_filter[key]){
+				return $scope.rank_filter[stream.rank];
+			}	
 		}
 		return true;
 	}
@@ -90,7 +110,6 @@ app.controller('StreamsCtrl', ['$scope', '$sce', '$state', 'Stream', '$statePara
 	}
 
 	$scope.closestream = function() {
-		$scope.showstreamer = false;
 		$state.go("home")
 	}
 

@@ -5,4 +5,5 @@ class Streamer
 	field :summoner_names, type: Hash
 	field :gender, type: Integer
 	field :team, type: String
+	field :rank, type: String
 end
