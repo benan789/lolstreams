@@ -37,6 +37,7 @@ streams.each do |stream|
 					break
 				end
 				rescue
+					stream['champion'] = "Not in game."
 				end
 			end
 

@@ -1,16 +1,34 @@
 <% @streamer.summoner_names ||= {"NA" => {
-	"Main" => "",
-	"Smurf" => ""
-	}} %>
+	}, "EUW" => {
+	}, "EUNE" => {
+	}, "TR" => {
+	}, "RU" => {
+	}, "OCE" => {
+	}, "LAS" => {
+	}, "LAN" => {
+	}, "BR" => {
+	}
+} %>
 <form action="/<%= @streamer.name %>/edit" method="post">
 	<input type="hidden" name="_method" value="put">
 	<p>Team</p><input name="streamer[team]" value="<%= @streamer.team %>">
 	<select name="streamer[gender]">
-	  <option value=0>F</option>
+	  <option value=2>None</option>
 	  <option value=1>M</option>
-	  <option value=2>Third</option>
+	  <option value=0>F</option>
 	</select>
 	<p>NA Main</p><input name="streamer[summoner_names][NA][Main]" value="<%= @streamer.summoner_names['NA']['Main'] %>">
 	<p>NA Smurf</p><input name="streamer[summoner_names][NA][Smurf]" value="<%= @streamer.summoner_names['NA']['Smurf'] %>">
+	<p>NA Smurf2</p><input name="streamer[summoner_names][NA][Smurf2]" value="<%= @streamer.summoner_names['NA']['Smurf2'] %>">
+	<p>EUW Main</p><input name="streamer[summoner_names][EUW][Main]" value="<%= @streamer.summoner_names['EUW']['Main'] %>">
+	<p>EUNE Main</p><input name="streamer[summoner_names][EUNE][Main]" value="<%= @streamer.summoner_names['EUNE']['Main'] %>">
+	<p>TR Main</p><input name="streamer[summoner_names][TR][Main]" value="<%= @streamer.summoner_names['TR']['Main'] %>">
+	<p>RU Main</p><input name="streamer[summoner_names][RU][Main]" value="<%= @streamer.summoner_names['RU']['Main'] %>">
+	<p>OCE Main</p><input name="streamer[summoner_names][OCE][Main]" value="<%= @streamer.summoner_names['OCE']['Main'] %>">
+	<p>LAS Main</p><input name="streamer[summoner_names][LAS][Main]" value="<%= @streamer.summoner_names['LAS']['Main'] %>">
+	<p>LAN Main</p><input name="streamer[summoner_names][LAN][Main]" value="<%= @streamer.summoner_names['LAN']['Main'] %>">
+	<p>BR Main</p><input name="streamer[summoner_names][BR][Main]" value="<%= @streamer.summoner_names['BR']['Main'] %>">
+
+
 	<input type="submit">
 </form>
