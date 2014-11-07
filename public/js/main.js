@@ -138,7 +138,11 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 	}
 
 	$scope.follow = function(stream, user) {
-		$http.put("https://api.twitch.tv/kraken/users/" + user.name + "/follows/channels/" + stream.channel.name + "?oauth_token=" + user.user_id)
+		$http.put('/follow', {stream: stream.channel.name, user: user.name}).then(function() {
+			var favstreams = Favorite.query(function() {
+				$scope.favstreams = favstreams
+			})
+		})
 	}
 
 	if ($stateParams.name) {
@@ -151,6 +155,13 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 
 	$scope.closestream = function() {
 		$state.go("home")
+	}
+
+	$scope.logout = function() {
+		$http.put('/logout').then(function() {
+			$scope.favstreams = undefined
+			$scope.user = undefined
+		})
 	}
 
 }])

@@ -41,11 +41,16 @@
           <li class="sublist" ng-show="showrank" ng-click="click_rank('GOLD')"><a><i ng-class="{'fa fa-square': rank_filter['GOLD'] == false, 'fa fa-check-square': rank_filter['GOLD'] }"></i> Gold</a></li>
           <li class="sublist" ng-show="showrank" ng-click="click_rank('SILVER')"><a><i ng-class="{'fa fa-square': rank_filter['SILVER'] == false, 'fa fa-check-square': rank_filter['SILVER'] }"></i> Silver</a></li>
           <li class="sublist" ng-show="showrank" ng-click="click_rank('BRONZE')"><a><i ng-class="{'fa fa-square': rank_filter['BRONZE'] == false, 'fa fa-check-square': rank_filter['BRONZE'] }"></i> Bronze</a></li>
-          <li><a ng-click="logout()">Region</a></li>
-          <li><a href="/auth" ng-if="favstreams == undefined">Twitch Login</a></li>
-          <li><a ng-if="user">{{user.name}}</a></li>
-          <li><a ng-if="favstreams !== undefined" ng-click="click_fav(favstreams)"><i ng-class="{'fa fa-square': fav_box == false, 'fa fa-check-square': fav_box }"></i> Follow Filter</a></li>
+          <li><a>Region</a></li>
+          <li><a ng-if="favstreams !== undefined" ng-click="click_fav(favstreams)"><i ng-class="{'fa fa-square': fav_box == false, 'fa fa-check-square': fav_box }"></i> Following</a></li>
        </ul>
+    </div>
+    <div class="twitch">
+      <div class="login">
+            <li class="signin" ng-if="favstreams == undefined"><a href="/auth"><i class="fa fa-twitch"></i> Sign In</a></li>
+            <li ng-if="user.name"><a><i class="fa fa-twitch"></i> {{user.name}}</a></li>
+            <li ng-if="user.name"><a ng-click="logout()"><i class="fa fa-sign-out"></i> Sign Out</a></li>
+      </div>
     </div>
     <div ui-view></div>
     <div ng-class="{'stream-list': true, 'pure-u-1': showstreamer == false, 'pure-u-1-4': showstreamer}">
@@ -69,7 +74,7 @@
                    <div class="status">{{stream.channel.status}}</div>
                 </button>
                 </a>
-                <div class="pure-button">{{stream.champion}}</div>
+                <img class="champion" ng-if="stream.champion !== 'Not in game.'" ng-src="http://ddragon.leagueoflegends.com/cdn/4.18.1/img/champion/{{stream.champion}}.png">
                 <div class="pure-button">{{stream.rank}}</div>
                 <div class="pure-button" ng-click="follow(stream, user)">Follow</div>
              </div>

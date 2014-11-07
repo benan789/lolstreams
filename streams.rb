@@ -76,4 +76,14 @@ class Streams < Sinatra::Base
 			redirect '/'
 		end
 	end
+
+	put '/follow' do
+		data = JSON.parse(request.body.read)
+		Unirest.put "https://api.twitch.tv/kraken/users/#{data['user']}/follows/channels/#{data['stream']}?oauth_token=#{cookies[:twitch]}"
+	end
+
+	put '/logout' do
+		cookies.delete('twitch')
+	end
+
 end

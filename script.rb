@@ -30,7 +30,10 @@ streams.each do |stream|
 
 				if champion = Champion.find_by(champion_id: summoner_info['championId'])
 					puts champion.name
-					stream['champion'] = champion.name
+					puts region
+					puts rank
+					stream['champion'] = champion.key
+					stream['region'] =  region
 					break
 				end
 				rescue
@@ -46,6 +49,7 @@ streams.each do |stream|
 	rescue
 		stream['champion'] = "Not in game."
 	end
+	puts "======"
 end
 
 redis.set "streams", streams.to_json

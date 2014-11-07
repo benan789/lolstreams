@@ -9,7 +9,7 @@ body {
 .pure-menu.pure-menu-open.sidebar {
     margin-left: -150px;
     width: 150px;
-    height: 100vh;
+    height: calc(100vh - 60px);
     position: fixed;
     letter-spacing: normal;
     overflow: auto;
@@ -28,6 +28,7 @@ body {
 
 a {
     color: white !important;
+    text-decoration: none;
 }
 
 .viewers {
@@ -125,4 +126,45 @@ a {
 
 .fa-times {
     float: right;
+}
+
+.champion {
+    max-width: 40px;
+    height: auto;
+}
+
+.twitch {
+    position: fixed;
+    background: #6C4C9F;
+    bottom: 0px;
+    list-style: none;
+    width: 150px;
+    margin-left: -150px;
+    height: 60px;
+    position: fixed;
+    letter-spacing: normal;
+    overflow: auto;
+    border: none;
+    border-right: none;
+    z-index: 1000;
+}
+
+.login {
+    margin: 5px 0px 0px 20px;
+}
+
+.fa-twitch {
+    margin-left: -1px;
+    margin-right: -1px;
+    padding-top: 6px;
+}
+
+.fa-sign-out {
+    margin-top: 5px;
+    margin-right: -1px;
+}
+
+.signin {
+    font-size: 1.5em;
+    padding-top: 6px;
 }
