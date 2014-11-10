@@ -42,7 +42,7 @@
           <li class="sublist" ng-show="showrank" ng-click="click_rank('SILVER')"><a><i ng-class="{'fa fa-square': rank_filter['SILVER'] == false, 'fa fa-check-square': rank_filter['SILVER'] }"></i> Silver</a></li>
           <li class="sublist" ng-show="showrank" ng-click="click_rank('BRONZE')"><a><i ng-class="{'fa fa-square': rank_filter['BRONZE'] == false, 'fa fa-check-square': rank_filter['BRONZE'] }"></i> Bronze</a></li>
           <li><a>Region</a></li>
-          <li><a ng-if="favstreams !== undefined" ng-click="click_fav(favstreams)"><i ng-class="{'fa fa-square': fav_box == false, 'fa fa-check-square': fav_box }"></i> Following</a></li>
+          <li><a ng-if="favstreams !== undefined" ng-click="click_fav(fav_filter)"><i ng-class="{'fa fa-square': fav_box == false, 'fa fa-check-square': fav_box }"></i> Following</a></li>
        </ul>
     </div>
     <div class="twitch">
@@ -77,11 +77,16 @@
                 <div ng-if="stream.champion == 'Not in game.'" class="nogame">
                 <i class="fa fa-gamepad off"></i>
                 </div>
-                <div class="game" ng-if="stream.champion !== 'Not in game.'">
+                <div ng-if="stream.champion == 'No info.'" class="nogame">
+                ...
+                </div>
+                <div class="game" ng-if="stream.champion !== 'Not in game.' && stream.champion !== 'No info.'">
                 <img class="champion" ng-src="http://ddragon.leagueoflegends.com/cdn/4.18.1/img/champion/{{stream.champion}}.png">
                 </div>
                 <div ng-class="{'rank':true}"><div class="ranktext">{{stream.region}}<br>{{stream.rank}}</div></div>
-                <a href="" class="follow" ng-click="follow(stream, user)"><p class="followtext">Follow</p></a>
+                <a href="" ng-if="fav_filter[stream.channel.name] == undefined" class="follow" ng-click="follow(stream, user)"><p class="followtext">Follow</p></a>
+                <a href="" ng-if="fav_filter[stream.channel.name] !== undefined" class="follow" ng-click="unfollow(stream, user)"><p class="followtext">Unfollow</p></a>
+                <a href="/auth" ng-if="user.name == undefined" class="follow"><p class="followtext">Follow</p></a>
              </div>
           </div>
        </div>

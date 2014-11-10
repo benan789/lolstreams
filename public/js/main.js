@@ -48,14 +48,16 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 	})
 
 	var favstreams = Favorite.query(function() {
+		$scope.fav_filter = {}
 		$scope.favstreams = favstreams
+		for (var i = 0; i<favstreams.length; i++) {
+			$scope.fav_filter[favstreams[i].channel.name] = false;
+		}
 	})
 
 	var user = User.get(function() {
 		$scope.user = user
 	})
-
-	console.log(user)
 
 	$scope.showteams = false
 	$scope.showrank = false
@@ -87,8 +89,8 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 		'BRONZE': false
 	}
 
-	$scope.fav_filter = {}
-		
+	console.log($scope.fav_filter)
+
 	$scope.click_team = function(team) {
 		$scope.team_filter[team] ? $scope.team_filter[team] = false : $scope.team_filter[team] = true
 	}
@@ -108,12 +110,13 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 
 	$scope.fav_box = false;
 	$scope.click_fav = function(fav) {
+		console.log(fav)
 		$scope.fav_box ? $scope.fav_box = false : $scope.fav_box = true
 		if(fav.length == 0) {
 			$scope.fav_box ? $scope.fav_filter['favoritesempty'] = true : $scope.fav_filter['favoritesempty'] = false;
 		} else {
 			angular.forEach(fav, function(stream, key) {
-				$scope.fav_box ? $scope.fav_filter[stream.channel.name] = true : $scope.fav_filter[stream.channel.name] = false;
+				$scope.fav_box ? $scope.fav_filter[key] = true : $scope.fav_filter[key] = false;
 			})
 		}
 		console.log($scope.fav_filter)
@@ -140,7 +143,23 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 	$scope.follow = function(stream, user) {
 		$http.put('/follow', {stream: stream.channel.name, user: user.name}).then(function() {
 			var favstreams = Favorite.query(function() {
+				$scope.fav_filter = {}
 				$scope.favstreams = favstreams
+				for (var i = 0; i<favstreams.length; i++) {
+					$scope.fav_filter[favstreams[i].channel.name] = false;
+				}
+			})
+		})
+	}
+
+	$scope.unfollow = function(stream, user) {
+		$http.put('/unfollow', {stream: stream.channel.name, user: user.name}).then(function() {
+			var favstreams = Favorite.query(function() {
+				$scope.fav_filter = {}
+				$scope.favstreams = favstreams
+				for (var i = 0; i<favstreams.length; i++) {
+					$scope.fav_filter[favstreams[i].channel.name] = false;
+				}
 			})
 		})
 	}

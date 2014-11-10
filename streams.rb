@@ -82,6 +82,11 @@ class Streams < Sinatra::Base
 		Unirest.put "https://api.twitch.tv/kraken/users/#{data['user']}/follows/channels/#{data['stream']}?oauth_token=#{cookies[:twitch]}"
 	end
 
+	put '/unfollow' do
+		data = JSON.parse(request.body.read)
+		Unirest.delete "https://api.twitch.tv/kraken/users/#{data['user']}/follows/channels/#{data['stream']}?oauth_token=#{cookies[:twitch]}"
+	end
+
 	put '/logout' do
 		cookies.delete('twitch')
 	end
