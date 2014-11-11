@@ -51,7 +51,7 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 		$scope.fav_filter = {}
 		$scope.favstreams = favstreams
 		for (var i = 0; i<favstreams.length; i++) {
-			$scope.fav_filter[favstreams[i].channel.name] = false;
+			$scope.fav_filter[favstreams[i].channel.name] = $scope.fav_filter[favstreams[i].channel.name] || false;
 		}
 	})
 
@@ -63,12 +63,15 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 	$scope.showrank = false
 
 	$scope.showlist = function() {
-
 		$scope.showteams ? $scope.showteams = false : $scope.showteams = true
 	}
 
 	$scope.showlist2 = function() {
 		$scope.showrank ? $scope.showrank = false : $scope.showrank = true
+	}
+
+	$scope.showlist3 = function() {
+		$scope.showregion ? $scope.showregion = false : $scope.showregion = true
 	}
 
 	$scope.team_filter = {
@@ -89,6 +92,24 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 		'BRONZE': false
 	}
 
+	$scope.region_filter = {
+		'NA': false,
+		'EUW': false,
+		'EUNE': false,
+		'BR': false,
+		'TR': false,
+		'RU': false,
+		'LAN': false,
+		'LAS': false,
+		'OCE': false
+	}
+
+	$scope.ingame_filter = {
+		'Not in game.': false,
+		'Champion select.': false,
+		'In game.': false
+	}
+
 	console.log($scope.fav_filter)
 
 	$scope.click_team = function(team) {
@@ -106,6 +127,14 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 
 	$scope.click_rank = function(rank) {
 		$scope.rank_filter[rank] ? $scope.rank_filter[rank] = false : $scope.rank_filter[rank] = true
+	}
+
+	$scope.click_region = function(region) {
+		$scope.region_filter[region] ? $scope.region_filter[region] = false : $scope.region_filter[region] = true
+	}
+
+	$scope.click_ingame = function(ingame) {
+		$scope.ingame_filter[ingame] ? $scope.ingame_filter[ingame] = false : $scope.ingame_filter[ingame] = true;
 	}
 
 	$scope.fav_box = false;
@@ -140,28 +169,45 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 		return true;
 	}
 
+	$scope.filterregion = function(stream) {
+		for (var key in $scope.region_filter) {
+			if ($scope.region_filter[key]){
+				return $scope.region_filter[stream.region];
+			}	
+		}
+		return true;
+	}
+
+	$scope.filteringame = function(stream) {
+		for (var key in $scope.ingame_filter) {
+			if ($scope.ingame_filter[key]){
+				return $scope.ingame_filter[stream.status]
+			}
+		}
+		return true; 
+	}
+
+	
+		
+
+	$scope.filterinoutgame = function(stream) {
+		if ($scope.inoutgame_box) {
+			return (stream.champion == "In champion select.")
+		}
+		return true;
+	}
+
 	$scope.follow = function(stream, user) {
 		$http.put('/follow', {stream: stream.channel.name, user: user.name}).then(function() {
-			var favstreams = Favorite.query(function() {
-				$scope.fav_filter = {}
-				$scope.favstreams = favstreams
-				for (var i = 0; i<favstreams.length; i++) {
-					$scope.fav_filter[favstreams[i].channel.name] = false;
-				}
-			})
+			$scope.fav_box ? $scope.fav_filter[stream.channel.name] = true : $scope.fav_filter[stream.channel.name] = false;
 		})
 	}
 
 	$scope.unfollow = function(stream, user) {
 		$http.put('/unfollow', {stream: stream.channel.name, user: user.name}).then(function() {
-			var favstreams = Favorite.query(function() {
-				$scope.fav_filter = {}
-				$scope.favstreams = favstreams
-				for (var i = 0; i<favstreams.length; i++) {
-					$scope.fav_filter[favstreams[i].channel.name] = false;
-				}
-			})
+			delete $scope.fav_filter[stream.channel.name]
 		})
+		console.log($scope.fav_filter)
 	}
 
 	if ($stateParams.name) {

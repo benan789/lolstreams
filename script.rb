@@ -20,7 +20,7 @@ streams.each do |stream|
 						headers:{
 						  "X-Mashape-Key" => ENV['MASHAPE']
 						}
-
+						
 						summoner_info = response.body['game']['playerChampionSelections']['array'].find {|x| x['summonerInternalName'] == summoner}
 						summoner_info2 = response.body['game']['teamOne']['array'].find {|x| x['summonerInternalName'] == summoner} || summoner_info2 = response.body['game']['teamTwo']['array'].find {|x| x['summonerInternalName'] == summoner}
 						
@@ -32,16 +32,20 @@ streams.each do |stream|
 						if champion = Champion.find_by(champion_id: summoner_info['championId'])
 							stream['champion'] = champion.key
 							stream['region'] =  region
+							stream['status'] = "In game."
 							break
 						end
 					end
 				rescue
 					stream['champion'] = "Not in game."
+					stream['status'] = "Not in game."
 				end
 			end		
 		end
 	rescue
 		stream['champion'] = "No info."
+		stream['status'] = "Not in game."
+		stream['rank'] = "No info."
 	end
 	puts stream['champion']
 	puts stream['region']

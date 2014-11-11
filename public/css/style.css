@@ -182,14 +182,8 @@ a {
 }
 
 .on {
-    float: left;
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    padding-left: 2px;
-    padding-top: -1px;
-    height: auto;
     color: green;
+    font-size: 1.8em;
 }
 
 .nogame {
@@ -206,6 +200,10 @@ a {
 .off {
     color: #c4151b;
     margin-top: 3px;
+}
+
+.onoff {
+    color: yellow;
 }
 
 .rank {
@@ -246,4 +244,9 @@ a {
 
 .fa-female {
     color: #C71477;
+}
+
+.checkboxtop {
+    float: left;
+    display: inline-block;
 }
