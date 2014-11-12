@@ -43,6 +43,7 @@ app.factory('User', function($resource) {
 
 app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$state', 'Stream', 'Favorite', 'User', '$stateParams', '$http', function($scope, $cookies, $cookieStore, $sce, $state, Stream, Favorite, User, $stateParams, $http) {
 	
+	
 	var streams = Stream.query(function() {
 		$scope.streams = streams
 	})
@@ -110,6 +111,13 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 		'In game.': false
 	}
 
+	$scope.gametype_filter = {
+		0: false,
+		1: false,
+		3: false,
+		4: false
+	}
+
 	console.log($scope.fav_filter)
 
 	$scope.click_team = function(team) {
@@ -135,6 +143,10 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 
 	$scope.click_ingame = function(ingame) {
 		$scope.ingame_filter[ingame] ? $scope.ingame_filter[ingame] = false : $scope.ingame_filter[ingame] = true;
+	}
+
+	$scope.click_gametype = function(gametype) {
+		$scope.gametype_filter[gametype] ? $scope.gametype_filter[gametype] = false : $scope.gametype_filter[gametype] = true;
 	}
 
 	$scope.fav_box = false;
@@ -187,14 +199,13 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 		return true; 
 	}
 
-	
-		
-
-	$scope.filterinoutgame = function(stream) {
-		if ($scope.inoutgame_box) {
-			return (stream.champion == "In champion select.")
+	$scope.filtergametype = function(stream) {
+		for (var key in $scope.gametype_filter) {
+			if ($scope.gametype_filter[key]){
+				return $scope.gametype_filter[stream.streamer.gender]
+			}
 		}
-		return true;
+		return true; 
 	}
 
 	$scope.follow = function(stream, user) {
@@ -229,4 +240,11 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 		})
 	}
 
-}])
+	window.addEventListener("resize", function(e) {
+	    var active = document.getElementById("active");
+	   	active.style.height = active.offsetWidth / (620/378) + "px";
+	   	console.log(active.style.height)
+	});
+
+}]);
+

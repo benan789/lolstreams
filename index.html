@@ -31,6 +31,10 @@
             <a class="checkboxtop" ng-click="click_ingame('In game.')"><i ng-class="{'fa fa-square': ingame_filter['In game.'] == false, 'fa fa-check-square': ingame_filter['In game.'] }"></i> <i class="fa fa-gamepad fa-lg on"></i></a>
             <a ng-click="click_ingame('Not in game.')"><i ng-class="{'fa fa-square': ingame_filter['Not in game.'] == false, 'fa fa-check-square': ingame_filter['Not in game.'] }"></i> <i class="fa fa-gamepad fa-lg off"></i></a>
             <a ng-click="click_ingame('Champion select.')"><i ng-class="{'fa fa-square': ingame_filter['Champion select.'] == false, 'fa fa-check-square': ingame_filter['Champion select.'] }"></i> <i class="fa fa-gamepad fa-lg onoff"></i></a>
+            <a class="checkboxtop" ng-click="click_gametype(1)"><i ng-class="{'fa fa-square': gametype_filter[1] == false, 'fa fa-check-square': gametype_filter[1] }"></i> <i class="fa fa-male"></i></a>
+            <a ng-click="click_gametype(0)"><i ng-class="{'fa fa-square': gametype_filter[0] == false, 'fa fa-check-square': gametype_filter[0] }"></i> <i class="fa fa-female"></i></a>
+            <a class="checkboxtop" ng-click="click_gametype(3)"><i ng-class="{'fa fa-square': gametype_filter[3] == false, 'fa fa-check-square': gametype_filter[3] }"></i> <i class="fa fa-video-camera"></i></a>
+            <a ng-click="click_gametype(4)"><i ng-class="{'fa fa-square': gametype_filter[4] == false, 'fa fa-check-square': gametype_filter[4] }"></i> <i class="fa fa-microphone"></i></a>
           </div>
           <li ng-click="showlist()"><a>Team</a></li>
           <li class="sublist" ng-repeat="(team, value) in team_filter" ng-show="showteams" ng-click="click_team(team)"><a><i ng-class="{'fa fa-square': team_filter[team] == false, 'fa fa-check-square': team_filter[team] }"></i> {{team.toUpperCase()}}</a></li>
@@ -62,10 +66,10 @@
       </div>
     </div>
     <div ui-view></div>
-    <div ng-class="{'stream-list': true, 'pure-u-1': showstreamer == false, 'pure-u-1-4': showstreamer}">
+    <div ng-class="{'stream-list': true, 'pure-u-1': showstreamer == false, 'pure-u-1-4 column': showstreamer}">
        <div class="pure-u-1">
           <div class="pure-g top-container">
-            <div ng-class="{'pure-u-1 pure-u-sm-1-2 pure-u-md-1-3 pure-u-lg-1-4': showstreamer == false, 'pure-u-1-4': showstreamer}">
+            <div ng-class="{'pure-u-1 pure-u-sm-1-2 pure-u-md-1-3 pure-u-lg-1-4': showstreamer == false, 'pure-u-1-4 column': showstreamer}">
                  <div class="pure-form">
                     <form>
                        <input id="search" ng-class="{search: showstreamer}" ng-model="search" type="text" placeholder="Stream / Champ"></input>
@@ -74,7 +78,7 @@
             </div>
           </div>
         <div class="pure-g container">
-          <div ng-class="{'pure-u-1 pure-u-sm-1-2 pure-u-md-1-3 pure-u-lg-1-4': showstreamer == false, 'pure-u-1': showstreamer}" ng-repeat="stream in streams | filter: search | filter: filterteams | filter: filterrank | filter: filterregion | filter: filterfav | filter: filteringame">
+          <div ng-class="{'pure-u-1 pure-u-sm-1-2 pure-u-md-1-3 pure-u-lg-1-4': showstreamer == false, 'pure-u-1': showstreamer}" ng-repeat="stream in streams | filter: search | filter: filterteams | filter: filterrank | filter: filterregion | filter: filterfav | filter: filteringame | filter: filtergametype">
              <div class="content">
                 <p><strong><i ng-if="stream.streamer.gender == 1" class="fa fa-male"></i><i ng-if="stream.streamer.gender == 0" class="fa fa-female"></i> {{stream.channel.name}}</strong><strong class="viewers"><i class="fa fa-eye"></i> {{stream.viewers}}</strong></p>
                 <button class="img-box" ng-click="showstream(stream.channel.name)">
@@ -93,7 +97,7 @@
                 <img class="champion" ng-src="http://ddragon.leagueoflegends.com/cdn/4.18.1/img/champion/{{stream.champion}}.png">
                 </div>
                 <div ng-class="{'rank':true}"><div class="ranktext">{{stream.region}}<br>{{stream.rank}}</div></div>
-                <a href="" ng-if="fav_filter[stream.channel.name] == undefined" class="follow" ng-click="follow(stream, user)"><p class="followtext">Follow</p></a>
+                <a href="" ng-if="fav_filter[stream.channel.name] == undefined && user.name !== undefined" class="follow" ng-click="follow(stream, user)"><p class="followtext">Follow</p></a>
                 <a href="" ng-if="fav_filter[stream.channel.name] !== undefined" class="follow" ng-click="unfollow(stream, user)"><p class="followtext">Unfollow</p></a>
                 <a href="/auth" ng-if="user.name == undefined" class="follow"><p class="followtext">Follow</p></a>
              </div>
@@ -102,11 +106,13 @@
        </div>
     </div>
     <div class="pure-u-3-4 stream-container" ng-if="showstreamer">
+    <h2 class="streamname">{{activestream}}</h2>
+    <i class="fa fa-times fa-2x" ng-click="closestream()"></i>
         <div class="pure-u-1">
-            <div class="pure-g active-stream">
+            <div id="active" class="pure-g active-stream">
                 <object type="application/x-shockwave-flash" 
-                    height="378" 
-                    width="620" 
+                    height="100%" 
+                    width="100%" 
                     id="live_embed_player_flash" 
                     data="http://www.twitch.tv/widgets/live_embed_player.swf?channel={{activestream}}}" 
                     bgcolor="#000000">
@@ -121,7 +127,6 @@
                   <param  name="flashvars" 
                           value="hostname=www.twitch.tv&channel={{activestream}}&auto_play=true&start_volume=25" />
                 </object>
-                <i class="fa fa-times" ng-click="closestream()"></i>
             </div>
             <div class="pure-g">
             <iframe frameborder="0" 
@@ -135,6 +140,10 @@
         </div>
     </div>
 </div>
-
+<script>
+    var active = document.getElementById("active");
+    active.style.height = active.offsetWidth * 378 / 620 + "px";
+    console.log(active.style.height)
+</script>
 </body>
 </html>

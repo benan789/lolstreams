@@ -4,6 +4,7 @@ body {
 
 #layout {
     padding-left: 150px;
+    overflow: auto;
 }
 
 .pure-menu.pure-menu-open.sidebar {
@@ -85,6 +86,10 @@ a {
     min-width: 200px;
 }
 
+.column {
+    width: 290px !important;
+}
+
 .status {
     float: left;
     display: none;
@@ -111,13 +116,13 @@ a {
     overflow: auto;
     height: 100vh;
     position: fixed;
-    width: 65%;
+    width: calc(100% - 440px);
     z-index: 1001;
 }
 
 .active-stream {
     overflow: auto;
-    
+    width: 100%; 
 }
 
 .rightside {
@@ -126,6 +131,8 @@ a {
 
 .fa-times {
     float: right;
+    padding-top: 2px;
+    padding-bottom: 4px;
 }
 
 .champion {
@@ -176,6 +183,7 @@ a {
     float: left;
     border: 1px solid green;
     margin: 1px;
+    margin-left: 0px;
     margin-top: 2px;
     height: 40px;
     width: 40px;
@@ -230,6 +238,7 @@ a {
     background: #6C4C9F;
     color: white;
     margin: 1px;
+    margin-right: 0px;
     margin-top: 2px;
 }
 
@@ -249,4 +258,19 @@ a {
 .checkboxtop {
     float: left;
     display: inline-block;
+}
+
+.fa-times {
+    float: right;
+}
+
+.streamname {
+    float: left;
+    margin: 0;
+    padding-top: 4px;
+    padding-left: 1px;
+}
+
+.chat {
+    float: left;
 }
