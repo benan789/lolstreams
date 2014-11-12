@@ -41,12 +41,19 @@ app.factory('User', function($resource) {
 	return $resource('/user')
 })
 
-app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$state', 'Stream', 'Favorite', 'User', '$stateParams', '$http', function($scope, $cookies, $cookieStore, $sce, $state, Stream, Favorite, User, $stateParams, $http) {
+app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$state', 'Stream', 'Favorite', 'User', '$stateParams', '$http', '$interval', function($scope, $cookies, $cookieStore, $sce, $state, Stream, Favorite, User, $stateParams, $http, $interval) {
 	
 	
 	var streams = Stream.query(function() {
 		$scope.streams = streams
 	})
+
+	$interval(function() {
+		var streams = Stream.query(function() {
+		$scope.streams = streams
+		console.log("df")
+		})
+	}, 60000)
 
 	var favstreams = Favorite.query(function() {
 		$scope.fav_filter = {}
@@ -63,20 +70,29 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 	$scope.showteams = false
 	$scope.showrank = false
 
-	$scope.showlist = function() {
-		$scope.showteams ? $scope.showteams = false : $scope.showteams = true
+	$scope.showgamestatuses = function() {
+		$scope.showgamestatus ? $scope.showgamestatus = false : $scope.showgamestatus = true
 	}
 
-	$scope.showlist2 = function() {
+	$scope.showstreamtypes = function() {
+		$scope.showstreamtype ? $scope.showstreamtype = false : $scope.showstreamtype = true
+	}
+
+	$scope.showteams = function() {
+		$scope.showteam ? $scope.showteam = false : $scope.showteam = true
+	}
+
+	$scope.showranks = function() {
 		$scope.showrank ? $scope.showrank = false : $scope.showrank = true
 	}
 
-	$scope.showlist3 = function() {
+	$scope.showregions = function() {
 		$scope.showregion ? $scope.showregion = false : $scope.showregion = true
 	}
 
 	$scope.team_filter = {
 		'clg': false,
+		'eg': false,
 		'tsm': false,
 		'dig': false,
 		'c9': false,
@@ -239,12 +255,6 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 			$scope.user = undefined
 		})
 	}
-
-	window.addEventListener("resize", function(e) {
-	    var active = document.getElementById("active");
-	   	active.style.height = active.offsetWidth / (620/378) + "px";
-	   	console.log(active.style.height)
-	});
 
 }]);
 
