@@ -9,6 +9,7 @@
 	}, "BR" => {
 	}
 } %>
+
 <form action="/<%= @streamer.name %>/edit" method="post">
 	<input type="hidden" name="_method" value="put">
 	<p>Team</p><input name="streamer[team]" value="<%= @streamer.team %>">
@@ -31,6 +32,6 @@
 	<p>LAN Main</p><input name="streamer[summoner_names][LAN][Main]" value="<%= @streamer.summoner_names['LAN']['Main'] %>">
 	<p>BR Main</p><input name="streamer[summoner_names][BR][Main]" value="<%= @streamer.summoner_names['BR']['Main'] %>">
 
-
+	<input name="password" value="">
 	<input type="submit">
 </form>

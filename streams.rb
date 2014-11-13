@@ -72,8 +72,10 @@ class Streams < Sinatra::Base
 
 	put '/:name/edit' do
 		@streamer = Streamer.find_by(name: params[:name])
-		if @streamer.update_attributes(params[:streamer])
-			redirect '/'
+		if params[:password] == ENV['PASSWORD'] 
+			if @streamer.update_attributes(params[:streamer])
+				redirect '/'
+			end
 		end
 	end
 
