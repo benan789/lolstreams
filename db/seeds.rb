@@ -1,10 +1,3 @@
-streamers = Streamer.create([{
-      name: "nightblue3",
-      summoner_names: {"NA" => "Nightblack"},
-      gender: 1,
-      team: ""
-   }])
-
 champions = Champion.create([{
       champion_id: 412,
       title: "the Chain Warden",

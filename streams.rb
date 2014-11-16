@@ -79,7 +79,7 @@ class Streams < Sinatra::Base
 
 	get '/:name/edit' do
 		@streamer = Streamer.find_by(name: params[:name])
-		erb :show
+		erb :edit
 	end
 
 	put '/:name/edit' do
