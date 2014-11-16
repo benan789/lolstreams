@@ -9,5 +9,5 @@ production:
   sessions:
     default:
       hosts:
-        - lolstreams.tv:27017
+        - lolstreams:27017
       database: lolstreams_production
