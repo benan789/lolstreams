@@ -6,7 +6,7 @@ development:
         - localhost:27017
 
 production:
-  session:
+  sessions:
     default:
       hosts:
         - 107.170.239.49
