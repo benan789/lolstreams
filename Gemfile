@@ -4,8 +4,6 @@ gem "sinatra"
 
 gem "oauth2"
 
-gem "better_errors"
-
 gem 'json'
 
 gem 'unirest'
