@@ -6,5 +6,8 @@ development:
         - localhost:27017
 
 production:
-      host: 107.170.239.49
+  session:
+    default:
+      hosts:
+        - 107.170.239.49
       database: lolstreams_production

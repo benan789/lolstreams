@@ -77,11 +77,6 @@ class Streams < Sinatra::Base
 		user.to_json
 	end
 
-	get '/:name' do
-		@token = token
-		erb :show
-	end
-
 	get '/:name/edit' do
 		@streamer = Streamer.find_by(name: params[:name])
 		erb :edit
