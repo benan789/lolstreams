@@ -156,8 +156,11 @@
     console.log(active.style.height)
 
     window.addEventListener("resize", function(e) {
-      active.style.height = active.offsetWidth / (620/378) + "px";
-      console.log(active.style.height)
+      var active = document.getElementById("active");
+      if(active.offsetWidth !== 0) {
+        active.style.height = active.offsetWidth / (620/378) + "px";
+        console.log(active.style.height)
+      }
     });
 </script>
 </body>
