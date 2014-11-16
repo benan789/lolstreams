@@ -2,6 +2,7 @@ require 'bundler'
 Bundler.require
 require 'sinatra'
 require "sinatra/cookies"
+require 'sinatra/assetpack'
 require 'redis'
 require 'oauth2'
 require 'json'

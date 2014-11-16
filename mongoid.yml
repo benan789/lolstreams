@@ -4,3 +4,7 @@ development:
       database: lolstreams
       hosts:
         - localhost:27017
+
+production:
+      host: 107.170.239.49
+      database: lolstreams_production

@@ -5,7 +5,24 @@ class Streams < Sinatra::Base
 	helpers Sinatra::Cookies
 	set :cookie_options, :domain => nil
 	enable :method_override
+
+	register Sinatra::AssetPack
+
+	assets do
+		js :application, [
+			'/js/*.js'
+		]
+
+		css :application, [
+			'/css/*.css'
+		]
+
+		js_compression :jsmin
+		css_compression :css
+	end
+
 	redis = Redis.new
+
 	get '/' do
 		send_file 'index.html'
 	end

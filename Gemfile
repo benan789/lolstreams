@@ -15,3 +15,5 @@ gem 'redis'
 gem 'dotenv'
 
 gem 'sinatra-contrib'
+
+gem 'sinatra-assetpack'
