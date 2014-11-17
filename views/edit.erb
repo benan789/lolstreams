@@ -1,15 +1,3 @@
-<% 	@streamer.summoner_names['NA'] ||= ""
-	@streamer.summoner_names['EUW'] ||= ""
-	@streamer.summoner_names['EUNE'] ||= ""
-	@streamer.summoner_names['TR'] ||= ""
-	@streamer.summoner_names['RU'] ||= ""
-	@streamer.summoner_names['OCE'] ||= ""
-	@streamer.summoner_names['LAS'] ||= ""
-	@streamer.summoner_names['LAN'] ||= ""
-	@streamer.summoner_names['BR'] ||= ""
-	@streamer.summoner_names['PBE'] ||= ""
-%>
-
 <form action="/<%= @streamer.name %>/edit" method="post">
 	<input type="hidden" name="_method" value="put">
 	<p>Team</p><input name="streamer[team]" value="<%= @streamer.team %>">
