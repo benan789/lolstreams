@@ -30,7 +30,7 @@ class Streams < Sinatra::Base
 		begin
 		client = OAuth2::Client.new(ENV['CLIENT_ID'], ENV['CLIENT_SECRET'], :authorize_url => 'https://api.twitch.tv/kraken/oauth2/authorize', :token_url => 'https://api.twitch.tv/kraken/oauth2/token')
 
-		redirect client.auth_code.authorize_url(:redirect_uri => 'http://localhost:9292/auth/callback',  :scope => 'user_read user_follows_edit')
+		redirect client.auth_code.authorize_url(:redirect_uri => 'http://lolstreams.tv/auth/callback',  :scope => 'user_read user_follows_edit')
 		# => "https://example.org/oauth/authorization?response_type=code&client_id=client_id&redirect_uri=http://localhost:8080/oauth2/callback"
 		
 		rescue Exception => e
@@ -41,7 +41,7 @@ class Streams < Sinatra::Base
 	get "/auth/callback" do
 		content_type :json
 		client = OAuth2::Client.new(ENV['CLIENT_ID'], ENV['CLIENT_SECRET'], :authorize_url => 'https://api.twitch.tv/kraken/oauth2/authorize', :token_url => 'https://api.twitch.tv/kraken/oauth2/token')
-		token = client.auth_code.get_token(params[:code], :redirect_uri => 'http://localhost:9292/auth/callback')
+		token = client.auth_code.get_token(params[:code], :redirect_uri => 'http://lolstreams.tv/auth/callback')
 		if token
 			token = JSON.parse(token.to_json)
 
