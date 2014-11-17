@@ -28,10 +28,14 @@ streams.each do |stream|
 							summoner_info = response.body['game']['playerChampionSelections']['array'].find {|x| x['summonerInternalName'] == summoner}
 							summoner_info2 = response.body['game']['teamOne']['array'].find {|x| x['summonerInternalName'] == summoner} || summoner_info2 = response.body['game']['teamTwo']['array'].find {|x| x['summonerInternalName'] == summoner}
 							
-							rank_response = Unirest.get "https://#{region.downcase}.api.pvp.net/api/lol/#{region.downcase}/v2.5/league/by-summoner/#{summoner_info2["summonerId"]}?api_key=#{ENV['LOL_SECRET']}"
-							rank = JSON.parse(rank_response.body.to_json)
-							rank = rank[summoner_info2["summonerId"].to_s][0]['tier']
-							stream['rank'] = rank
+							begin
+								rank_response = Unirest.get "https://#{region.downcase}.api.pvp.net/api/lol/#{region.downcase}/v2.5/league/by-summoner/#{summoner_info2["summonerId"]}?api_key=#{ENV['LOL_SECRET']}"
+								rank = JSON.parse(rank_response.body.to_json)
+								rank = rank[summoner_info2["summonerId"].to_s][0]['tier']
+								stream['rank'] = rank
+							rescue
+								puts "Rate Limit Reached"
+							end
 
 							if champion = Champion.find_by(champion_id: summoner_info['championId'])
 								stream['champion'] = champion.key
