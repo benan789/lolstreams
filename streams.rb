@@ -1,5 +1,4 @@
 require './config.rb'
-require 'redis'
 
 class Streams < Sinatra::Base
 	helpers Sinatra::Cookies
