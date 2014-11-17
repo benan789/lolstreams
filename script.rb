@@ -24,6 +24,7 @@ streams.each do |stream|
 								if response.body['error'] == "Game has not started"
 									stream['status'] = "Champion select."
 									stream['rank'] = "Champion Select"
+									stream['region'] = region
 									break
 								end
 								summoner_info = response.body['game']['playerChampionSelections']['array'].find {|x| x['summonerInternalName'] == summoner}
@@ -31,7 +32,7 @@ streams.each do |stream|
 							rescue
 								puts "MASHAPE rate limit?"
 							end
-							
+
 							begin
 								rank_response = Unirest.get "https://#{region.downcase}.api.pvp.net/api/lol/#{region.downcase}/v2.5/league/by-summoner/#{summoner_info2["summonerId"]}?api_key=#{ENV['LOL_SECRET']}"
 								rank = JSON.parse(rank_response.body.to_json)
@@ -43,7 +44,7 @@ streams.each do |stream|
 
 							if champion = Champion.find_by(champion_id: summoner_info['championId'])
 								stream['champion'] = champion.key
-								stream['region'] =  region
+								stream['region'] = region
 								stream['status'] = "In game."
 								break
 							end
