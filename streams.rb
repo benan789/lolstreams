@@ -78,6 +78,7 @@ class Streams < Sinatra::Base
 
 	get '/:name/edit' do
 		@streamer = Streamer.find_by(name: params[:name])
+		@streamer.summoner_names ||= {}
 		@streamer.summoner_names['NA'] ||= ""
 		@streamer.summoner_names['EUW'] ||= ""
 		@streamer.summoner_names['EUNE'] ||= ""
