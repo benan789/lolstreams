@@ -61,6 +61,7 @@ streams.each do |stream|
 	puts stream['rank']
 	puts stream['status']
 	puts "======"
-	redis.set "streams", streams.to_json
 end
+
+redis.set "streams", streams.to_json
 
