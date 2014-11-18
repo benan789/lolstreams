@@ -92,7 +92,7 @@
                    <div class="status">{{stream.channel.status}}</div>
                 </button>
                 </a>
-                <div ng-if="stream.champion == 'Not in game.'" class="nogame">
+                <div ng-if="stream.champion == 'Not in game.' && stream.rank !== 'Champion Select'" class="nogame">
                 <i class="fa fa-gamepad off"></i>
                 </div>
                 <div ng-if="stream.champion == 'No info.'" class="nogame">
