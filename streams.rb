@@ -26,6 +26,10 @@ class Streams < Sinatra::Base
 		send_file 'index.html'
 	end
 
+	get '/riot.html' do
+		send_file 'riot.html'
+	end
+
 	get "/auth" do
 		begin
 		client = OAuth2::Client.new(ENV['CLIENT_ID'], ENV['CLIENT_SECRET'], :authorize_url => 'https://api.twitch.tv/kraken/oauth2/authorize', :token_url => 'https://api.twitch.tv/kraken/oauth2/token')
