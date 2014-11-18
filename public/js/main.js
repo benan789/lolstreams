@@ -96,7 +96,9 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 		'tsm': false,
 		'dig': false,
 		'c9': false,
-		'lmq': false		
+		'lmq': false,
+		't8': false,
+		'crs': false		
 	}
 
 	$scope.rank_filter = {
