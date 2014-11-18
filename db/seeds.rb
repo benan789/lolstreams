@@ -1,3 +1,5 @@
+Champion.destroy_all
+
 champions = Champion.create([{
       champion_id: 412,
       title: "the Chain Warden",
@@ -105,12 +107,12 @@ champions = Champion.create([{
       key: "Morgana"
    }, {
       champion_id: 28,
-      title: "the Wchampion_idowmaker",
+      title: "the Widowmaker",
       name: "Evelynn",
       key: "Evelynn"
    }, {
       champion_id: 105,
-      title: "the Tchampion_idal Trickster",
+      title: "the Tidal Trickster",
       name: "Fizz",
       key: "Fizz"
    }, {
@@ -215,7 +217,7 @@ champions = Champion.create([{
       key: "Riven"
    }, {
       champion_id: 121,
-      title: "the Vochampion_idreaver",
+      title: "the Voidreaver",
       name: "Kha'Zix",
       key: "Khazix"
    }, {
@@ -236,8 +238,8 @@ champions = Champion.create([{
    }, {
       champion_id: 76,
       title: "the Bestial Huntress",
-      name: "Nchampion_idalee",
-      key: "Nchampion_idalee"
+      name: "Nidalee",
+      key: "Nidalee"
    }, {
       champion_id: 3,
       title: "the Sentinel's Sorrow",
@@ -265,7 +267,7 @@ champions = Champion.create([{
       key: "Graves"
    }, {
       champion_id: 90,
-      title: "the Prophet of the Vochampion_id",
+      title: "the Prophet of the Void",
       name: "Malzahar",
       key: "Malzahar"
    }, {
@@ -290,7 +292,7 @@ champions = Champion.create([{
       key: "LeeSin"
    }, {
       champion_id: 60,
-      title: "The Spchampion_ider Queen",
+      title: "The Spider Queen",
       name: "Elise",
       key: "Elise"
    }, {
@@ -300,7 +302,7 @@ champions = Champion.create([{
       key: "Volibear"
    }, {
       champion_id: 20,
-      title: "the Yeti Rchampion_ider",
+      title: "the Yeti Rider",
       name: "Nunu",
       key: "Nunu"
    }, {
@@ -380,7 +382,7 @@ champions = Champion.create([{
       key: "Lucian"
    }, {
       champion_id: 107,
-      title: "the Prchampion_idestalker",
+      title: "the Pridestalker",
       name: "Rengar",
       key: "Rengar"
    }, {
@@ -461,8 +463,8 @@ champions = Champion.create([{
    }, {
       champion_id: 9,
       title: "the Harbinger of Doom",
-      name: "Fchampion_iddlesticks",
-      key: "Fchampion_iddleSticks"
+      name: "Fiddlesticks",
+      key: "FiddleSticks"
    }, {
       champion_id: 114,
       title: "the Grand Duelist",
@@ -470,7 +472,7 @@ champions = Champion.create([{
       key: "Fiora"
    }, {
       champion_id: 31,
-      title: "the Terror of the Vochampion_id",
+      title: "the Terror of the Void",
       name: "Cho'Gath",
       key: "Chogath"
    }, {
@@ -510,7 +512,7 @@ champions = Champion.create([{
       key: "Yorick"
    }, {
       champion_id: 6,
-      title: "the Headsman's Prchampion_ide",
+      title: "the Headsman's Pride",
       name: "Urgot",
       key: "Urgot"
    }, {
@@ -575,12 +577,12 @@ champions = Champion.create([{
       key: "Trundle"
    }, {
       champion_id: 38,
-      title: "the Vochampion_id Walker",
+      title: "the Void Walker",
       name: "Kassadin",
       key: "Kassadin"
    }, {
       champion_id: 161,
-      title: "the Eye of the Vochampion_id",
+      title: "the Eye of the Void",
       name: "Vel'Koz",
       key: "Velkoz"
    }, {
@@ -590,7 +592,7 @@ champions = Champion.create([{
       key: "Zyra"
    }, {
       champion_id: 267,
-      title: "the Tchampion_idecaller",
+      title: "the Tidecaller",
       name: "Nami",
       key: "Nami"
    }, {

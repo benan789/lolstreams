@@ -101,7 +101,7 @@
                 <div ng-if="stream.rank == 'Champion Select'" class="champselect">
                 <i class="fa fa-gamepad onoff"></i>
                 </div>
-                <div class="game" ng-if="stream.champion !== 'Not in game.' && stream.champion !== 'No info.' && stream.status !== 'Champion select.'">
+                <div class="game" ng-if="stream.champion !== 'Not in game.' && stream.champion !== 'No info.' && stream.rank !== 'Champion Select'">
                 <img class="champion" ng-src="http://ddragon.leagueoflegends.com/cdn/4.18.1/img/champion/{{stream.champion}}.png">
                 <i ng-if="stream.streamer.gender == 3" class="fa fa-video-camera tourn"></i>
                 <i ng-if="stream.streamer.gender == 4" class="fa fa-microphone pod"></i>
