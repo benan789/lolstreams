@@ -2,26 +2,52 @@
 	<input type="hidden" name="_method" value="put">
 	<p>Team</p><input name="streamer[team]" value="<%= @streamer.team %>">
 	<select name="streamer[gender]">
-	  <option value=2>None</option>
+	  <option value="<%= @streamer.gender %>"><%= @streamer.gender %></option>
 	  <option value=1>M</option>
 	  <option value=0>F</option>
 	  <option value=3>Tournament</option>
 	  <option value=4>Podcast</option>
 	</select>
-	<p>NA Main</p><input name="streamer[summoner_names][NA][Main]" value="<%= @streamer.summoner_names['NA']['Main'] %>">
-	<p>NA Smurf</p><input name="streamer[summoner_names][NA][Smurf]" value="<%= @streamer.summoner_names['NA']['Smurf'] %>">
-	<p>NA Smurf2</p><input name="streamer[summoner_names][NA][Smurf2]" value="<%= @streamer.summoner_names['NA']['Smurf2'] %>">
-	<p>NA Smurf3</p><input name="streamer[summoner_names][NA][Smurf3]" value="<%= @streamer.summoner_names['NA']['Smurf3'] %>">
-	<p>EUW Main</p><input name="streamer[summoner_names][EUW][Main]" value="<%= @streamer.summoner_names['EUW']['Main'] %>">
-	<p>EUNE Main</p><input name="streamer[summoner_names][EUNE][Main]" value="<%= @streamer.summoner_names['EUNE']['Main'] %>">
-	<p>TR Main</p><input name="streamer[summoner_names][TR][Main]" value="<%= @streamer.summoner_names['TR']['Main'] %>">
-	<p>RU Main</p><input name="streamer[summoner_names][RU][Main]" value="<%= @streamer.summoner_names['RU']['Main'] %>">
-	<p>OCE Main</p><input name="streamer[summoner_names][OCE][Main]" value="<%= @streamer.summoner_names['OCE']['Main'] %>">
-	<p>LAS Main</p><input name="streamer[summoner_names][LAS][Main]" value="<%= @streamer.summoner_names['LAS']['Main'] %>">
-	<p>LAN Main</p><input name="streamer[summoner_names][LAN][Main]" value="<%= @streamer.summoner_names['LAN']['Main'] %>">
-	<p>BR Main</p><input name="streamer[summoner_names][BR][Main]" value="<%= @streamer.summoner_names['BR']['Main'] %>">
-	<p>PBE Main</p><input name="streamer[summoner_names][PBE][Main]" value="<%= @streamer.summoner_names['PBE']['Main'] %>">
 
-	<input name="password" value="">
+	<p>
+	NA Main<input name="streamer[summoner_names][NA][Main]" value="<%= @streamer.summoner_names['NA']['Main'] %>">
+	NA Smurf<input name="streamer[summoner_names][NA][Smurf]" value="<%= @streamer.summoner_names['NA']['Smurf'] %>">
+	NA Smurf2<input name="streamer[summoner_names][NA][Smurf2]" value="<%= @streamer.summoner_names['NA']['Smurf2'] %>">
+	NA Smurf3<input name="streamer[summoner_names][NA][Smurf3]" value="<%= @streamer.summoner_names['NA']['Smurf3'] %>">
+	</p>
+	<p>
+	EUW Main<input name="streamer[summoner_names][EUW][Main]" value="<%= @streamer.summoner_names['EUW']['Main'] %>">
+	EUW Smurf<input name="streamer[summoner_names][EUW][Smurf]" value="<%= @streamer.summoner_names['EUW']['Smurf'] %>">
+	</p>
+	<p>
+	EUNE Main<input name="streamer[summoner_names][EUNE][Main]" value="<%= @streamer.summoner_names['EUNE']['Main'] %>">
+	EUNE Smurf<input name="streamer[summoner_names][EUNE][Smurf]" value="<%= @streamer.summoner_names['EUNE']['Smurf'] %>">
+	</p>
+	<p>
+	TR Main<input name="streamer[summoner_names][TR][Main]" value="<%= @streamer.summoner_names['TR']['Main'] %>">
+	TR Smurf<input name="streamer[summoner_names][TR][Smurf]" value="<%= @streamer.summoner_names['TR']['Smurf'] %>">
+	</p>
+	<p>
+	RU Main<input name="streamer[summoner_names][RU][Main]" value="<%= @streamer.summoner_names['RU']['Main'] %>">
+	RU Smurf<input name="streamer[summoner_names][RU][Smurf]" value="<%= @streamer.summoner_names['RU']['Smurf'] %>">
+	</p>
+	<p>
+	OCE Main<input name="streamer[summoner_names][OCE][Main]" value="<%= @streamer.summoner_names['OCE']['Main'] %>">
+	OCE Smurf<input name="streamer[summoner_names][OCE][Smurf]" value="<%= @streamer.summoner_names['OCE']['Smurf'] %>">
+	</p>
+	<p>
+	LAS Main<input name="streamer[summoner_names][LAS][Main]" value="<%= @streamer.summoner_names['LAS']['Main'] %>">
+	LAS Smurf<input name="streamer[summoner_names][LAS][Smurf]" value="<%= @streamer.summoner_names['LAS']['Smurf'] %>">
+	</p>
+	<p>
+	LAN Main<input name="streamer[summoner_names][LAN][Main]" value="<%= @streamer.summoner_names['LAN']['Main'] %>">
+	LAN Smurf<input name="streamer[summoner_names][LAN][Smurf]" value="<%= @streamer.summoner_names['LAN']['Smurf'] %>">
+	</p>
+	<p>
+	BR Main<input name="streamer[summoner_names][BR][Main]" value="<%= @streamer.summoner_names['BR']['Main'] %>">
+	BR Smurf<input name="streamer[summoner_names][BR][Smurf]" value="<%= @streamer.summoner_names['BR']['Smurf'] %>">
+	</p>
+
+	<input type="password" name="password" value="">
 	<input type="submit">
 </form>
