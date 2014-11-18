@@ -53,7 +53,8 @@ streams.each do |stream|
 						stream['champion'] = "Not in game."
 						stream['status'] = "Not in game."
 					end
-				end		
+				end
+				break if stream['status'] == "Champion select." || stream['status'] == "In game."
 			end
 		rescue
 			stream['champion'] = "No info."
