@@ -21,7 +21,8 @@ streams.each do |stream|
 	  							headers:{
 								  "X-Mashape-Key" => ENV['MASHAPE']
 								}
-							if response.body['error'] == "Game has not started"
+						
+							if response.body['data']['error'] == "Game is not observable"
 								stream['status'] = "Champion select."
 								stream['rank'] = "Champion Select"
 								stream['region'] = region
