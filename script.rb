@@ -17,7 +17,7 @@ streams.each do |stream|
 						if summoner != ""
 							puts summoner
 							
-							response = Unirest.get "https://spectator-league-of-legends-v1.p.mashape.com/lol/#{region.downcase}/v1/spectator/by-name/#{summoner}",
+							response = Unirest.get "https://spectator-league-of-legends-v1.p.mashape.com/lol/#{region.downcase}/v1/spectator/by-name/#{URI::encode(summoner)}",
 	  							headers:{
 								  "X-Mashape-Key" => ENV['MASHAPE']
 								}
