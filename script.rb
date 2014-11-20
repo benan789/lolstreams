@@ -17,26 +17,27 @@ streams.each do |stream|
 						if summoner != ""
 							puts summoner
 							
-							response = Unirest.get "https://community-league-of-legends.p.mashape.com/api/v1.0/#{region}/summoner/retrieveInProgressSpectatorGameInfo/#{URI::encode(summoner)}",
-							headers:{
-							  "X-Mashape-Key" => ENV['MASHAPE']
-							}
+							response = Unirest.get "https://spectator-league-of-legends-v1.p.mashape.com/lol/#{region.downcase}/v1/spectator/by-name/#{summoner}",
+	  							headers:{
+								  "X-Mashape-Key" => ENV['MASHAPE']
+								}
 							if response.body['error'] == "Game has not started"
 								stream['status'] = "Champion select."
 								stream['rank'] = "Champion Select"
 								stream['region'] = region
 								break
 							end
-							summoner_info = response.body['game']['playerChampionSelections']['array'].find {|x| x['summonerInternalName'] == summoner}
-							summoner_info2 = response.body['game']['teamOne']['array'].find {|x| x['summonerInternalName'] == summoner} || summoner_info2 = response.body['game']['teamTwo']['array'].find {|x| x['summonerInternalName'] == summoner}
-							
+
+							summoner_info = response.body['data']['game']['playerChampionSelections'].find {|x| x['summonerInternalName'] == summoner}
+							summoner_info2 = response.body['data']['game']['teamOne'].find {|x| x['summonerInternalName'] == summoner} || summoner_info2 = response.body['data']['game']['teamTwo'].find {|x| x['summonerInternalName'] == summoner}
+						
 							if summoner_info == nil
 								stream['status'] = "Spectating."
 								stream['rank'] = "Spectating"
 								stream['region'] = region
 								break
 							end
-								
+
 							begin
 								rank_response = Unirest.get "https://#{region.downcase}.api.pvp.net/api/lol/#{region.downcase}/v2.5/league/by-summoner/#{summoner_info2["summonerId"]}?api_key=#{ENV['LOL_SECRET']}"
 								rank = JSON.parse(rank_response.body.to_json)
