@@ -69,8 +69,9 @@ class Streams < Sinatra::Base
 
 	get "/streams/:name/?" do
 		content_type :json
-		response = Unirest.get "https://api.twitch.tv/kraken/streams/#{params[:name]}?client_id=#{ENV['CLIENT_ID']}"
-		stream = response.body['stream'].to_json
+		streams = JSON.parse(redis.get('streams'))
+		stream = streams.find { |x| x['channel']['name'] == params[:name] }
+		stream.to_json
 	end
 
 	get "/user/?" do 

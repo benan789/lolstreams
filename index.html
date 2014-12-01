@@ -18,8 +18,8 @@
 	<script src="js/angular-ui-router.js"></script>
 	<script src="js/angular-resource.js"></script>
   <script src="js/angular-cookies.js"></script>
-	<script src="js/main.js"></script>
-    
+  <script src="js/jquery-2.1.1.js"></script>
+
 </head>
 <body ng-app="LoLStreamsApp">
 
@@ -71,98 +71,115 @@
       </div>
     </div>
     <div ui-view></div>
-    <div ng-class="{'stream-list': true, 'pure-u-1': showstreamer == false, 'pure-u-1-4 column': showstreamer}">
-       <div class="pure-u-1">
-          <div class="pure-g top-container">
-            <div ng-class="{'pure-u-1 pure-u-sm-1-2 pure-u-md-1-3 pure-u-lg-1-4 pure-u-xl-1-5': showstreamer == false, 'pure-u-1-4 column': showstreamer}">
-                 <div class="pure-form">
-                    <form>
-                       <input id="search" ng-class="{search: showstreamer}" ng-model="search" type="text" placeholder="Stream / Champ"></input>
-                    </form>
-                 </div>
-            </div>
-          </div>
-        <div class="pure-g container">
-          <div ng-class="{'pure-u-1 pure-u-sm-1-2 pure-u-md-1-3 pure-u-lg-1-4 pure-u-xl-1-5': showstreamer == false, 'pure-u-1': showstreamer}" ng-repeat="stream in streams | filter: search | filter: filterteams | filter: filterrank | filter: filterregion | filter: filterfav | filter: filteringame | filter: filtergametype">
-             <div class="content">
-                <p><strong><i ng-if="stream.streamer.gender == 1" class="fa fa-male"></i><i ng-if="stream.streamer.gender == 0" class="fa fa-female"></i><i ng-if="stream.streamer.gender == 3" class="fa fa-video-camera"></i><i ng-if="stream.streamer.gender == 4" class="fa fa-microphone"></i> {{stream.channel.name}}</strong><strong class="viewers"><i class="fa fa-eye"></i> {{stream.viewers}}</strong></p>
-                <button class="img-box" ng-click="showstream(stream.channel.name)">
-                   <img class="pure-img-responsive" src={{stream.preview.medium}}>
-                   </img>
-                   <div class="status">{{stream.channel.status}}</div>
-                </button>
-                </a>
-                <div ng-if="stream.champion == 'Not in game.' && stream.rank !== 'Champion Select'" class="nogame">
-                <i class="fa fa-gamepad off"></i>
-                </div>
-                <div ng-if="stream.champion == 'No info.'" class="nogame">
-                ...
-                </div>
-                <div ng-if="stream.rank == 'Champion Select'" class="champselect">
-                <i class="fa fa-gamepad onoff"></i>
-                </div>
-                <div class="game" ng-if="stream.champion !== 'Not in game.' && stream.champion !== 'No info.' && stream.rank !== 'Champion Select'">
-                <img class="champion" ng-src="http://ddragon.leagueoflegends.com/cdn/4.18.1/img/champion/{{stream.champion}}.png">
-                <i ng-if="stream.streamer.gender == 3" class="fa fa-video-camera tourn"></i>
-                <i ng-if="stream.streamer.gender == 4" class="fa fa-microphone pod"></i>
-                </div>
-                <div ng-class="{'rank':true}"><div class="ranktext">{{stream.region}}<br>{{stream.rank}}</div></div>
-                <a href="" ng-if="fav_filter[stream.channel.name] == undefined && user.name !== undefined" class="follow" ng-click="follow(stream, user)"><p class="followtext">Follow</p></a>
-                <a href="" ng-if="fav_filter[stream.channel.name] !== undefined && user.name !== undefined" class="follow" ng-click="unfollow(stream, user)"><p class="followtext">Unfollow</p></a>
-                <a href="/auth" ng-if="user.name == undefined" class="follow"><p class="followtext">Sign In</p></a>
-             </div>
-          </div>
-       </div>
-       </div>
-    </div>
-    <div class="pure-u-3-4 stream-container" ng-if="showstreamer">
-    <h2 class="streamname">{{activestream}}</h2>
-    <i class="fa fa-times fa-2x" ng-click="closestream()"></i>
-        <div class="pure-u-1">
-            <div id="active" class="pure-g active-stream">
-                <object type="application/x-shockwave-flash" 
-                    height="100%" 
-                    width="100%" 
-                    id="live_embed_player_flash" 
-                    data="http://www.twitch.tv/widgets/live_embed_player.swf?channel={{activestream}}}" 
-                    bgcolor="#000000">
-                  <param  name="allowFullScreen" 
-                          value="true" />
-                  <param  name="allowScriptAccess" 
-                          value="always" />
-                  <param  name="allowNetworking" 
-                          value="all" />
-                  <param  name="movie" 
-                          value="http://www.twitch.tv/widgets/live_embed_player.swf" />
-                  <param  name="flashvars" 
-                          value="hostname=www.twitch.tv&channel={{activestream}}&auto_play=true&start_volume=25" />
-                </object>
-            </div>
-            <div class="pure-g">
-            <iframe frameborder="0" 
-                        scrolling="no" 
-                        id="chat_embed" 
-                        ng-src={{activechat}}
-                        height="500" 
-                        width="620">
-                </iframe>
-            </div>
-        </div>
-    </div>
-    <p class="footer">LoLStreams.tv isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.</p>
-</div>
-<script>
-    var active = document.getElementById("active");
-    active.style.height = active.offsetWidth * 378 / 620 + "px";
-    console.log(active.style.height)
+    <div class="pure-g all">
 
-    window.addEventListener("resize", function(e) {
-      var active = document.getElementById("active");
-      if(active.offsetWidth !== 0) {
-        active.style.height = active.offsetWidth / (620/378) + "px";
-        console.log(active.style.height)
-      }
-    });
-</script>
+      <div class="pure-u-1 stream-container" ng-if="showstreamer">
+        
+        <div class="header">
+          <h2 class="streamname">{{activestream}}</h2>
+          <i class="fa fa-times fa-2x" ng-click="closestream()"></i>
+        </div>
+  
+        <div class="active-stream">
+          <div id="active">
+            <object type="application/x-shockwave-flash" 
+                height="100%" 
+                width="100%" 
+                id="live_embed_player_flash" 
+                data="http://www.twitch.tv/widgets/live_embed_player.swf?channel={{activestream}}}" 
+                bgcolor="#000000">
+              <param  name="allowFullScreen" 
+                      value="true" />
+              <param  name="allowScriptAccess" 
+                      value="always" />
+              <param  name="allowNetworking" 
+                      value="all" />
+              <param  name="movie" 
+                      value="http://www.twitch.tv/widgets/live_embed_player.swf" />
+              <param  name="flashvars" 
+                      value="hostname=www.twitch.tv&channel={{activestream}}&auto_play=true&start_volume=25" />
+            </object>
+          </div>
+          <div ng-if="activestreamer.champion == 'Not in game.' && activestreamer.rank !== 'Champion Select'" class="nogame">
+                    <i class="fa fa-gamepad off"></i>
+                    </div>
+                    <div ng-if="activestreamer.champion == 'No info.'" class="nogame">
+                    ...
+                    </div>
+                    <div ng-if="activestreamer.rank == 'Champion Select'" class="champselect">
+                    <i class="fa fa-gamepad onoff"></i>
+                    </div>
+                    <div class="game" ng-if="activestreamer.champion !== 'Not in game.' && activestreamer.champion !== 'No info.' && activestreamer.rank !== 'Champion Select'">
+                    <img class="champion" ng-src="http://ddragon.leagueoflegends.com/cdn/4.18.1/img/champion/{{activestreamer.champion}}.png">
+                    <i ng-if="activestreamer.activestreamerer.gender == 3" class="fa fa-video-camera tourn"></i>
+                    <i ng-if="activestreamer.activestreamerer.gender == 4" class="fa fa-microphone pod"></i>
+                    </div>
+                    <div ng-class="{'rank':true}"><div class="ranktext">{{activestreamer.region}}<br>{{activestreamer.rank}}</div></div>
+                    <a href="" ng-if="fav_filter[activestreamer.channel.name] == undefined && user.name !== undefined" class="follow" ng-click="follow(activestreamer, user)"><p class="followtext">Follow</p></a>
+                    <a href="" ng-if="fav_filter[activestreamer.channel.name] !== undefined && user.name !== undefined" class="follow" ng-click="unfollow(activestreamer, user)"><p class="followtext">Unfollow</p></a>
+                    <a href="/auth" ng-if="user.name == undefined" class="follow"><p class="followtext">Sign In</p></a>
+        </div>
+
+        <div class="chat" id="chat">
+          <iframe frameborder="0" 
+                  scrolling="no" 
+                  id="chat_embed" 
+                  ng-src={{activechat}}
+                  height="100%" 
+                  width="100%">
+          </iframe>
+        </div>
+      </div>
+        <div ng-class="{'stream-list': true, 'pure-u-1': showstreamer == false, 'pure-u-1 row': showstreamer}" id="row">
+           <div class="pure-u-1">
+              <div class="top-container">
+                <div ng-class="{'pure-u-1 pure-u-sm-1-2 pure-u-md-1-3 pure-u-lg-1-4 pure-u-xl-1-5': showstreamer == false, 'pure-u-1-5': showstreamer == true}">
+                     <div class="pure-form">
+                        <form>
+                           <input id="search" ng-class="{search: showstreamer}" ng-model="search" type="text" placeholder="Stream / Champ"></input>
+                        </form>
+                     </div>
+                </div>
+              </div>
+            <div ng-class="{'container': showstreamer == false, 'nowrap': showstreamer == true}">
+              <div ng-class="{'pure-u-1 pure-u-sm-1-2 pure-u-md-1-3 pure-u-lg-1-4 pure-u-xl-1-5': showstreamer == false, 'single': showstreamer == true}" ng-repeat="stream in streams | filter: search | filter: filterteams | filter: filterrank | filter: filterregion | filter: filterfav | filter: filteringame | filter: filtergametype">
+                 <div class="content">
+                    <p><strong><i ng-if="stream.streamer.gender == 1" class="fa fa-male"></i><i ng-if="stream.streamer.gender == 0" class="fa fa-female"></i><i ng-if="stream.streamer.gender == 3" class="fa fa-video-camera"></i><i ng-if="stream.streamer.gender == 4" class="fa fa-microphone"></i> {{stream.channel.name}}</strong><strong class="viewers"><i class="fa fa-eye"></i> {{stream.viewers}}</strong></p>
+                    <button class="img-box" ng-click="showstream(stream)">
+                       <img class="pure-img-responsive" src={{stream.preview.medium}}>
+                       </img>
+                       <div class="status">{{stream.channel.status}}</div>
+                    </button>
+                    </a>
+                    <div ng-if="stream.champion == 'Not in game.' && stream.rank !== 'Champion Select'" class="nogame">
+                    <i class="fa fa-gamepad off"></i>
+                    </div>
+                    <div ng-if="stream.champion == 'No info.'" class="nogame">
+                    ...
+                    </div>
+                    <div ng-if="stream.rank == 'Champion Select'" class="champselect">
+                    <i class="fa fa-gamepad onoff"></i>
+                    </div>
+                    <div class="game" ng-if="stream.champion !== 'Not in game.' && stream.champion !== 'No info.' && stream.rank !== 'Champion Select'">
+                    <img class="champion" ng-src="http://ddragon.leagueoflegends.com/cdn/4.18.1/img/champion/{{stream.champion}}.png">
+                    <i ng-if="stream.streamer.gender == 3" class="fa fa-video-camera tourn"></i>
+                    <i ng-if="stream.streamer.gender == 4" class="fa fa-microphone pod"></i>
+                    </div>
+                    <div ng-class="{'rank':true}"><div class="ranktext">{{stream.region}}<br>{{stream.rank}}</div></div>
+                    <a href="" ng-if="fav_filter[stream.channel.name] == undefined && user.name !== undefined" class="follow" ng-click="follow(stream, user)"><p class="followtext">Follow</p></a>
+                    <a href="" ng-if="fav_filter[stream.channel.name] !== undefined && user.name !== undefined" class="follow" ng-click="unfollow(stream, user)"><p class="followtext">Unfollow</p></a>
+                    <a href="/auth" ng-if="user.name == undefined" class="follow"><p class="followtext">Sign In</p></a>
+                 </div>
+              </div>
+           </div>
+            <p class="footer">LoLStreams.tv isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.</p>
+        </div>
+      </div>
+    </div>
+    
+ 
+</div>
+<script src="js/main.js"></script>
 </body>
+  
 </html>

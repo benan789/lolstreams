@@ -11,24 +11,6 @@ app.run(['$rootScope', '$stateParams', function($rootScope, $stateParams) {
 	$rootScope.activechat = undefined;
 }])
 
-app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
-
-	$urlRouterProvider.otherwise('/');
-
-	$stateProvider
-		.state('home', {
-			url: '/'
-		})
-		.state('stream', {
-			url: '/:name',
-			controller: function($rootScope, $stateParams, $sce) {
-				$rootScope.showstreamer = true;
-				$rootScope.activestream = $stateParams.name;
-				$rootScope.activechat = $sce.trustAsResourceUrl("http://twitch.tv/chat/embed?channel=" + $stateParams.name + "&amp;popout_chat=true")
-			}
-		})
-}]);
-
 app.factory('Stream', function($resource) {
 	return $resource('/streams/:name')
 })
@@ -41,6 +23,33 @@ app.factory('User', function($resource) {
 	return $resource('/user')
 })
 
+app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
+
+	$urlRouterProvider.otherwise('/');
+
+	$stateProvider
+		.state('home', {
+			url: '/'
+		})
+		.state('stream', {
+			url: '/:name',
+			controller: function($rootScope, $stateParams, $sce, Stream, $interval) {
+				$rootScope.showstreamer = true;
+				$rootScope.activestream = $stateParams.name;
+				var streamer = Stream.get({name: $stateParams.name}, function(){
+					$rootScope.activestreamer = streamer
+				});
+				$interval(function() {
+					var streamer = Stream.get({name: $stateParams.name}, function(){
+						$rootScope.activestreamer = streamer
+					});
+				}, 30000)
+				$rootScope.activechat = $sce.trustAsResourceUrl("http://twitch.tv/chat/embed?channel=" + $stateParams.name + "&amp;popout_chat=true")
+			}
+		})
+}]);
+
+
 app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$state', 'Stream', 'Favorite', 'User', '$stateParams', '$http', '$interval', function($scope, $cookies, $cookieStore, $sce, $state, Stream, Favorite, User, $stateParams, $http, $interval) {
 	
 	
@@ -51,9 +60,8 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 	$interval(function() {
 		var streams = Stream.query(function() {
 		$scope.streams = streams
-		console.log("df")
 		})
-	}, 60000)
+	}, 30000)
 
 	var favstreams = Favorite.query(function() {
 		$scope.fav_filter = {}
@@ -243,8 +251,8 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 		$scope.showstream($stateParams.name);
 	}
 
-	$scope.showstream = function(streamer) {
-		$state.go("stream", {"name": streamer})
+	$scope.showstream = function(stream) {
+		$state.go("stream", {"name": stream.channel.name, "id": stream._id})
 	}
 
 	$scope.closestream = function() {
@@ -260,3 +268,53 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 
 }]);
 
+var active = document.getElementById("active");
+    
+if(active.offsetWidth * 378 / 620 + "px" > (window.innerHeight - 410 + "px")) {
+  active.style.height = window.innerHeight - 410 + "px"
+} else {
+  active.style.height = active.offsetWidth * 378 / 620 + "px";
+}
+console.log(active.style.height)
+
+
+window.addEventListener("resize", function(e) {
+  var active = document.getElementById("active");
+  if(active.offsetWidth !== 0) {
+    if(active.offsetWidth * 378 / 620 + "px" > (window.innerHeight - 410 + "px")) {
+      active.style.height = window.innerHeight - 410 + "px"
+    } else {
+      active.style.height = active.offsetWidth * 378 / 620 + "px";
+    }
+  }
+});
+
+window.addEventListener("click", function(e) {
+  var active = document.getElementById("active");
+  if(active.offsetWidth !== 0) {
+    if(active.offsetWidth * 378 / 620 + "px" > (window.innerHeight - 410 + "px")) {
+      active.style.height = window.innerHeight - 410 + "px"
+    } else {
+      active.style.height = active.offsetWidth * 378 / 620 + "px";
+    }
+  }
+});
+
+var row = document.getElementById('row')
+
+function scrollHorizontally(e) {
+    e = window.event || e;
+    var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+    row.scrollLeft -= (delta*80); // Multiplied by 40
+  
+}
+
+if (row.addEventListener) {
+    // IE9, Chrome, Safari, Opera
+    row.addEventListener("mousewheel", scrollHorizontally, false);
+    // Firefox
+    row.addEventListener("DOMMouseScroll", scrollHorizontally, false);
+} else {
+    // IE 6/7/8
+    row.attachEvent("onmousewheel", scrollHorizontally);
+}

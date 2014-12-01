@@ -85,8 +85,15 @@ a {
     min-width: 200px;
 }
 
-.column {
-    width: 290px !important;
+.row {
+    position: fixed;
+    bottom: 0px;
+    width: calc(100% - 150px);
+    height: 330px;
+    overflow: auto;
+    z-index: 1000;
+    left: 150px;
+
 }
 
 .status {
@@ -99,6 +106,7 @@ a {
     background: rgba(40, 40, 40, 0.6);
     height: auto;
     color: white;
+    white-space: normal;
 }
 
 .img-box:hover .status {
@@ -111,16 +119,18 @@ a {
 
 .stream-container {
     color: white;
-    overflow: auto;
-    height: 100vh;
-    position: fixed;
-    width: calc(100% - 440px);
+    height: calc(100vh - 330px);
+    width: 100%;
     z-index: 1001;
 }
 
 .active-stream {
-    overflow: auto;
-    width: 100%; 
+    width: calc(100% - 300px);
+    display:inline-block;
+}
+
+#active {
+    width: 100%;
 }
 
 .rightside {
@@ -129,8 +139,7 @@ a {
 
 .fa-times {
     float: right;
-    padding-top: 2px;
-    padding-bottom: 4px;
+    padding-right: 2px;
 }
 
 .champion {
@@ -296,11 +305,36 @@ a {
 }
 
 .chat {
-    float: left;
+    display: inline-block;
+    height: calc(100vh - 367px);
+    position: relative;
+    float: right;
+    padding-top: 1px;
+    width: 300px;
 }
 
 .footer {
     letter-spacing: normal;
     color: white;
     margin: 5px;
+    display: none;
+}
+
+.all {
+    width: 100%;
+}
+
+.single {
+    display: inline-block;
+    padding-top: 30px;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.header {
+    width: 100%;
+    display: block;
+    height: 35px;
 }
