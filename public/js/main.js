@@ -9,6 +9,7 @@ app.run(['$rootScope', '$stateParams', function($rootScope, $stateParams) {
 	
 	$rootScope.activestream = undefined;
 	$rootScope.activechat = undefined;
+	$rootScope.sidebar_hover = false;
 }])
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
@@ -21,9 +22,17 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		})
 		.state('stream', {
 			url: '/:name',
-			controller: function($rootScope, $stateParams, $sce) {
+			controller: function($rootScope, $stateParams, $sce, Stream, $interval) {
 				$rootScope.showstreamer = true;
 				$rootScope.activestream = $stateParams.name;
+				var streamer = Stream.get({name: $stateParams.name}, function(){
+					$rootScope.activestreamer = streamer
+				});
+				$interval(function() {
+					var streamer = Stream.get({name: $stateParams.name}, function(){
+						$rootScope.activestreamer = streamer
+					});
+				}, 30000)
 				$rootScope.activechat = $sce.trustAsResourceUrl("http://twitch.tv/chat/embed?channel=" + $stateParams.name + "&amp;popout_chat=true")
 			}
 		})
@@ -53,7 +62,7 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 		$scope.streams = streams
 		console.log("df")
 		})
-	}, 60000)
+	}, 30000)
 
 	var favstreams = Favorite.query(function() {
 		$scope.fav_filter = {}

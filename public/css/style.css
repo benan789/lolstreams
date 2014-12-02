@@ -86,7 +86,18 @@ a {
 }
 
 .column {
-    width: 290px !important;
+    width: 300px !important;
+    position: absolute;
+    z-index: 1002;
+    background: #252525;
+}
+
+.column div .top-container {
+    width: 300px !important;    
+}
+
+.column .container {
+    min-height: 100vh;
 }
 
 .status {
@@ -111,16 +122,18 @@ a {
 
 .stream-container {
     color: white;
-    overflow: auto;
     height: 100vh;
-    position: fixed;
-    width: calc(100% - 440px);
+    width: 100%;
     z-index: 1001;
+    padding-right: 1px;
+    position: fixed;
+    overflow: auto;
 }
 
 .active-stream {
-    overflow: auto;
-    width: 100%; 
+    width: calc(100% - 450px);
+    display:inline-block;
+    padding: 2px;
 }
 
 .rightside {
@@ -295,12 +308,34 @@ a {
     padding-left: 1px;
 }
 
-.chat {
-    float: left;
-}
-
 .footer {
     letter-spacing: normal;
     color: white;
     margin: 5px;
+}
+
+.chat {
+    display: inline-block;
+    height: 100vh;
+    position: fixed;
+    float: right;
+    width: 300px;
+    margin-top: -40px;
+}
+
+.header {
+    width: calc(100% - 450px);
+    display: block;
+    height: 35px;
+    margin-top: 5px;
+}
+
+#active {
+    width: 100%;
+    float: left;
+    display: inline-block;
+}
+
+h2 {
+    margin: 0;
 }

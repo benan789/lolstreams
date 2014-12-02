@@ -24,6 +24,7 @@
 <body ng-app="LoLStreamsApp">
 
 <div id="layout" class="pure-g" ng-controller="StreamsCtrl">
+  <div ng-mouseenter="sidebar_hover=true" ng-mouseleave="sidebar_hover=false">
     <div class="pure-menu pure-menu-open sidebar">
        <a href="/" class="pure-menu-heading">LoL Streams</a>
        <ul>
@@ -71,10 +72,10 @@
       </div>
     </div>
     <div ui-view></div>
-    <div ng-class="{'stream-list': true, 'pure-u-1': showstreamer == false, 'pure-u-1-4 column': showstreamer}">
+    <div ng-class="{'stream-list': true, 'pure-u-1': showstreamer == false, 'pure-u-1 column': showstreamer}" ng-hide="showstreamer && sidebar_hover == false">
        <div class="pure-u-1">
           <div class="pure-g top-container">
-            <div ng-class="{'pure-u-1 pure-u-sm-1-2 pure-u-md-1-3 pure-u-lg-1-4 pure-u-xl-1-5': showstreamer == false, 'pure-u-1-4 column': showstreamer}">
+            <div ng-class="{'pure-u-1 pure-u-sm-1-2 pure-u-md-1-3 pure-u-lg-1-4 pure-u-xl-1-5': showstreamer == false, 'pure-u-1 column': showstreamer}">
                  <div class="pure-form">
                     <form>
                        <input id="search" ng-class="{search: showstreamer}" ng-model="search" type="text" placeholder="Stream / Champ"></input>
@@ -115,54 +116,87 @@
        </div>
        </div>
     </div>
-    <div class="pure-u-3-4 stream-container" ng-if="showstreamer">
-    <h2 class="streamname">{{activestream}}</h2>
-    <i class="fa fa-times fa-2x" ng-click="closestream()"></i>
-        <div class="pure-u-1">
-            <div id="active" class="pure-g active-stream">
-                <object type="application/x-shockwave-flash" 
-                    height="100%" 
-                    width="100%" 
-                    id="live_embed_player_flash" 
-                    data="http://www.twitch.tv/widgets/live_embed_player.swf?channel={{activestream}}}" 
-                    bgcolor="#000000">
-                  <param  name="allowFullScreen" 
-                          value="true" />
-                  <param  name="allowScriptAccess" 
-                          value="always" />
-                  <param  name="allowNetworking" 
-                          value="all" />
-                  <param  name="movie" 
-                          value="http://www.twitch.tv/widgets/live_embed_player.swf" />
-                  <param  name="flashvars" 
-                          value="hostname=www.twitch.tv&channel={{activestream}}&auto_play=true&start_volume=25" />
-                </object>
-            </div>
-            <div class="pure-g">
-            <iframe frameborder="0" 
-                        scrolling="no" 
-                        id="chat_embed" 
-                        ng-src={{activechat}}
-                        height="500" 
-                        width="620">
-                </iframe>
-            </div>
+  </div>
+    <div class="pure-u-1 stream-container" ng-if="showstreamer">
+  
+        <div class="header">
+          <h2><strong><i ng-if="activestreamer.streamer.gender == 1" class="fa fa-male"></i><i ng-if="activestreamer.streamer.gender == 0" class="fa fa-female"></i><i ng-if="activestreamer.streamer.gender == 3" class="fa fa-video-camera"></i><i ng-if="activestreamer.streamer.gender == 4" class="fa fa-microphone"></i> {{activestreamer.channel.name}}</strong><strong class="viewers"><i class="fa fa-eye"></i> {{activestreamer.viewers}} &nbsp <i class="fa fa-times" ng-click="closestream()"></i></strong></h2>
+          
         </div>
+  
+        <div class="active-stream">
+
+          <div id="active">
+            <object type="application/x-shockwave-flash" 
+                height="100%" 
+                width="100%" 
+                id="live_embed_player_flash" 
+                data="http://www.twitch.tv/widgets/live_embed_player.swf?channel={{activestream}}}" 
+                bgcolor="#000000">
+              <param  name="allowFullScreen" 
+                      value="true" />
+              <param  name="allowScriptAccess" 
+                      value="always" />
+              <param  name="allowNetworking" 
+                      value="all" />
+              <param  name="movie" 
+                      value="http://www.twitch.tv/widgets/live_embed_player.swf" />
+              <param  name="flashvars" 
+                      value="hostname=www.twitch.tv&channel={{activestream}}&auto_play=true&start_volume=25" />
+            </object>
+          </div>
+
+          <div ng-if="activestreamer.champion == 'Not in game.' && activestreamer.rank !== 'Champion Select'" class="nogame">
+                    <i class="fa fa-gamepad off"></i>
+                    </div>
+                    <div ng-if="activestreamer.champion == 'No info.'" class="nogame">
+                    ...
+                    </div>
+                    <div ng-if="activestreamer.rank == 'Champion Select'" class="champselect">
+                    <i class="fa fa-gamepad onoff"></i>
+                    </div>
+                    <div class="game" ng-if="activestreamer.champion !== 'Not in game.' && activestreamer.champion !== 'No info.' && activestreamer.rank !== 'Champion Select'">
+                    <img class="champion" ng-src="http://ddragon.leagueoflegends.com/cdn/4.18.1/img/champion/{{activestreamer.champion}}.png">
+                    <i ng-if="activestreamer.activestreamerer.gender == 3" class="fa fa-video-camera tourn"></i>
+                    <i ng-if="activestreamer.activestreamerer.gender == 4" class="fa fa-microphone pod"></i>
+                    </div>
+                    <div ng-class="{'rank':true}"><div class="ranktext">{{activestreamer.region}}<br>{{activestreamer.rank}}</div></div>
+                    <a href="" ng-if="fav_filter[activestreamer.channel.name] == undefined && user.name !== undefined" class="follow" ng-click="follow(activestreamer, user)"><p class="followtext">Follow</p></a>
+                    <a href="" ng-if="fav_filter[activestreamer.channel.name] !== undefined && user.name !== undefined" class="follow" ng-click="unfollow(activestreamer, user)"><p class="followtext">Unfollow</p></a>
+                    <a href="/auth" ng-if="user.name == undefined" class="follow"><p class="followtext">Sign In</p></a>
+        </div>
+
+         <div class="chat" id="chat">
+          <iframe frameborder="0" 
+                  scrolling="no" 
+                  id="chat_embed" 
+                  ng-src={{activechat}}
+                  height="100%" 
+                  width="100%">
+          </iframe>
+        </div>
+      </div>
+     
     </div>
-    <p class="footer">LoLStreams.tv isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.</p>
 </div>
+<p class="footer">LoLStreams.tv isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.</p>
 <script>
     var active = document.getElementById("active");
     active.style.height = active.offsetWidth * 378 / 620 + "px";
-    console.log(active.style.height)
 
     window.addEventListener("resize", function(e) {
       var active = document.getElementById("active");
       if(active.offsetWidth !== 0) {
         active.style.height = active.offsetWidth / (620/378) + "px";
-        console.log(active.style.height)
       }
     });
+    window.addEventListener("click", function(e) {
+      var active = document.getElementById("active");
+      if(active.offsetWidth !== 0) {
+        active.style.height = active.offsetWidth / (620/378) + "px";
+      }
+    });
+
 </script>
 </body>
 </html>
