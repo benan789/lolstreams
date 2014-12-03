@@ -339,3 +339,7 @@ a {
 h2 {
     margin: 0;
 }
+
+.filter-container {
+    width: 100% !important;
+}

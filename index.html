@@ -24,7 +24,7 @@
 <body ng-app="LoLStreamsApp">
 
 <div id="layout" class="pure-g" ng-controller="StreamsCtrl">
-  <div ng-mouseenter="sidebar_hover=true" ng-mouseleave="sidebar_hover=false">
+  <div ng-class="{'filter-container': showstreamer == false}" ng-mouseenter="sidebar_hover=true" ng-mouseleave="sidebar_hover=false">
     <div class="pure-menu pure-menu-open sidebar">
        <a href="/" class="pure-menu-heading">LoL Streams</a>
        <ul>
