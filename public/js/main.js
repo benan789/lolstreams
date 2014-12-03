@@ -254,6 +254,7 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 	}
 
 	$scope.showstream = function(streamer) {
+		$scope.sidebar_hover = false;
 		$state.go("stream", {"name": streamer})
 	}
 
