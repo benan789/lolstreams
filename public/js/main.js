@@ -25,11 +25,12 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 			controller: function($rootScope, $stateParams, $sce, Stream, $interval) {
 				$rootScope.showstreamer = true;
 				$rootScope.activestream = $stateParams.name;
-				var streamer = Stream.get({name: $stateParams.name}, function(){
+				console.log($stateParams.name)
+				var streamer = Stream.get({name: $rootScope.activestream}, function(){
 					$rootScope.activestreamer = streamer
 				});
 				$interval(function() {
-					var streamer = Stream.get({name: $stateParams.name}, function(){
+					var streamer = Stream.get({name: $rootScope.activestream}, function(){
 						$rootScope.activestreamer = streamer
 					});
 				}, 30000)
