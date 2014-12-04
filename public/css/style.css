@@ -130,11 +130,6 @@ a {
     overflow: auto;
 }
 
-.active-stream {
-    width: calc(100% - 450px);
-    display:inline-block;
-    padding: 2px;
-}
 
 .rightside {
     position: fixed;
@@ -314,22 +309,6 @@ a {
     margin: 5px;
 }
 
-.chat {
-    display: inline-block;
-    height: 100vh;
-    position: fixed;
-    float: right;
-    width: 300px;
-    margin-top: -40px;
-}
-
-.header {
-    width: calc(100% - 450px);
-    display: block;
-    height: 35px;
-    margin-top: 5px;
-}
-
 #active {
     width: 100%;
     float: left;
@@ -343,3 +322,42 @@ h2 {
 .filter-container {
     width: 100% !important;
 }
+
+.chat {
+    width: calc(100% - 150px);
+    height: 50vh;
+}
+
+.active-stream {
+    width: calc(100% - 150px);
+    display:inline-block;
+}
+
+.header {
+    width: 100%;
+    display: block;
+    height: 35px;
+    margin-top: 5px;
+}
+
+@media screen and (min-width: 58em) {
+    .header {
+        width: 100%;
+        display: block;
+        height: 35px;
+        margin-top: 5px;
+    }
+    .chat {
+        height: 100vh;
+        position: fixed;
+        right: 0;
+        top: 0;
+        float: right;
+        width: 300px;
+    }
+    .active-stream {
+        width: calc(100% - 450px);
+        display:inline-block;
+    }
+}
+

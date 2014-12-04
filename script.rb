@@ -3,7 +3,6 @@ require 'open-uri'
 
 begin
 
-redis = Redis.new
 response = Unirest.get "https://api.twitch.tv/kraken/streams?game=league+of+legends&limit=100&?client_id=#{ENV['CLIENT_ID']}"	
 streams = response.body['streams']
 
@@ -81,6 +80,7 @@ streams.each do |stream|
 	puts "======"
 end
 
+redis = Redis.new
 redis.set "streams", streams.to_json
 
 rescue
