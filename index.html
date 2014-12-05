@@ -41,7 +41,8 @@
             <li ng-click="showgamestatuses()"><a>Game Status</a></li>
             <a class="checkboxtop" ng-show="showgamestatus" ng-click="click_ingame('In game.')"><i ng-class="{'fa fa-square': ingame_filter['In game.'] == false, 'fa fa-check-square': ingame_filter['In game.'] }"></i> <i class="fa fa-gamepad fa-lg on"></i></a>
             <a ng-show="showgamestatus" ng-click="click_ingame('Not in game.')"><i ng-class="{'fa fa-square': ingame_filter['Not in game.'] == false, 'fa fa-check-square': ingame_filter['Not in game.'] }"></i> <i class="fa fa-gamepad fa-lg off"></i></a>
-            <a ng-show="showgamestatus" ng-click="click_ingame('Champion select.')"><i ng-class="{'fa fa-square': ingame_filter['Champion select.'] == false, 'fa fa-check-square': ingame_filter['Champion select.'] }"></i> <i class="fa fa-gamepad fa-lg onoff"></i></a>
+            <a class="checkboxtop" ng-show="showgamestatus" ng-click="click_ingame('Champion select.')"><i ng-class="{'fa fa-square': ingame_filter['Champion select.'] == false, 'fa fa-check-square': ingame_filter['Champion select.'] }"></i> <i class="fa fa-gamepad fa-lg onoff"></i></a>
+            <a ng-show="showgamestatus" ng-click="click_ingame('Spectating.')"><i ng-class="{'fa fa-square': ingame_filter['Spectating.'] == false, 'fa fa-check-square': ingame_filter['Spectating.'] }"></i> <i class="fa fa-eye fa-lg spec"></i></a>
 
             <li ng-click="showstreamtypes()"><a>Stream Type</a></li>
             <a class="checkboxtop" ng-show="showstreamtype" ng-click="click_gametype(1)"><i ng-class="{'fa fa-square': gametype_filter[1] == false, 'fa fa-check-square': gametype_filter[1] }"></i> <i class="fa fa-male"></i></a>
@@ -105,20 +106,35 @@
                    <div class="status">{{stream.channel.status}}</div>
                 </button>
                 </a>
-                <div ng-if="stream.champion == 'Not in game.' && stream.rank !== 'Champion Select'" class="nogame">
+
+                <div ng-if="stream.champion == 'Not in game.' && stream.rank !== 'Champion Select' && stream.rank !== 'Spectating'" class="nogame">
                 <i class="fa fa-gamepad off"></i>
                 </div>
+
                 <div ng-if="stream.champion == 'No info.'" class="nogame">
                 ...
                 </div>
+
                 <div ng-if="stream.rank == 'Champion Select'" class="champselect">
                 <i class="fa fa-gamepad onoff"></i>
                 </div>
-                <div class="game" ng-if="stream.champion !== 'Not in game.' && stream.champion !== 'No info.' && stream.rank !== 'Champion Select'">
+
+                <div class="game" ng-if="stream.status == 'In game.' && stream.champion !== 'No info.' && stream.rank !== 'Champion Select'">
                 <img class="champion" ng-src="http://ddragon.leagueoflegends.com/cdn/4.18.1/img/champion/{{stream.champion}}.png">
-                <i ng-if="stream.streamer.gender == 3" class="fa fa-video-camera tourn"></i>
-                <i ng-if="stream.streamer.gender == 4" class="fa fa-microphone pod"></i>
                 </div>
+
+                <div class="game-tourn" ng-if="stream.status !== 'Not in game.' && stream.champion !== 'No info.' && stream.rank !== 'Champion Select' && stream.streamer.gender == 3">
+                  <i class="fa fa-video-camera tourn"></i>
+                </div>
+
+                <div class="game-pod" ng-if="stream.status !== 'Not in game.' && stream.champion !== 'No info.' && stream.rank !== 'Champion Select' && stream.streamer.gender == 4">
+                  <i class="fa fa-microphone pod"></i>
+                </div>
+
+                <div class="game-spec" ng-if="stream.status !== 'Not in game.' && stream.champion !== 'No info.' && stream.rank !== 'Champion Select' && stream.rank == 'Spectating'">
+                  <i class="fa fa-eye tourn spec"></i>
+                </div>
+                
                 <div ng-class="{'rank':true}"><div class="ranktext">{{stream.region}}<br>{{stream.rank}}</div></div>
                 <a href="" ng-if="fav_filter[stream.channel.name] == undefined && user.name !== undefined" class="follow" ng-click="follow(stream, user)"><p class="followtext">Follow</p></a>
                 <a href="" ng-if="fav_filter[stream.channel.name] !== undefined && user.name !== undefined" class="follow" ng-click="unfollow(stream, user)"><p class="followtext">Unfollow</p></a>
@@ -157,24 +173,38 @@
             </object>
           </div>
 
-          <div ng-if="activestreamer.champion == 'Not in game.' && activestreamer.rank !== 'Champion Select'" class="nogame">
-                    <i class="fa fa-gamepad off"></i>
-                    </div>
-                    <div ng-if="activestreamer.champion == 'No info.'" class="nogame">
-                    ...
-                    </div>
-                    <div ng-if="activestreamer.rank == 'Champion Select'" class="champselect">
-                    <i class="fa fa-gamepad onoff"></i>
-                    </div>
-                    <div class="game" ng-if="activestreamer.champion !== 'Not in game.' && activestreamer.champion !== 'No info.' && activestreamer.rank !== 'Champion Select'">
-                    <img class="champion" ng-src="http://ddragon.leagueoflegends.com/cdn/4.18.1/img/champion/{{activestreamer.champion}}.png">
-                    <i ng-if="activestreamer.activestreamerer.gender == 3" class="fa fa-video-camera tourn"></i>
-                    <i ng-if="activestreamer.activestreamerer.gender == 4" class="fa fa-microphone pod"></i>
-                    </div>
-                    <div ng-class="{'rank':true}"><div class="ranktext">{{activestreamer.region}}<br>{{activestreamer.rank}}</div></div>
-                    <a href="" ng-if="fav_filter[activestreamer.channel.name] == undefined && user.name !== undefined" class="follow" ng-click="follow(activestreamer, user)"><p class="followtext">Follow</p></a>
-                    <a href="" ng-if="fav_filter[activestreamer.channel.name] !== undefined && user.name !== undefined" class="follow" ng-click="unfollow(activestreamer, user)"><p class="followtext">Unfollow</p></a>
-                    <a href="/auth" ng-if="user.name == undefined" class="follow"><p class="followtext">Sign In</p></a>
+          <div ng-if="activestreamer.champion == 'Not in game.' && activestreamer.rank !== 'Champion Select' && activestreamer.rank !== 'Spectating'" class="nogame">
+          <i class="fa fa-gamepad off"></i>
+          </div>
+
+          <div ng-if="activestreamer.champion == 'No info.'" class="nogame">
+          ...
+          </div>
+
+          <div ng-if="activestreamer.rank == 'Champion Select'" class="champselect">
+          <i class="fa fa-gamepad onoff"></i>
+          </div>
+
+          <div class="game" ng-if="activestreamer.status == 'In game.' && activestreamer.champion !== 'No info.' && activestreamer.rank !== 'Champion Select'">
+          <img class="champion" ng-src="http://ddragon.leagueoflegends.com/cdn/4.18.1/img/champion/{{activestreamer.champion}}.png">
+          </div>
+
+          <div class="game-tourn" ng-if="activestreamer.status !== 'Not in game.' && activestreamer.champion !== 'No info.' && activestreamer.rank !== 'Champion Select' && activestreamer.streamer.gender == 3">
+            <i class="fa fa-video-camera tourn"></i>
+          </div>
+
+          <div class="game-pod" ng-if="activestreamer.status !== 'Not in game.' && activestreamer.champion !== 'No info.' && activestreamer.rank !== 'Champion Select' && activestreamer.streamer.gender == 4">
+            <i class="fa fa-microphone pod"></i>
+          </div>
+
+          <div class="game-spec" ng-if="activestreamer.status !== 'Not in game.' && activestreamer.champion !== 'No info.' && activestreamer.rank !== 'Champion Select' && activestreamer.rank == 'Spectating'">
+            <i class="fa fa-eye tourn spec"></i>
+          </div>
+
+          <div ng-class="{'rank':true}"><div class="ranktext">{{activestreamer.region}}<br>{{activestreamer.rank}}</div></div>
+          <a href="" ng-if="fav_filter[activestreamer.channel.name] == undefined && user.name !== undefined" class="follow" ng-click="follow(activestreamer, user)"><p class="followtext">Follow</p></a>
+          <a href="" ng-if="fav_filter[activestreamer.channel.name] !== undefined && user.name !== undefined" class="follow" ng-click="unfollow(activestreamer, user)"><p class="followtext">Unfollow</p></a>
+          <a href="/auth" ng-if="user.name == undefined" class="follow"><p class="followtext">Sign In</p></a>
         </div>
 
          <div class="chat" id="chat">

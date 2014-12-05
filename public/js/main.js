@@ -186,7 +186,8 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 	$scope.ingame_filter = {
 		'Not in game.': false,
 		'Champion select.': false,
-		'In game.': false
+		'In game.': false,
+		'Spectating.': false
 	}
 
 	$scope.gametype_filter = {
