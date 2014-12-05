@@ -49,6 +49,8 @@
             <a ng-show="showstreamtype" class="checkboxtop" ng-click="click_gametype(3)"><i ng-class="{'fa fa-square': gametype_filter[3] == false, 'fa fa-check-square': gametype_filter[3] }"></i> <i class="fa fa-video-camera"></i></a>
             <a ng-show="showstreamtype" ng-click="click_gametype(4)"><i ng-class="{'fa fa-square': gametype_filter[4] == false, 'fa fa-check-square': gametype_filter[4] }"></i> <i class="fa fa-microphone"></i></a>
           
+          <li ng-click="showchampions()"><a>Champions</a></li>
+          <a ng-class="{'sublist': true}" ng-repeat="(champion, value) in champion_filter track by $index" ng-show="showchampion" ng-click="click_champion(champion)"><i ng-class="{'fa fa-square': champion_filter[champion] == false, 'fa fa-check-square': champion_filter[champion] }"></i> {{champion}}</a>
 
           <li ng-click="showteams()"><a>Teams</a></li>
           <a ng-class="{'sublist': true, 'checkboxtop': $index % 2 == 0}" ng-repeat="(team, value) in team_filter track by $index" ng-show="showteam" ng-click="click_team(team)"><i ng-class="{'fa fa-square': team_filter[team] == false, 'fa fa-check-square': team_filter[team] }"></i> {{team.toUpperCase()}}</a>
@@ -94,7 +96,7 @@
             </div>
           </div>
         <div class="pure-g container">
-          <div ng-class="{'pure-u-1 pure-u-sm-1-2 pure-u-md-1-3 pure-u-lg-1-4 pure-u-xl-1-5': showstreamer == false, 'pure-u-1': showstreamer}" ng-repeat="stream in streams | filter: search | filter: filterteams | filter: filterrank | filter: filterregion | filter: filterfav | filter: filteringame | filter: filtergametype">
+          <div ng-class="{'pure-u-1 pure-u-sm-1-2 pure-u-md-1-3 pure-u-lg-1-4 pure-u-xl-1-5': showstreamer == false, 'pure-u-1': showstreamer}" ng-repeat="stream in streams | filter: search | filter: filterteams | filter: filterrank | filter: filterregion | filter: filterfav | filter: filteringame | filter: filtergametype | filter: filterchampion">
              <div class="content">
                 <p><strong><i ng-if="stream.streamer.gender == 1" class="fa fa-male"></i><i ng-if="stream.streamer.gender == 0" class="fa fa-female"></i><i ng-if="stream.streamer.gender == 3" class="fa fa-video-camera"></i><i ng-if="stream.streamer.gender == 4" class="fa fa-microphone"></i> {{stream.channel.name}}</strong><strong class="viewers"><i class="fa fa-eye"></i> {{stream.viewers}}</strong></p>
                 <button class="img-box" ng-click="showstream(stream.channel.name)">

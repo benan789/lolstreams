@@ -51,6 +51,7 @@ streams.each do |stream|
 
 							if champion = Champion.find_by(champion_id: summoner_info['championId'])
 								stream['champion'] = champion.key
+								stream['championname'] = champion.name
 								stream['region'] = region
 								stream['status'] = "In game."
 								break

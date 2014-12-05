@@ -56,14 +56,59 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 	
 	var streams = Stream.query(function() {
 		$scope.streams = streams
+		$scope.champion_filter = {}
+
+		$scope.streams.map(function(stream) {
+			if(stream.champion != "No info." && stream.champion != "Not in game." && stream.champion != undefined){
+				$scope.champion_filter[stream.championname] = false;
+			}
+		});
+
+		$scope.filterchampion = function(stream) {
+			for (var key in $scope.champion_filter) {
+				if ($scope.champion_filter[key]){
+					return $scope.champion_filter[stream.championname];
+				}	
+			}
+			return true;
+		}
 	})
 
 	$interval(function() {
 		var streams = Stream.query(function() {
-		$scope.streams = streams
-		console.log("df")
+			$scope.streams = streams
+	
+			$scope.streams.map(function(stream) {
+				if(stream.champion != "No info." && stream.champion != "Not in game." && stream.champion != undefined){
+					if($scope.champion_filter[stream.championname] == undefined){
+						$scope.champion_filter[stream.championname] = false;
+					}
+				}
+			});
+
+			for (var key in $scope.champion_filter) {
+				var exists = false
+				for (var i = 0; i < $scope.streams.length; i++) {
+					if (key == $scope.streams[i].championname){
+						exists = true
+						break
+					}
+				}
+				if (exists == false) {
+					delete $scope.champion_filter[key]
+				}		
+			}
+
+			$scope.filterchampion = function(stream) {
+				for (var key in $scope.champion_filter) {
+					if ($scope.champion_filter[key]){
+						return $scope.champion_filter[stream.championname];
+					}	
+				}
+				return true;
+			}
 		})
-	}, 30000)
+	}, 15000)
 
 	var favstreams = Favorite.query(function() {
 		$scope.fav_filter = {}
@@ -77,8 +122,9 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 		$scope.user = user
 	})
 
-	$scope.showteams = false
-	$scope.showrank = false
+	$scope.showteam = false;
+	$scope.showrank = false;
+	$scope.showchampion = false;
 
 	$scope.showgamestatuses = function() {
 		$scope.showgamestatus ? $scope.showgamestatus = false : $scope.showgamestatus = true
@@ -98,6 +144,10 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 
 	$scope.showregions = function() {
 		$scope.showregion ? $scope.showregion = false : $scope.showregion = true
+	}
+
+	$scope.showchampions = function() {
+		$scope.showchampion ? $scope.showchampion = false : $scope.showchampion = true
 	}
 
 	$scope.team_filter = {
@@ -146,6 +196,7 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 		4: false
 	}
 
+
 	console.log($scope.fav_filter)
 
 	$scope.click_team = function(team) {
@@ -175,6 +226,10 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 
 	$scope.click_gametype = function(gametype) {
 		$scope.gametype_filter[gametype] ? $scope.gametype_filter[gametype] = false : $scope.gametype_filter[gametype] = true;
+	}
+
+	$scope.click_champion = function(champion) {
+		$scope.champion_filter[champion] ? $scope.champion_filter[champion] = false : $scope.champion_filter[champion] = true;
 	}
 
 	$scope.fav_box = false;
