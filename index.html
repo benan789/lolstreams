@@ -32,7 +32,7 @@
 	<script src="js/main.js"></script>
     
 </head>
-<body ng-app="LoLStreamsApp">
+<body ng-app="LoLStreamsApp" ng-cloak>
 
 <div id="layout" class="pure-g" ng-controller="StreamsCtrl">
   <div ng-class="{'filter-container': showstreamer == false}" ng-mouseenter="sidebar_hover=true" ng-mouseleave="sidebar_hover=false">
@@ -52,7 +52,8 @@
             <a ng-show="showstreamtype" ng-click="click_gametype(4)"><i ng-class="{'fa fa-square': gametype_filter[4] == false, 'fa fa-check-square': gametype_filter[4] }"></i> <i class="fa fa-microphone"></i></a>
           
           <li ng-click="showchampions()"><a>Champions</a></li>
-          <a ng-class="{'sublist': true}" ng-repeat="(champion, value) in champion_filter track by $index" ng-show="showchampion" ng-click="click_champion(champion)"><i ng-class="{'fa fa-square': champion_filter[champion] == false, 'fa fa-check-square': champion_filter[champion] }"></i> {{champion}}</a>
+          <!-- <a ng-show="showchampion"><input class="search-champ" ng-model="searchchamp" type="text" placeholder="Search"></input></a> -->
+          <a ng-class="{'sublist': true}" ng-repeat="(champion, value) in champion_filter" ng-show="showchampion" ng-click="click_champion(champion)"><i ng-class="{'fa fa-square': champion_filter[champion] == false, 'fa fa-check-square': champion_filter[champion] }"></i> {{champion}}</a>
 
           <li ng-click="showteams()"><a>Teams</a></li>
           <a ng-class="{'sublist': true, 'checkboxtop': $index % 2 == 0}" ng-repeat="(team, value) in team_filter track by $index" ng-show="showteam" ng-click="click_team(team)"><i ng-class="{'fa fa-square': team_filter[team] == false, 'fa fa-check-square': team_filter[team] }"></i> {{team.toUpperCase()}}</a>
@@ -90,11 +91,9 @@
        <div class="pure-u-1">
           <div class="pure-g top-container">
             <div ng-class="{'pure-u-1 pure-u-sm-1-2 pure-u-md-1-3 pure-u-lg-1-4 pure-u-xl-1-5': showstreamer == false, 'pure-u-1 column': showstreamer}">
-                 <div class="pure-form">
-                    <form>
-                       <input id="search" ng-class="{search: showstreamer}" ng-model="search" type="text" placeholder="Stream / Champ"></input>
-                    </form>
-                 </div>
+               
+             <input id="search" ng-model="search" type="text" placeholder="Search"></input>
+             
             </div>
           </div>
         <div class="pure-g container">
@@ -150,7 +149,7 @@
         
         <div class="active-stream">
         <div class="header">
-          <h2><strong><i ng-if="activestreamer.streamer.gender == 1" class="fa fa-male"></i><i ng-if="activestreamer.streamer.gender == 0" class="fa fa-female"></i><i ng-if="activestreamer.streamer.gender == 3" class="fa fa-video-camera"></i><i ng-if="activestreamer.streamer.gender == 4" class="fa fa-microphone"></i> {{activestreamer.channel.name}}</strong><strong class="viewers"><i class="fa fa-eye"></i> {{activestreamer.viewers}} &nbsp <i class="fa fa-times" ng-click="closestream()">&nbsp</i></strong></h2>
+          <h2><strong><i ng-if="activestreamer.streamer.gender == 1" class="fa fa-male"></i><i ng-if="activestreamer.streamer.gender == 0" class="fa fa-female"></i><i ng-if="activestreamer.streamer.gender == 3" class="fa fa-video-camera"></i><i ng-if="activestreamer.streamer.gender == 4" class="fa fa-microphone"></i>{{activestreamer.channel.name}}</strong><strong class="viewers"><i class="fa fa-eye"></i> {{activestreamer.viewers}} &nbsp <i class="fa fa-times" ng-click="closestream()">&nbsp</i></strong></h2><div class="title">{{activestreamer.channel.status}}</div>
           
         </div>
   
