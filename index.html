@@ -25,6 +25,7 @@
 <!--   // <script type="text/javascript" src="jasmine/lib/jasmine-2.0.0/jasmine.js"></script>
   // <script type="text/javascript" src="jasmine/lib/jasmine-2.0.0/jasmine-html.js"></script>
   // <script type="text/javascript" src="jasmine/lib/jasmine-2.0.0/boot.js"></script> -->
+  <script src="js/pace.js"></script>
 	<script src="js/angular.js"></script>
 	<script src="js/angular-ui-router.js"></script>
 	<script src="js/angular-resource.js"></script>
@@ -39,43 +40,73 @@
     <div class="pure-menu pure-menu-open sidebar">
        <a href="/" class="pure-menu-heading">LoL Streams</a>
        <ul>
-            <li ng-click="showgamestatuses()"><a>Game Status</a></li>
-            <a class="checkboxtop" ng-show="showgamestatus" ng-click="click_ingame('In game.')"><i ng-class="{'fa fa-square': ingame_filter['In game.'] == false, 'fa fa-check-square': ingame_filter['In game.'] }"></i> <i class="fa fa-gamepad fa-lg on"></i></a>
-            <a ng-show="showgamestatus" ng-click="click_ingame('Not in game.')"><i ng-class="{'fa fa-square': ingame_filter['Not in game.'] == false, 'fa fa-check-square': ingame_filter['Not in game.'] }"></i> <i class="fa fa-gamepad fa-lg off"></i></a>
-            <a class="checkboxtop" ng-show="showgamestatus" ng-click="click_ingame('Champion select.')"><i ng-class="{'fa fa-square': ingame_filter['Champion select.'] == false, 'fa fa-check-square': ingame_filter['Champion select.'] }"></i> <i class="fa fa-gamepad fa-lg onoff"></i></a>
-            <a ng-show="showgamestatus" ng-click="click_ingame('Spectating.')"><i ng-class="{'fa fa-square': ingame_filter['Spectating.'] == false, 'fa fa-check-square': ingame_filter['Spectating.'] }"></i> <i class="fa fa-eye fa-lg spec"></i></a>
+            <li ng-click="showgamestatuses()"><a><i ng-hide="showgamestatus" class="fa fa-plus"></i><i ng-show="showgamestatus" class="fa fa-minus"></i> Game Status</a></li>
+            
+            <div class="pure-g list-container" ng-show="showgamestatus">
+              <a class="pure-u-1-2 teams" ng-click="click_ingame('In game.')"><i ng-class="{'fa fa-square': ingame_filter['In game.'] == false, 'fa fa-check-square': ingame_filter['In game.'] }"></i> <i class="fa fa-gamepad fa-lg on"></i><div class="hover">In Game</div></a>
+              <a class="pure-u-1-2 teams" ng-click="click_ingame('Not in game.')"><i ng-class="{'fa fa-square': ingame_filter['Not in game.'] == false, 'fa fa-check-square': ingame_filter['Not in game.'] }"></i> <i class="fa fa-gamepad fa-lg off"></i><div class="hover">Not In Game</div></a>
+              <a class="pure-u-1-2 teams" ng-click="click_ingame('Champion select.')"><i ng-class="{'fa fa-square': ingame_filter['Champion select.'] == false, 'fa fa-check-square': ingame_filter['Champion select.'] }"></i> <i class="fa fa-gamepad fa-lg onoff"></i><div class="hover">Champion Select</div></a>
+              <a class="pure-u-1-2 teams" ng-click="click_ingame('Spectating.')"><i ng-class="{'fa fa-square': ingame_filter['Spectating.'] == false, 'fa fa-check-square': ingame_filter['Spectating.'] }"></i> <i class="fa fa-eye fa-lg spec"></i><div class="hover">Spectating</div></a>
+            </div>
 
-            <li ng-click="showstreamtypes()"><a>Stream Type</a></li>
-            <a class="checkboxtop" ng-show="showstreamtype" ng-click="click_gametype(1)"><i ng-class="{'fa fa-square': gametype_filter[1] == false, 'fa fa-check-square': gametype_filter[1] }"></i> <i class="fa fa-male"></i></a>
-            <a ng-show="showstreamtype" ng-click="click_gametype(0)"><i ng-class="{'fa fa-square': gametype_filter[0] == false, 'fa fa-check-square': gametype_filter[0] }"></i> <i class="fa fa-female"></i></a>
-            <a ng-show="showstreamtype" class="checkboxtop" ng-click="click_gametype(3)"><i ng-class="{'fa fa-square': gametype_filter[3] == false, 'fa fa-check-square': gametype_filter[3] }"></i> <i class="fa fa-video-camera"></i></a>
-            <a ng-show="showstreamtype" ng-click="click_gametype(4)"><i ng-class="{'fa fa-square': gametype_filter[4] == false, 'fa fa-check-square': gametype_filter[4] }"></i> <i class="fa fa-microphone"></i></a>
+            <li ng-click="showstreamtypes()"><a><i ng-hide="showstreamtype" class="fa fa-plus"></i><i ng-show="showstreamtype" class="fa fa-minus"></i> Stream Type</a></li>
+            
+            <div class="pure-g list-container" ng-show="showstreamtype">
+              <a class="pure-u-1-2 teams" ng-show="showstreamtype" ng-click="click_gametype(1)"><i ng-class="{'fa fa-square': gametype_filter[1] == false, 'fa fa-check-square': gametype_filter[1] }"></i> <i class="fa fa-male"></i><div class="hover">Male</div></a>
+              <a class="pure-u-1-2 teams" ng-show="showstreamtype" ng-click="click_gametype(0)"><i ng-class="{'fa fa-square': gametype_filter[0] == false, 'fa fa-check-square': gametype_filter[0] }"></i> <i class="fa fa-female"></i><div class="hover">Female</div></a>
+              <a class="pure-u-1-2 teams" ng-show="showstreamtype" ng-click="click_gametype(3)"><i ng-class="{'fa fa-square': gametype_filter[3] == false, 'fa fa-check-square': gametype_filter[3] }"></i> <i class="fa fa-video-camera"></i><div class="hover">Tournament</div></a>
+              <a class="pure-u-1-2 teams" ng-show="showstreamtype" ng-click="click_gametype(4)"><i ng-class="{'fa fa-square': gametype_filter[4] == false, 'fa fa-check-square': gametype_filter[4] }"></i> <i class="fa fa-microphone"></i><div class="hover">Podcast</div></a>
+            </div>
           
-          <li ng-click="showchampions()"><a>Champions</a></li>
-          <!-- <a ng-show="showchampion"><input class="search-champ" ng-model="searchchamp" type="text" placeholder="Search"></input></a> -->
-          <a ng-class="{'sublist': true}" ng-repeat="(champion, value) in champion_filter" ng-show="showchampion" ng-click="click_champion(champion)"><i ng-class="{'fa fa-square': champion_filter[champion] == false, 'fa fa-check-square': champion_filter[champion] }"></i> {{champion}}</a>
+          <li ng-click="showchampions()"><a><i ng-hide="showchampion" class="fa fa-plus"></i><i ng-show="showchampion" class="fa fa-minus"></i> Champions</a></li>
+          
+          <div class="list-container" ng-show="showchampion">
+            <!-- <a ng-show="showchampion"><input class="search-champ" ng-model="searchchamp" type="text" placeholder="Search"></input></a> -->
+            <a ng-class="{'sublist': true}" ng-repeat="(champion, value) in champion_filter" ng-click="click_champion(champion)"><i ng-class="{'fa fa-square': champion_filter[champion] == false, 'fa fa-check-square': champion_filter[champion] }"></i> {{champion}}</a>
+          </div>
 
-          <li ng-click="showteams()"><a>Teams</a></li>
-          <a ng-class="{'sublist': true, 'checkboxtop': $index % 2 == 0}" ng-repeat="(team, value) in team_filter track by $index" ng-show="showteam" ng-click="click_team(team)"><i ng-class="{'fa fa-square': team_filter[team] == false, 'fa fa-check-square': team_filter[team] }"></i> {{team.toUpperCase()}}</a>
+          <li ng-click="showteams()"><a><i ng-hide="showteam" class="fa fa-plus"></i><i ng-show="showteam" class="fa fa-minus"></i> Teams</a></li>
 
-          <li ng-click="showranks()"><a>Rank</a></li>
-          <li class="sublist" ng-show="showrank" ng-click="click_rank('CHALLENGER')"><a><i ng-class="{'fa fa-square': rank_filter['CHALLENGER'] == false, 'fa fa-check-square': rank_filter['CHALLENGER'] }"></i> Challenger</a></li>
-          <li class="sublist" ng-show="showrank" ng-click="click_rank('MASTER')"><a><i ng-class="{'fa fa-square': rank_filter['MASTER'] == false, 'fa fa-check-square': rank_filter['MASTER'] }"></i> Master</a></li>
-          <li class="sublist" ng-show="showrank" ng-click="click_rank('DIAMOND')"><a><i ng-class="{'fa fa-square': rank_filter['DIAMOND'] == false, 'fa fa-check-square': rank_filter['DIAMOND'] }"></i> Diamond</a></li>
-          <li class="sublist" ng-show="showrank" ng-click="click_rank('PLATINUM')"><a><i ng-class="{'fa fa-square': rank_filter['PLATINUM'] == false, 'fa fa-check-square': rank_filter['PLATINUM'] }"></i> Platinum</a></li>
-          <li class="sublist" ng-show="showrank" ng-click="click_rank('GOLD')"><a><i ng-class="{'fa fa-square': rank_filter['GOLD'] == false, 'fa fa-check-square': rank_filter['GOLD'] }"></i> Gold</a></li>
-          <li class="sublist" ng-show="showrank" ng-click="click_rank('SILVER')"><a><i ng-class="{'fa fa-square': rank_filter['SILVER'] == false, 'fa fa-check-square': rank_filter['SILVER'] }"></i> Silver</a></li>
-          <li class="sublist" ng-show="showrank" ng-click="click_rank('BRONZE')"><a><i ng-class="{'fa fa-square': rank_filter['BRONZE'] == false, 'fa fa-check-square': rank_filter['BRONZE'] }"></i> Bronze</a></li>
+          <div class="pure-g list-container" ng-show="showteam">
+            <a ng-class="{'teams': true, 'pure-u-1-2': true}" ng-repeat="(team, value) in team_filter track by $index" ng-click="click_team(team)"><i ng-class="{'fa fa-square': team_filter[team] == false, 'fa fa-check-square': team_filter[team] }"></i>
+                <img class="team-img" src="images/{{team}}.png"></span>
+                <div ng-if="team == 'c9'" class="hover">Cloud 9</div>
+                <div ng-if="team == 'clg'" class="hover" style="font-size: 12px">Counter Logic Gaming</div>
+                <div ng-if="team == 'crs'" class="hover">Team Curse</div>
+                <div ng-if="team == 'dig'" class="hover">Team Dignitas</div>
+                <div ng-if="team == 'eg'" class="hover">Evil Geniuses</div>
+                <div ng-if="team == 'lmq'" class="hover">LMQ</div>
+                <div ng-if="team == 't8'" class="hover">Team 8</div>          
+                <div ng-if="team == 'tsm'" class="hover">Team SoloMid</div>
+            </a>
+          </div>
 
-          <li ng-click="showregions()"><a>Regions</a></li>
-          <li class="sublist" ng-show="showregion" ng-click="click_region('NA')"><a><i ng-class="{'fa fa-square': region_filter['NA'] == false, 'fa fa-check-square': region_filter['NA'] }"></i> North America</a></li>
-          <li class="sublist" ng-show="showregion" ng-click="click_region('EUW')"><a><i ng-class="{'fa fa-square': region_filter['EUW'] == false, 'fa fa-check-square': region_filter['EUW'] }"></i> Europe West</a></li>
-          <li class="sublist" ng-show="showregion" ng-click="click_region('EUNE')"><a><i ng-class="{'fa fa-square': region_filter['EUNE'] == false, 'fa fa-check-square': region_filter['EUNE'] }"></i> EU Nordic & E</a></li>
-          <li class="sublist" ng-show="showregion" ng-click="click_region('BR')"><a><i ng-class="{'fa fa-square': region_filter['BR'] == false, 'fa fa-check-square': region_filter['BR'] }"></i> Brazil</a></li>
-          <li class="sublist" ng-show="showregion" ng-click="click_region('TR')"><a><i ng-class="{'fa fa-square': region_filter['TR'] == false, 'fa fa-check-square': region_filter['TR'] }"></i> Turkey</a></li><li class="sublist" ng-show="showregion" ng-click="click_region('RU')"><a><i ng-class="{'fa fa-square': region_filter['RU'] == false, 'fa fa-check-square': region_filter['RU'] }"></i> Russia</a></li>
-          <li class="sublist" ng-show="showregion" ng-click="click_region('LAN')"><a><i ng-class="{'fa fa-square': region_filter['LAN'] == false, 'fa fa-check-square': region_filter['LAN'] }"></i> Latin America N</a></li>
-          <li class="sublist" ng-show="showregion" ng-click="click_region('LAS')"><a><i ng-class="{'fa fa-square': region_filter['LAS'] == false, 'fa fa-check-square': region_filter['LAS'] }"></i> Latin America S</a></li>
-          <li class="sublist" ng-show="showregion" ng-click="click_region('OCE')"><a><i ng-class="{'fa fa-square': region_filter['OCE'] == false, 'fa fa-check-square': region_filter['OCE'] }"></i> Oceania</a></li>
+          <li ng-click="showranks()"><a><i ng-hide="showrank" class="fa fa-plus"></i><i ng-show="showrank" class="fa fa-minus"></i> Rank</a></li>
+
+          <div class="list-container" ng-show="showrank">
+            <a class="sublist" ng-click="click_rank('CHALLENGER')"><i ng-class="{'fa fa-square': rank_filter['CHALLENGER'] == false, 'fa fa-check-square': rank_filter['CHALLENGER'] }"></i> Challenger</a>
+            <a class="sublist" ng-click="click_rank('MASTER')"><i ng-class="{'fa fa-square': rank_filter['MASTER'] == false, 'fa fa-check-square': rank_filter['MASTER'] }"></i> Master</a>
+            <a class="sublist" ng-click="click_rank('DIAMOND')"><i ng-class="{'fa fa-square': rank_filter['DIAMOND'] == false, 'fa fa-check-square': rank_filter['DIAMOND'] }"></i> Diamond</a>
+            <a class="sublist" ng-click="click_rank('PLATINUM')"><i ng-class="{'fa fa-square': rank_filter['PLATINUM'] == false, 'fa fa-check-square': rank_filter['PLATINUM'] }"></i> Platinum</a>
+            <a class="sublist" ng-click="click_rank('GOLD')"><i ng-class="{'fa fa-square': rank_filter['GOLD'] == false, 'fa fa-check-square': rank_filter['GOLD'] }"></i> Gold</a>
+            <a class="sublist" ng-click="click_rank('SILVER')"><i ng-class="{'fa fa-square': rank_filter['SILVER'] == false, 'fa fa-check-square': rank_filter['SILVER'] }"></i> Silver</a>
+            <a class="sublist" ng-click="click_rank('BRONZE')"><i ng-class="{'fa fa-square': rank_filter['BRONZE'] == false, 'fa fa-check-square': rank_filter['BRONZE'] }"></i> Bronze</a>
+          </div>
+
+          <li ng-click="showregions()"><a><i ng-hide="showregion" class="fa fa-plus"></i><i ng-show="showregion" class="fa fa-minus"></i> Regions</a></li>
+
+          <div class="list-container" ng-show="showregion">
+            <a class="sublist" ng-click="click_region('NA')"><i ng-class="{'fa fa-square': region_filter['NA'] == false, 'fa fa-check-square': region_filter['NA'] }"></i> North America</a>
+            <a class="sublist" ng-click="click_region('EUW')"><i ng-class="{'fa fa-square': region_filter['EUW'] == false, 'fa fa-check-square': region_filter['EUW'] }"></i> Europe West</a>
+            <a class="sublist" ng-click="click_region('EUNE')"><i ng-class="{'fa fa-square': region_filter['EUNE'] == false, 'fa fa-check-square': region_filter['EUNE'] }"></i> EU Nordic & E</a>
+            <a class="sublist" ng-click="click_region('BR')"><i ng-class="{'fa fa-square': region_filter['BR'] == false, 'fa fa-check-square': region_filter['BR'] }"></i> Brazil</a>
+            <a class="sublist" ng-click="click_region('TR')"><i ng-class="{'fa fa-square': region_filter['TR'] == false, 'fa fa-check-square': region_filter['TR'] }"></i> Turkey</a>
+            <a class="sublist" ng-click="click_region('RU')"><i ng-class="{'fa fa-square': region_filter['RU'] == false, 'fa fa-check-square': region_filter['RU'] }"></i> Russia</a>
+            <a class="sublist" ng-click="click_region('LAN')"><i ng-class="{'fa fa-square': region_filter['LAN'] == false, 'fa fa-check-square': region_filter['LAN'] }"></i> Latin America N</a>
+            <a class="sublist" ng-click="click_region('LAS')"><i ng-class="{'fa fa-square': region_filter['LAS'] == false, 'fa fa-check-square': region_filter['LAS'] }"></i> Latin America S</a>
+            <a class="sublist" ng-click="click_region('OCE')"><i ng-class="{'fa fa-square': region_filter['OCE'] == false, 'fa fa-check-square': region_filter['OCE'] }"></i> Oceania</a>
+          </div>
+
           <li><a ng-if="favstreams !== undefined" ng-click="click_fav(fav_filter)"><i ng-class="{'fa fa-square': fav_box == false, 'fa fa-check-square': fav_box }"></i> Following</a></li>
        </ul>
     </div>
@@ -90,7 +121,7 @@
     <div ng-class="{'stream-list': true, 'pure-u-1': showstreamer == false, 'pure-u-1 column': showstreamer}" ng-hide="showstreamer && sidebar_hover == false">
        <div class="pure-u-1">
           <div class="pure-g top-container">
-            <div ng-class="{'pure-u-1 pure-u-sm-1-2 pure-u-md-1-3 pure-u-lg-1-4 pure-u-xl-1-5': showstreamer == false, 'pure-u-1 column': showstreamer}">
+            <div ng-class="{'pure-u-1 pure-u-sm-1-2 pure-u-md-1-3 pure-u-lg-1-4 pure-u-xl-1-5': showstreamer == false, 'pure-u-1': showstreamer}">
                
              <input id="search" ng-model="search" type="text" placeholder="Search"></input>
              
@@ -99,7 +130,7 @@
         <div class="pure-g container">
           <div ng-class="{'pure-u-1 pure-u-sm-1-2 pure-u-md-1-3 pure-u-lg-1-4 pure-u-xl-1-5': showstreamer == false, 'pure-u-1': showstreamer}" ng-repeat="stream in streams | filter: search | filter: filterteams | filter: filterrank | filter: filterregion | filter: filterfav | filter: filteringame | filter: filtergametype | filter: filterchampion">
              <div class="content">
-                <p><strong><i ng-if="stream.streamer.gender == 1" class="fa fa-male"></i><i ng-if="stream.streamer.gender == 0" class="fa fa-female"></i><i ng-if="stream.streamer.gender == 3" class="fa fa-video-camera"></i><i ng-if="stream.streamer.gender == 4" class="fa fa-microphone"></i> {{stream.channel.name}}</strong><strong class="viewers"><i class="fa fa-eye"></i> {{stream.viewers}}</strong></p>
+                <p><strong><i ng-if="stream.streamer.gender == 1" class="fa fa-male"></i><i ng-if="stream.streamer.gender == 0" class="fa fa-female"></i><i ng-if="stream.streamer.gender == 3" class="fa fa-video-camera"></i><i ng-if="stream.streamer.gender == 4" class="fa fa-microphone"></i> {{stream.channel.name}} <img ng-if="stream.streamer.team" class="team-img-box" src="images/{{stream.streamer.team}}.png"></span></strong><strong class="viewers"><i class="fa fa-eye"></i> {{stream.viewers}}</strong></p>
                 <button class="img-box" ng-click="showstream(stream.channel.name)">
                    <img class="pure-img-responsive" src={{stream.preview.medium}}>
                    </img>

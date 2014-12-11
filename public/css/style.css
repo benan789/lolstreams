@@ -85,6 +85,20 @@ a {
     display: block;
 }
 
+.team-img {
+    max-width: 50%;
+    height: auto;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.team-img-box {
+    max-width: 6%;
+    height: auto;
+    display: inline-block;
+    vertical-align: middle;
+}
+
 .container {
     width: 100%;
     padding-top: 45px;
@@ -101,17 +115,20 @@ a {
 
 .column {
     width: 300px !important;
-    position: absolute;
+    position: fixed;
     z-index: 1002;
     background: #252525;
+    height: 100%;
 }
 
 .column div .top-container {
-    width: 300px !important;    
+    width: 295px !important;    
 }
 
 .column .container {
     min-height: 100vh;
+    height: 100vh;
+    overflow: scroll;
 }
 
 .status {
@@ -149,6 +166,7 @@ a {
 
 .sublist {
     font-size: 12px;
+    padding: 2px 0px !important;
 }
 
 .stream-container {
@@ -418,6 +436,52 @@ h2 {
     margin-top: 5px;
 }
 
+.hover {
+    display: none;
+}
+
+.hover:hover {
+    display: none !important;
+}
+
+.list-container {
+    position: relative;
+    padding: 0px 20px;
+    padding-left: 25px;
+}
+
+.sprite {
+    background-image: url("http://hydra-media.cursecdn.com/lol.gamepedia.com/2/20/TeamSprite.png");
+    width: 50px;
+    height: 25px;
+    margin-left: -10px !important;
+    vertical-align: middle;
+    display: inline-block;
+    position: relative;
+    margin: 0px !important;
+    left: 0;
+}
+
+.teams {
+    padding: 2px 0px !important;
+}
+
+.teams-container {
+    padding: 0px 20px;
+}
+
+a:hover .hover{
+    width: 100%;
+    text-align: center;
+    height: 26px;
+    display: block;
+    position: absolute;
+    background-color: #c4151b;
+    padding: 5px 0px;
+    top: -36px;
+    left: 0px;
+}
+
 @media screen and (min-width: 58em) {
     .header {
         width: 100%;
@@ -439,3 +503,101 @@ h2 {
     }
 }
 
+.pace {
+  -webkit-pointer-events: none;
+  pointer-events: none;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.pace .pace-activity {
+  display: block;
+  position: fixed;
+  z-index: 2000;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 300px;
+  background: #c4151b;
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+  -webkit-transform: translateX(100%) translateY(-100%) rotate(45deg);
+  transform: translateX(100%) translateY(-100%) rotate(45deg);
+  pointer-events: none;
+}
+
+.pace.pace-active .pace-activity {
+  -webkit-transform: translateX(50%) translateY(-50%) rotate(45deg);
+  transform: translateX(50%) translateY(-50%) rotate(45deg);
+}
+
+.pace .pace-activity::before,
+.pace .pace-activity::after {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    display: block;
+    border: 5px solid #fff;
+    border-radius: 50%;
+    content: '';
+}
+
+.pace .pace-activity::before {
+    margin-left: -40px;
+    width: 80px;
+    height: 80px;
+    border-right-color: rgba(0, 0, 0, .2);
+    border-left-color: rgba(0, 0, 0, .2);
+    -webkit-animation: pace-theme-corner-indicator-spin 3s linear infinite;
+    animation: pace-theme-corner-indicator-spin 3s linear infinite;
+}
+
+.pace .pace-activity::after {
+    bottom: 50px;
+    margin-left: -20px;
+    width: 40px;
+    height: 40px;
+    border-top-color: rgba(0, 0, 0, .2);
+    border-bottom-color: rgba(0, 0, 0, .2);
+    -webkit-animation: pace-theme-corner-indicator-spin 1s linear infinite;
+    animation: pace-theme-corner-indicator-spin 1s linear infinite;
+}
+
+@-webkit-keyframes pace-theme-corner-indicator-spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(359deg); }
+}
+@keyframes pace-theme-corner-indicator-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(359deg); }
+}
+
+.fa-plus {
+   color: grey;
+}
+
+.fa-minus {
+   color: grey;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+ 
+/* Track */
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgba(255,0,0,0.8); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(255,0,0,0.4); 
+}
