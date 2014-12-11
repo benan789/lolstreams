@@ -610,5 +610,10 @@ champions = Champion.create([{
       title: "the Spear of Vengeance",
       name: "Kalista",
       key: "Kalista"
+   }, {
+      champion_id: 421,
+      title: "the Void Burrower",
+      name: "Rek'Sai",
+      key: "RekSai"
    }
 ])
