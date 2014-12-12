@@ -130,7 +130,7 @@
         <div class="pure-g container">
           <div ng-class="{'pure-u-1 pure-u-sm-1-2 pure-u-md-1-3 pure-u-lg-1-4 pure-u-xl-1-5': showstreamer == false, 'pure-u-1': showstreamer}" ng-repeat="stream in streams | filter: search | filter: filterteams | filter: filterrank | filter: filterregion | filter: filterfav | filter: filteringame | filter: filtergametype | filter: filterchampion">
              <div class="content">
-                <p><strong><i ng-if="stream.streamer.gender == 1" class="fa fa-male"></i><i ng-if="stream.streamer.gender == 0" class="fa fa-female"></i><i ng-if="stream.streamer.gender == 3" class="fa fa-video-camera"></i><i ng-if="stream.streamer.gender == 4" class="fa fa-microphone"></i> {{stream.channel.name}} <img ng-if="stream.streamer.team" class="team-img-box" src="images/{{stream.streamer.team}}.png"></span></strong><strong class="viewers"><i class="fa fa-eye"></i> {{stream.viewers}}</strong></p>
+                <p><strong><i ng-if="stream.streamer.gender == 1" class="fa fa-male"></i><i ng-if="stream.streamer.gender == 0" class="fa fa-female"></i><i ng-if="stream.streamer.gender == 3" class="fa fa-video-camera"></i><i ng-if="stream.streamer.gender == 4" class="fa fa-microphone"></i> {{stream.channel.name}} <img ng-if="stream.streamer.team" class="team-img-box" src="images/{{stream.streamer.team}}.png"></strong><strong class="viewers"><i class="fa fa-eye"></i> {{stream.viewers}}</strong></p>
                 <button class="img-box" ng-click="showstream(stream.channel.name)">
                    <img class="pure-img-responsive" src={{stream.preview.medium}}>
                    </img>
@@ -166,7 +166,7 @@
                   <i class="fa fa-eye tourn spec"></i>
                 </div>
                 
-                <div ng-class="{'rank':true}"><div class="ranktext">{{stream.region}}<br>{{stream.rank}}</div></div>
+                <div ng-class="{'rank':true}"><div class="ranktext">{{stream.region}}<br>{{stream.rank}} {{stream.division}}</div></div>
                 <a href="" ng-if="fav_filter[stream.channel.name] == undefined && user.name !== undefined" class="follow" ng-click="follow(stream, user)"><p class="followtext">Follow</p></a>
                 <a href="" ng-if="fav_filter[stream.channel.name] !== undefined && user.name !== undefined" class="follow" ng-click="unfollow(stream, user)"><p class="followtext">Unfollow</p></a>
                 <a href="/auth" ng-if="user.name == undefined" class="follow"><p class="followtext">Sign In</p></a>
@@ -180,7 +180,7 @@
         
         <div class="active-stream">
         <div class="header">
-          <h2><strong><i ng-if="activestreamer.streamer.gender == 1" class="fa fa-male"></i><i ng-if="activestreamer.streamer.gender == 0" class="fa fa-female"></i><i ng-if="activestreamer.streamer.gender == 3" class="fa fa-video-camera"></i><i ng-if="activestreamer.streamer.gender == 4" class="fa fa-microphone"></i> {{activestreamer.channel.name}}</strong><strong class="viewers"><i class="fa fa-eye"></i> {{activestreamer.viewers}} &nbsp <i class="fa fa-times" ng-click="closestream()">&nbsp</i></strong></h2><div class="title">{{activestreamer.channel.status}}</div>
+          <h2><strong><i ng-if="activestreamer.streamer.gender == 1" class="fa fa-male"></i><i ng-if="activestreamer.streamer.gender == 0" class="fa fa-female"></i><i ng-if="activestreamer.streamer.gender == 3" class="fa fa-video-camera"></i><i ng-if="activestreamer.streamer.gender == 4" class="fa fa-microphone"></i> {{activestreamer.channel.name}} <img ng-if="activestreamer.streamer.team" class="team-img-box" style="max-width: 25px" src="images/{{activestreamer.streamer.team}}.png"></strong><strong class="viewers"><i class="fa fa-eye"></i> {{activestreamer.viewers}} &nbsp <i class="fa fa-times" ng-click="closestream()">&nbsp</i></strong></h2><div class="title">{{activestreamer.channel.status}}</div>
           
         </div>
   
@@ -232,7 +232,7 @@
             <i class="fa fa-eye tourn spec"></i>
           </div>
 
-          <div ng-class="{'rank':true}"><div class="ranktext">{{activestreamer.region}}<br>{{activestreamer.rank}}</div></div>
+          <div ng-class="{'rank':true}"><div class="ranktext">{{activestreamer.region}}<br>{{activestreamer.rank}} {{activestreamer.division}}</div></div>
           <a href="" ng-if="fav_filter[activestreamer.channel.name] == undefined && user.name !== undefined" class="follow" ng-click="follow(activestreamer, user)"><p class="followtext">Follow</p></a>
           <a href="" ng-if="fav_filter[activestreamer.channel.name] !== undefined && user.name !== undefined" class="follow" ng-click="unfollow(activestreamer, user)"><p class="followtext">Unfollow</p></a>
           <a href="/auth" ng-if="user.name == undefined" class="follow"><p class="followtext">Sign In</p></a>

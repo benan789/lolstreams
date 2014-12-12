@@ -42,8 +42,11 @@ streams.each do |stream|
 
 							begin
 								rank_response = Unirest.get "https://#{region.downcase}.api.pvp.net/api/lol/#{region.downcase}/v2.5/league/by-summoner/#{summoner_info2["summonerId"]}?api_key=#{ENV['LOL_SECRET']}"
-								rank = JSON.parse(rank_response.body.to_json)
-								rank = rank[summoner_info2["summonerId"].to_s][0]['tier']
+								rank_info = JSON.parse(rank_response.body.to_json)
+								summoner_id = summoner_info2["summonerId"].to_s
+								rank = rank_info[summoner_id][0]['tier']
+								division = rank_info[summoner_id][0]['entries'].find { |x| x['playerOrTeamId'] == summoner_id}
+								stream['division'] = division['division']
 								stream['rank'] = rank
 							rescue
 								puts "Rate Limit Reached"
