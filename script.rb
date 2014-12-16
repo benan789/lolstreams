@@ -24,6 +24,8 @@ streams.each do |stream|
 								}
 
 							if response.body['data']['ECODE'] == "GAMENOTFOUND_PATH"
+								stream['champion'] = "Not in game."
+								stream['status'] = "Not in game."
 								next
 							end
 						
