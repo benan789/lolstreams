@@ -99,8 +99,23 @@ class Streams < Sinatra::Base
 
 	put '/:name/edit' do
 		@streamer = Streamer.find_by(name: params[:name])
-		if params[:password] == ENV['PASSWORD'] 
+		if params[:password] == ENV['PASSWORD']
+			
 			if @streamer.update_attributes(params[:streamer])
+				
+				@streamer.summoner_names.each do |region, names|
+					names.each do |account, name|
+						if name == ""
+							@streamer.summoner_names[region].delete(account)
+						end
+					end
+
+					if names == {}
+						@streamer.summoner_names.delete(region)
+					end
+
+				end
+				@streamer.save
 				redirect '/'
 			end
 		end

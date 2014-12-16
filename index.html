@@ -166,7 +166,7 @@
                   <i class="fa fa-eye tourn spec"></i>
                 </div>
                 
-                <div ng-class="{'rank':true}"><div class="ranktext">{{stream.region}}<br>{{stream.rank}} {{stream.division}}</div></div>
+                <div ng-class="{'rank':true}"><div class="ranktext"><span ng-if="stream.region">{{stream.region + " - "}}</span>{{stream.channel.broadcaster_language.toUpperCase()}}<br>{{stream.rank}} {{stream.division}}</div></div>
                 <a href="" ng-if="fav_filter[stream.channel.name] == undefined && user.name !== undefined" class="follow" ng-click="follow(stream, user)"><p class="followtext">Follow</p></a>
                 <a href="" ng-if="fav_filter[stream.channel.name] !== undefined && user.name !== undefined" class="follow" ng-click="unfollow(stream, user)"><p class="followtext">Unfollow</p></a>
                 <a href="/auth" ng-if="user.name == undefined" class="follow"><p class="followtext">Sign In</p></a>
