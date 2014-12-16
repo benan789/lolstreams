@@ -22,6 +22,10 @@ streams.each do |stream|
 	  							headers:{
 								  "X-Mashape-Key" => ENV['MASHAPE']
 								}
+
+							if response.body['data']['ECODE'] == "GAMENOTFOUND_PATH"
+								break
+							end
 						
 							if response.body['data']['error'] == "Game is not observable"
 								stream['status'] = "Champion select."
