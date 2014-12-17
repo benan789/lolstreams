@@ -77,6 +77,7 @@ a {
     margin: 0;
     border: none;
     text-align: left;
+    width: 100%;
 }
 
 .pure-img-responsive {
@@ -185,9 +186,13 @@ a {
 }
 
 .fa-times {
-    float: right;
     padding-top: 2px;
     padding-bottom: 4px;
+}
+
+.fa-caret-right {
+    float: right;
+    padding-top: 3px;
 }
 
 .champion {
@@ -351,6 +356,10 @@ a {
     color: grey;
 }
 
+.rank2 {
+    width: calc(100% - 172px) !important;
+}
+
 .ranktext {
     font-size: 0.8em;
     margin: 5px 0px 0px 0px;
@@ -388,10 +397,6 @@ a {
     width: 40px;
 }
 
-.fa-times {
-    float: right;
-}
-
 .streamname {
     float: left;
     margin: 0;
@@ -421,7 +426,7 @@ h2 {
 
 .chat {
     width: calc(100% - 150px);
-    height: 50vh;
+    height: 40vh;
 }
 
 .active-stream {
@@ -501,6 +506,11 @@ a:hover .hover{
         width: calc(100% - 450px);
         display:inline-block;
     }
+
+    .fullscreen {
+        width: calc(100% - 150px) !important;
+    }
+
 }
 
 .pace {
@@ -512,68 +522,18 @@ a:hover .hover{
   user-select: none;
 }
 
-.pace .pace-activity {
-  display: block;
+.pace-inactive {
+  display: none;
+}
+
+.pace .pace-progress {
+  background: #c4151b;
   position: fixed;
   z-index: 2000;
   top: 0;
-  right: 0;
-  width: 300px;
-  height: 300px;
-  background: #c4151b;
-  -webkit-transition: -webkit-transform 0.3s;
-  transition: transform 0.3s;
-  -webkit-transform: translateX(100%) translateY(-100%) rotate(45deg);
-  transform: translateX(100%) translateY(-100%) rotate(45deg);
-  pointer-events: none;
-}
-
-.pace.pace-active .pace-activity {
-  -webkit-transform: translateX(50%) translateY(-50%) rotate(45deg);
-  transform: translateX(50%) translateY(-50%) rotate(45deg);
-}
-
-.pace .pace-activity::before,
-.pace .pace-activity::after {
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    display: block;
-    border: 5px solid #fff;
-    border-radius: 50%;
-    content: '';
-}
-
-.pace .pace-activity::before {
-    margin-left: -40px;
-    width: 80px;
-    height: 80px;
-    border-right-color: rgba(0, 0, 0, .2);
-    border-left-color: rgba(0, 0, 0, .2);
-    -webkit-animation: pace-theme-corner-indicator-spin 3s linear infinite;
-    animation: pace-theme-corner-indicator-spin 3s linear infinite;
-}
-
-.pace .pace-activity::after {
-    bottom: 50px;
-    margin-left: -20px;
-    width: 40px;
-    height: 40px;
-    border-top-color: rgba(0, 0, 0, .2);
-    border-bottom-color: rgba(0, 0, 0, .2);
-    -webkit-animation: pace-theme-corner-indicator-spin 1s linear infinite;
-    animation: pace-theme-corner-indicator-spin 1s linear infinite;
-}
-
-@-webkit-keyframes pace-theme-corner-indicator-spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(359deg); }
-}
-@keyframes pace-theme-corner-indicator-spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(359deg); }
+  right: 100%;
+  width: 100%;
+  height: 5px;
 }
 
 .fa-plus {

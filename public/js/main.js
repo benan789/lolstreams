@@ -53,7 +53,8 @@ app.factory('User', function($resource) {
 
 app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$state', 'Stream', 'Favorite', 'User', '$stateParams', '$http', '$interval', function($scope, $cookies, $cookieStore, $sce, $state, Stream, Favorite, User, $stateParams, $http, $interval) {
 	
-	
+	$scope.chat = false;
+
 	var streams = Stream.query(function() {
 		$scope.streams = streams
 		$scope.champion_filter = {}
@@ -231,6 +232,10 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 
 	$scope.click_champion = function(champion) {
 		$scope.champion_filter[champion] ? $scope.champion_filter[champion] = false : $scope.champion_filter[champion] = true;
+	}
+
+	$scope.click_chat = function() {
+		$scope.chat ? $scope.chat = false : $scope.chat = true
 	}
 
 	$scope.fav_box = false;

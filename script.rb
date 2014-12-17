@@ -6,7 +6,7 @@ begin
 response = Unirest.get "https://api.twitch.tv/kraken/streams?game=league+of+legends&limit=100&?client_id=#{ENV['CLIENT_ID']}"	
 streams = response.body['streams']
 
-streams.each do |stream|
+streams.reverse_each do |stream|
 	stream['streamer'] = Streamer.find_or_create_by({name: stream['channel']['name']})
 	if stream['streamer']['gender'] != 3 && stream['streamer']['gender'] != 4
 		begin
