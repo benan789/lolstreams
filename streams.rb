@@ -81,7 +81,7 @@ class Streams < Sinatra::Base
 		user.to_json
 	end
 
-	get '/:name/edit' do
+	get '/:name/bleh' do
 		@streamer = Streamer.find_by(name: params[:name])
 		@streamer.summoner_names ||= {}
 		@streamer.summoner_names['NA'] ||= ""
@@ -97,7 +97,7 @@ class Streams < Sinatra::Base
 		erb :edit
 	end
 
-	put '/:name/edit' do
+	put '/:name/bleh' do
 		@streamer = Streamer.find_by(name: params[:name])
 		if params[:password] == ENV['PASSWORD']
 			
