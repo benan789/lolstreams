@@ -11,3 +11,5 @@ production:
       hosts:
         - lolstreams:27017
       database: lolstreams_production
+      options:
+        pool_size: 100
