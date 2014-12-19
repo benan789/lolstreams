@@ -12,4 +12,4 @@ production:
         - lolstreams:27017
       database: lolstreams_production
       options:
-        pool_size: 100
+        pool_size:100
