@@ -111,7 +111,7 @@ body {
  */
 
 a:focus {
-    outline: thin dotted;
+    outline: 0;
 }
 
 /**

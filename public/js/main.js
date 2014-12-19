@@ -55,40 +55,7 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 	
 	$scope.chat = false;
 
-	var streams = Stream.query(function() {
-		$scope.streams = streams
-		$scope.champion_filter = {}
-		$scope.lang_filter = {}
-
-		$scope.streams.map(function(stream) {
-			if(stream.champion != "No info." && stream.champion != "Not in game." && stream.champion != undefined){
-				$scope.champion_filter[stream.championname] = false;
-			}
-			if(stream.channel.broadcaster_language != "other" && stream.channel.broadcaster_language != undefined) {
-				$scope.lang_filter[stream.channel.broadcaster_language] = false;
-			}
-		});
-
-		$scope.filterchampion = function(stream) {
-			for (var key in $scope.champion_filter) {
-				if ($scope.champion_filter[key]){
-					return $scope.champion_filter[stream.championname];
-				}	
-			}
-			return true;
-		}
-
-		$scope.filterlang = function(stream) {
-			for (var key in $scope.lang_filter) {
-				if ($scope.lang_filter[key]){
-					return $scope.lang_filter[stream.channel.broadcaster_language];
-				}	
-			}
-			return true;
-		}
-	})
-
-	$interval(function() {
+	var refresh_streams = function() {
 		var streams = Stream.query(function() {
 			$scope.streams = streams
 	
@@ -149,7 +116,48 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 				return true;
 			}
 		})
-	}, 15000)
+	}
+
+	var streams = Stream.query(function() {
+		$scope.streams = streams
+		$scope.champion_filter = {}
+		$scope.lang_filter = {}
+
+		$scope.streams.map(function(stream) {
+			if(stream.champion != "No info." && stream.champion != "Not in game." && stream.champion != undefined){
+				$scope.champion_filter[stream.championname] = false;
+			}
+			if(stream.channel.broadcaster_language != "other" && stream.channel.broadcaster_language != undefined) {
+				$scope.lang_filter[stream.channel.broadcaster_language] = false;
+			}
+		});
+
+		$scope.filterchampion = function(stream) {
+			for (var key in $scope.champion_filter) {
+				if ($scope.champion_filter[key]){
+					return $scope.champion_filter[stream.championname];
+				}	
+			}
+			return true;
+		}
+
+		$scope.filterlang = function(stream) {
+			for (var key in $scope.lang_filter) {
+				if ($scope.lang_filter[key]){
+					return $scope.lang_filter[stream.channel.broadcaster_language];
+				}	
+			}
+			return true;
+		}
+	})
+
+	$interval(function() {
+		refresh_streams();
+	}, 120000)
+
+	$scope.refresh = function() {
+		refresh_streams();
+	}
 
 	var favstreams = Favorite.query(function() {
 		$scope.fav_filter = {}

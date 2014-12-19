@@ -29,6 +29,17 @@ body {
 a {
     color: white !important;
     text-decoration: none;
+    outline: 0;
+}
+
+.refresh {
+    font-size: 13px;
+}
+
+.refresh:active .fa-refresh {
+   transform: rotate(45deg);
+   -webkit-transform: rotate(45deg);
+   -ms-transform: rotate(45deg);
 }
 
 .viewers {
