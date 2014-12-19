@@ -9,7 +9,7 @@ require 'json'
 require 'unirest'
 require 'dotenv'
 Dotenv.load
-Mongoid.load!("./mongoid.yml", :production)
+Mongoid.load!("./mongoid.yml")
 require './models/streamer.rb'
 require './models/champion.rb'
 
