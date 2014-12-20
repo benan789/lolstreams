@@ -80,6 +80,12 @@ a {
     max-width: 320px;
 }
 
+.ad {
+    margin: 5px;
+    width: calc(100% - 12px);
+    max-width: 320px;
+}
+
 .img-box {
     position: relative;
     display: block;

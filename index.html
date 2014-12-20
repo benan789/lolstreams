@@ -198,23 +198,28 @@
                   <i class="fa fa-eye tourn spec"></i>
                 </div>
                 
-                <div ng-class="{'rank':true}"><div class="ranktext">{{stream.region}}<span ng-if="stream.region && stream.channel.broadcaster_language != undefined && stream.channel.broadcaster_language != 'other' "> - </span><span ng-if="stream.channel.broadcaster_language != 'other'">{{stream.channel.broadcaster_language.toUpperCase()}}</span><br>{{stream.rank}} {{stream.division}}</div></div>
+                <div ng-class="{'rank':true}">
+                  <div class="ranktext">{{stream.region}}<span ng-if="stream.region && stream.channel.broadcaster_language != undefined && stream.channel.broadcaster_language != 'other' "> - </span><span ng-if="stream.channel.broadcaster_language != 'other'">{{stream.channel.broadcaster_language.toUpperCase()}}</span><br>{{stream.rank}} {{stream.division}}
+                  </div>
+                </div>
                 <a href="" ng-if="fav_filter[stream.channel.name] == undefined && user.name !== undefined" class="follow" ng-click="follow(stream, user)"><p class="followtext">Follow</p></a>
                 <a href="" ng-if="fav_filter[stream.channel.name] !== undefined && user.name !== undefined" class="follow" ng-click="unfollow(stream, user)"><p class="followtext">Unfollow</p></a>
                 <a href="/auth" ng-if="user.name == undefined" class="follow"><p class="followtext">Sign In</p></a>
              </div>
           </div>
           <div ng-class="{'pure-u-1 pure-u-sm-1-2 pure-u-md-1-3 pure-u-lg-1-4 pure-u-xl-1-5': showstreamer == false, 'pure-u-1': showstreamer}">
-            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-            <!-- streams -->
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-1921471101495139"
-                 data-ad-slot="8772700809"
-                 data-ad-format="auto"></ins>
-            <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
+            <div class="ad">
+              <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+              <!-- streams -->
+              <ins class="adsbygoogle"
+                   style="display:block"
+                   data-ad-client="ca-pub-1921471101495139"
+                   data-ad-slot="8772700809"
+                   data-ad-format="auto"></ins>
+              <script>
+              (adsbygoogle = window.adsbygoogle || []).push({});
+              </script>
+            </div>
           </div>
        </div>
        </div>
