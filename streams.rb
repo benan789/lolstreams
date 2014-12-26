@@ -110,7 +110,7 @@ class Streams < Sinatra::Base
 						if name == ""
 							@streamer.summoner_names[region].delete(account)
 						else
-							name = name.delete(" ").downcase
+							@streamer.summoner_names[region][account] = name.delete(" ").downcase
 						end
 					end
 
