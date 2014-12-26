@@ -52,6 +52,8 @@ class Streams < Sinatra::Base
 			cookies[:twitch] = token['access_token']
 			
 			redirect back
+		else
+			redirect back
 		end
 	end
 
@@ -107,6 +109,8 @@ class Streams < Sinatra::Base
 					names.each do |account, name|
 						if name == ""
 							@streamer.summoner_names[region].delete(account)
+						else
+							name = name.delete(" ").downcase
 						end
 					end
 
