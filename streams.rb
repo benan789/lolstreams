@@ -44,15 +44,19 @@ class Streams < Sinatra::Base
 
 	get "/auth/callback" do
 		content_type :json
-		client = OAuth2::Client.new(ENV['CLIENT_ID'], ENV['CLIENT_SECRET'], :authorize_url => 'https://api.twitch.tv/kraken/oauth2/authorize', :token_url => 'https://api.twitch.tv/kraken/oauth2/token')
-		token = client.auth_code.get_token(params[:code], :redirect_uri => 'http://lolstreams.tv/auth/callback')
-		if token
-			token = JSON.parse(token.to_json)
+		begin
+			client = OAuth2::Client.new(ENV['CLIENT_ID'], ENV['CLIENT_SECRET'], :authorize_url => 'https://api.twitch.tv/kraken/oauth2/authorize', :token_url => 'https://api.twitch.tv/kraken/oauth2/token')
+			token = client.auth_code.get_token(params[:code], :redirect_uri => 'http://lolstreams.tv/auth/callback')
+			if token
+				token = JSON.parse(token.to_json)
 
-			cookies[:twitch] = token['access_token']
-			
-			redirect back
-		else
+				cookies[:twitch] = token['access_token']
+				
+				redirect back
+			else
+				redirect back
+			end
+		rescue
 			redirect back
 		end
 	end
