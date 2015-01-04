@@ -116,6 +116,19 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 				return true;
 			}
 		})
+
+		var favstreams = Favorite.query(function() {
+			$scope.fav_filter = {}
+			$scope.favstreams = favstreams
+			for (var i = 0; i<favstreams.length; i++) {
+				$scope.fav_filter[favstreams[i].channel.name] = $scope.fav_filter[favstreams[i].channel.name] || false;
+			}
+		})
+
+		var user = User.get(function() {
+			$scope.user = user
+		})
+
 	}
 
 	var streams = Stream.query(function() {
