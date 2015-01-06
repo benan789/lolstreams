@@ -8,8 +8,8 @@ begin
 
 	if streams != []
 
-		threads = Array.new(10)
-		work_queue = SizedQueue.new(10)
+		threads = Array.new(5)
+		work_queue = SizedQueue.new(5)
 		threads.extend(MonitorMixin)
 		threads_available = threads.new_cond
 		sysexit = false
@@ -44,7 +44,7 @@ begin
 												}
 
 											puts response.body
-											
+
 											if response.body['data']['ECODE'] == "GAMENOTFOUND_PATH"
 												stream['champion'] = "Not in game."
 												stream['status'] = "Not in game."
