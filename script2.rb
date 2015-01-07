@@ -45,17 +45,15 @@ begin
 
 											puts response.body												
 
-											if response.body['game']['ECODE'] == "GAMENOTFOUND_PATH"
-												stream['champion'] = "Not in game."
-												stream['status'] = "Not in game."
-												next
-											end
-										
-											if response.body['game']['error'] == "Game is not observable"
+											if response.body['error'] == "Game has not started"
 												stream['status'] = "Champion select."
 												stream['rank'] = "Champion Select"
 												stream['region'] = region
 												break
+											elsif response.body['error'] != nil
+												stream['champion'] = "Not in game."
+												stream['status'] = "Not in game."
+												next
 											end
 
 											summoner_info = response.body['game']['playerChampionSelections']['array'].find {|x| x['summonerInternalName'] == summoner}
