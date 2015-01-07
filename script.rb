@@ -8,8 +8,8 @@ begin
 
 	if streams != []
 
-		threads = Array.new(5)
-		work_queue = SizedQueue.new(5)
+		threads = Array.new(2)
+		work_queue = SizedQueue.new(2)
 		threads.extend(MonitorMixin)
 		threads_available = threads.new_cond
 		sysexit = false
