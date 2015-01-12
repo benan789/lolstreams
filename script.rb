@@ -46,6 +46,8 @@ begin
 											  "X-Mashape-Key" => ENV['MASHAPE']
 											}
 
+										puts response.body
+
 										if response.body['data']['ECODE'] == "GAMENOTFOUND_PATH"
 											stream['champion'] = "Not in game."
 											stream['status'] = "Not in game."
