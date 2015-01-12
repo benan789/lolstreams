@@ -79,12 +79,16 @@ begin
 											stream['lp'] = division['leaguePoints']
 											stream['rank'] = rank
 										rescue
-											begin
-												cache_stream = streams_cache.find {|x| x['channel']['name'] == stream['channel']['name']}
-												stream['division'] = cache_stream['division']
-												stream['lp'] = cache_stream['lp']
-												stream['rank'] = cache_stream['rank']
-											rescue
+											if rank_response.code == 404
+												stream['rank'] = "UNRANKED"
+											else
+												begin
+													cache_stream = streams_cache.find {|x| x['channel']['name'] == stream['channel']['name']}
+													stream['division'] = cache_stream['division']
+													stream['lp'] = cache_stream['lp']
+													stream['rank'] = cache_stream['rank']
+												rescue
+												end
 											end
 										end
 
