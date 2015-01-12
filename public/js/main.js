@@ -70,6 +70,11 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 						$scope.lang_filter[stream.channel.broadcaster_language] = false;
 					}
 				}
+				if(stream.streamer.team != "" && stream.streamer.team != undefined) {
+					if($scope.team_filter[stream.streamer.team] == undefined){
+						$scope.team_filter[stream.streamer.team] = false;
+					}
+				}
 			});
 
 			for (var key in $scope.champion_filter) {
@@ -98,6 +103,19 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 				}		
 			}
 
+			for (var key in $scope.team_filter) {
+				var exists = false
+				for (var i = 0; i < $scope.streams.length; i++) {
+					if (key == $scope.streams[i].streamer.team){
+						exists = true
+						break
+					}
+				}
+				if (exists == false) {
+					delete $scope.team_filter[key]
+				}		
+			}
+
 			$scope.filterchampion = function(stream) {
 				for (var key in $scope.champion_filter) {
 					if ($scope.champion_filter[key]){
@@ -111,6 +129,15 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 				for (var key in $scope.lang_filter) {
 					if ($scope.lang_filter[key]){
 						return $scope.lang_filter[stream.channel.broadcaster_language];
+					}	
+				}
+				return true;
+			}
+
+			$scope.filterteams = function(stream) {
+				for (var key in $scope.team_filter) {
+					if ($scope.team_filter[key]){
+						return $scope.team_filter[stream.streamer.team];
 					}	
 				}
 				return true;
@@ -135,6 +162,7 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 		$scope.streams = streams
 		$scope.champion_filter = {}
 		$scope.lang_filter = {}
+		$scope.team_filter = {}
 
 		$scope.streams.map(function(stream) {
 			if(stream.champion != "No info." && stream.champion != "Not in game." && stream.champion != undefined){
@@ -142,6 +170,9 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 			}
 			if(stream.channel.broadcaster_language != "other" && stream.channel.broadcaster_language != undefined) {
 				$scope.lang_filter[stream.channel.broadcaster_language] = false;
+			}
+			if(stream.streamer.team != "" && stream.streamer.team != undefined) {
+				$scope.team_filter[stream.streamer.team] = false;
 			}
 		});
 
@@ -158,6 +189,15 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 			for (var key in $scope.lang_filter) {
 				if ($scope.lang_filter[key]){
 					return $scope.lang_filter[stream.channel.broadcaster_language];
+				}	
+			}
+			return true;
+		}
+
+		$scope.filterteams = function(stream) {
+			for (var key in $scope.team_filter) {
+				if ($scope.team_filter[key]){
+					return $scope.team_filter[stream.streamer.team];
 				}	
 			}
 			return true;
@@ -217,17 +257,6 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 		$scope.showlang ? $scope.showlang = false : $scope.showlang = true
 	}
 
-	$scope.team_filter = {
-		'clg': false,
-		'eg': false,
-		'tsm': false,
-		'dig': false,
-		'c9': false,
-		'lmq': false,
-		't8': false,
-		'crs': false		
-	}
-
 	$scope.rank_filter = {
 		'CHALLENGER': false,
 		'MASTER': false,
@@ -269,15 +298,6 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 
 	$scope.click_team = function(team) {
 		$scope.team_filter[team] ? $scope.team_filter[team] = false : $scope.team_filter[team] = true
-	}
-		
-	$scope.filterteams = function(stream) {
-		for (var key in $scope.team_filter) {
-			if ($scope.team_filter[key]){
-				return $scope.team_filter[stream.streamer.team];
-			}	
-		}
-		return true;
 	}
 
 	$scope.click_rank = function(rank) {
