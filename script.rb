@@ -59,7 +59,7 @@ begin
 											break
 										end
 
-										if response.body['data']['success'] != nil
+										if response.body['data']['success'] == false
 											cache_stream = streams_cache.find {|x| x['channel']['name'] == stream['channel']['name']}
 											if cache_stream == nil
 												stream['champion'] = "Not in game."
