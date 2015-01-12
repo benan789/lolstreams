@@ -46,7 +46,7 @@ begin
 											  "X-Mashape-Key" => ENV['MASHAPE']
 											}
 
-										
+										puts response.body
 
 										if response.body['data']['ECODE'] == "GAMENOTFOUND_PATH"
 											stream['champion'] = "Not in game."
@@ -104,7 +104,7 @@ begin
 									end
 								rescue
 									cache_stream = streams_cache.find {|x| x['channel']['name'] == stream['channel']['name']}
-									puts response.body
+									
 									puts cache_stream['champion']
 									if cache_stream == nil
 										stream['champion'] = "Not in game."
