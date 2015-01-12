@@ -59,61 +59,65 @@ begin
 											break
 										end
 
-										summoner_info = response.body['data']['game']['playerChampionSelections'].find {|x| x['summonerInternalName'] == summoner}
-										summoner_info2 = response.body['data']['game']['teamOne'].find {|x| x['summonerInternalName'] == summoner} || summoner_info2 = response.body['data']['game']['teamTwo'].find {|x| x['summonerInternalName'] == summoner}
-									
-										if summoner_info == nil
-											stream['status'] = "Spectating."
-											stream['rank'] = "Spectating"
-											stream['region'] = region
-											break
-										end
-
-										begin
-											rank_response = Unirest.get "https://#{region.downcase}.api.pvp.net/api/lol/#{region.downcase}/v2.5/league/by-summoner/#{summoner_info2["summonerId"]}?api_key=#{ENV['LOL_SECRET']}"
-											rank_info = JSON.parse(rank_response.body.to_json)
-											summoner_id = summoner_info2["summonerId"].to_s
-											rank = rank_info[summoner_id][0]['tier']
-											division = rank_info[summoner_id][0]['entries'].find { |x| x['playerOrTeamId'] == summoner_id}
-											stream['division'] = division['division']
-											stream['lp'] = division['leaguePoints']
-											stream['rank'] = rank
-										rescue
-											if rank_response.code == 404
-												stream['rank'] = "UNRANKED"
+										if response.body['data']['success'] != nil
+											cache_stream = streams_cache.find {|x| x['channel']['name'] == stream['channel']['name']}
+											if cache_stream == nil
+												stream['champion'] = "Not in game."
+												stream['status'] = "Not in game."
 											else
-												begin
-													cache_stream = streams_cache.find {|x| x['channel']['name'] == stream['channel']['name']}
-													stream['division'] = cache_stream['division']
-													stream['lp'] = cache_stream['lp']
-													stream['rank'] = cache_stream['rank']
-												rescue
+												stream['champion'] = cache_stream['champion']
+												stream['championname'] = cache_stream['championname']
+												stream['status'] = cache_stream['status']
+												stream['region'] = cache_stream['region']
+												stream['division'] = cache_stream['division']
+												stream['lp'] = cache_stream['lp']
+												stream['rank'] = cache_stream['rank']
+											end
+										else
+
+											summoner_info = response.body['data']['game']['playerChampionSelections'].find {|x| x['summonerInternalName'] == summoner}
+											summoner_info2 = response.body['data']['game']['teamOne'].find {|x| x['summonerInternalName'] == summoner} || summoner_info2 = response.body['data']['game']['teamTwo'].find {|x| x['summonerInternalName'] == summoner}
+										
+											if summoner_info == nil
+												stream['status'] = "Spectating."
+												stream['rank'] = "Spectating"
+												stream['region'] = region
+												break
+											end
+
+											begin
+												rank_response = Unirest.get "https://#{region.downcase}.api.pvp.net/api/lol/#{region.downcase}/v2.5/league/by-summoner/#{summoner_info2["summonerId"]}?api_key=#{ENV['LOL_SECRET']}"
+												rank_info = JSON.parse(rank_response.body.to_json)
+												summoner_id = summoner_info2["summonerId"].to_s
+												rank = rank_info[summoner_id][0]['tier']
+												division = rank_info[summoner_id][0]['entries'].find { |x| x['playerOrTeamId'] == summoner_id}
+												stream['division'] = division['division']
+												stream['lp'] = division['leaguePoints']
+												stream['rank'] = rank
+											rescue
+												if rank_response.code == 404
+													stream['rank'] = "UNRANKED"
+												else
+													begin
+														cache_stream = streams_cache.find {|x| x['channel']['name'] == stream['channel']['name']}
+														stream['division'] = cache_stream['division']
+														stream['lp'] = cache_stream['lp']
+														stream['rank'] = cache_stream['rank']
+													rescue
+													end
 												end
 											end
-										end
 
-										if champion = Champion.find_by(champion_id: summoner_info['championId'])
-											stream['champion'] = champion.key
-											stream['championname'] = champion.name
-											stream['region'] = region
-											stream['status'] = "In game."
-											break
+											if champion = Champion.find_by(champion_id: summoner_info['championId'])
+												stream['champion'] = champion.key
+												stream['championname'] = champion.name
+												stream['region'] = region
+												stream['status'] = "In game."
+												break
+											end
 										end
 									end
 								rescue
-									cache_stream = streams_cache.find {|x| x['channel']['name'] == stream['channel']['name']}
-									if cache_stream == nil
-										stream['champion'] = "Not in game."
-										stream['status'] = "Not in game."
-									else
-										stream['champion'] = cache_stream['champion']
-										stream['championname'] = cache_stream['championname']
-										stream['status'] = cache_stream['status']
-										stream['region'] = cache_stream['region']
-										stream['division'] = cache_stream['division']
-										stream['lp'] = cache_stream['lp']
-										stream['rank'] = cache_stream['rank']
-									end
 								end
 							end
 							break if stream['status'] == "Champion select." || stream['status'] == "In game." || stream['status'] == "Spectating."
