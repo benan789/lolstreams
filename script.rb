@@ -104,6 +104,8 @@ begin
 									begin
 										stream = streams_cache.find {|x| x['channel']['name'] == stream['channel']['name']}
 									rescue
+										stream['champion'] = "Not in game."
+										stream['status'] = "Not in game."
 									end
 								end
 							end
