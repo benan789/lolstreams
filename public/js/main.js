@@ -235,7 +235,8 @@ app.controller('StreamsCtrl', ['$scope', '$cookies', '$cookieStore', '$sce', '$s
 		'PLATINUM': false,
 		'GOLD': false,
 		'SILVER': false,
-		'BRONZE': false
+		'BRONZE': false,
+		"UNRANKED": false
 	}
 
 	$scope.region_filter = {
