@@ -97,6 +97,8 @@
                 <div ng-if="team == 'isg'" class="hover">Isurus Gaming</div>
                 <div ng-if="team == 'imp'" class="hover">IMP e-Sports</div>
                 <div ng-if="team == 'cnb'" class="hover" style="font-size: 12px">CNB e-Sports Club</div>
+
+                <div ng-if="team == 'mse'" class="hover" style="font-size: 12px">Midnight Sun e-Sports</div>
             </a>
           </div>
 
@@ -187,11 +189,15 @@
                 </a>
 
                 <div ng-if="stream.champion == 'Not in game.' && stream.rank !== 'Champion Select' && stream.rank !== 'Spectating'" class="nogame">
-                <i class="fa fa-gamepad off"></i>
+                  <i class="fa fa-gamepad off"></i>
                 </div>
 
                 <div ng-if="stream.champion == 'No info.'" class="nogame">
                 ...
+                </div>
+
+                <div ng-if="stream.status == 'Error.'" class="nogame">
+                  <i class="fa fa-exclamation-circle"></i>
                 </div>
 
                 <div ng-if="stream.rank == 'Champion Select'" class="champselect">
@@ -284,6 +290,10 @@
 
           <div ng-if="activestreamer.champion == 'No info.'" class="nogame">
           ...
+          </div>
+
+          <div ng-if="activestreamer.status == 'Error.'" class="nogame">
+            <i class="fa fa-exclamation-circle"></i>
           </div>
 
           <div ng-if="activestreamer.rank == 'Champion Select'" class="champselect">

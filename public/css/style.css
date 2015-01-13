@@ -324,6 +324,11 @@ a {
     text-align: center;
 }
 
+.fa-exclamation-circle {
+    color: #c4151b;
+    padding-top: 6px;
+}
+
 .champselect {
     height: 40px;
     width: 40px;

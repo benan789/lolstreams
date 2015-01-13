@@ -34,6 +34,10 @@ begin
 				stream['streamer'] = Streamer.find_or_create_by({name: stream['channel']['name']})
 				if stream['streamer']['gender'] != 3 && stream['streamer']['gender'] != 4
 					begin
+						if stream['streamer']['summoner_names'] == {}
+							break
+						end
+
 						regions = stream['streamer']['summoner_names'].keys
 						regions.each do |region|
 							summoners = stream['streamer']['summoner_names'][region]
@@ -65,13 +69,17 @@ begin
 												stream['champion'] = "Not in game."
 												stream['status'] = "Not in game."
 											else
-												stream['champion'] = cache_stream['champion']
-												stream['championname'] = cache_stream['championname']
-												stream['status'] = cache_stream['status']
-												stream['region'] = cache_stream['region']
-												stream['division'] = cache_stream['division']
-												stream['lp'] = cache_stream['lp']
-												stream['rank'] = cache_stream['rank']
+												if stream['status'] == nil
+													stream['status'] = "Error."
+												else
+													stream['champion'] = cache_stream['champion']
+													stream['championname'] = cache_stream['championname']
+													stream['status'] = cache_stream['status']
+													stream['region'] = cache_stream['region']
+													stream['division'] = cache_stream['division']
+													stream['lp'] = cache_stream['lp']
+													stream['rank'] = cache_stream['rank']
+												end
 											end
 										else
 
