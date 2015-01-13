@@ -116,6 +116,7 @@ begin
 												break
 											end
 										end
+										break if stream['status'] == "Champion select." || stream['status'] == "In game." || stream['status'] == "Spectating."
 									end
 								rescue
 								end
