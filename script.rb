@@ -69,16 +69,16 @@ begin
 												stream['champion'] = "Not in game."
 												stream['status'] = "Not in game."
 											else
+												stream['champion'] = cache_stream['champion']
+												stream['championname'] = cache_stream['championname']
+												stream['status'] = cache_stream['status']
+												stream['region'] = cache_stream['region']
+												stream['division'] = cache_stream['division']
+												stream['lp'] = cache_stream['lp']
+												stream['rank'] = cache_stream['rank']
+												
 												if stream['status'] == nil
 													stream['status'] = "Error."
-												else
-													stream['champion'] = cache_stream['champion']
-													stream['championname'] = cache_stream['championname']
-													stream['status'] = cache_stream['status']
-													stream['region'] = cache_stream['region']
-													stream['division'] = cache_stream['division']
-													stream['lp'] = cache_stream['lp']
-													stream['rank'] = cache_stream['rank']
 												end
 											end
 										else
