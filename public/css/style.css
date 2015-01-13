@@ -324,8 +324,19 @@ a {
     text-align: center;
 }
 
+.error {
+    height: 40px;
+    width: 40px;
+    font-size: 1.8em;
+    float: left;
+    margin: 1px;
+    margin-top: 2px;
+    border: 1px solid #999966;
+    text-align: center;
+}
+
 .fa-exclamation-circle {
-    color: orange;
+    color: #999966;
     padding-top: 6px;
 }
 
